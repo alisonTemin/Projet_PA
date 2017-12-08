@@ -5,12 +5,17 @@ import java.awt.*;
 
 class PluginGraphisme implements IGraphique{
 
+    JFrame maFenetre;
+
+    PluginGraphisme(JFrame maFenetre){
+        this.maFenetre = maFenetre;
+    }
+
      Color colorRandom = new Color((int)(Math.random() * 0x1000000));
      public void dessinerRobot() {
-         JFrame frame = new JFrame();
-         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         frame.setVisible(true);
-         frame.setSize(600, 400);
+         maFenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         maFenetre.setVisible(true);
+         maFenetre.setSize(600, 400);
          JPanel panel = new JPanel() {
              @Override
              public void paintComponent(Graphics g) {
@@ -19,17 +24,30 @@ class PluginGraphisme implements IGraphique{
                  g.fillRect(30, 30, 30, 30);
              }
          };
-         frame.add(panel);
-         frame.validate();
-         frame.repaint();
+         maFenetre.add(panel);
+         maFenetre.validate();
+         maFenetre.repaint();
      }
 
-     public void dessinerArme(){
-        
-     }
+     public void dessinerArme() {
+         JPanel monPanel = new JPanel() {
+             @Override
+             public void paintComponent(Graphics g1) {
+                 g1 = maFenetre.getContentPane().getGraphics();
+                 super.paintComponent(g1);
+                 g1.setColor(Color.BLACK);
+                 g1.fillRect(5, 5, 5, 5);
+             }
+         };
+          maFenetre.add(monPanel);
+         maFenetre.validate();
+         maFenetre.repaint();
+         }
+
 
      public static void main(String[] args){
-         PluginGraphisme pg = new PluginGraphisme();
+         JFrame fenetre = new JFrame();
+         PluginGraphisme pg = new PluginGraphisme(fenetre);
          pg.dessinerRobot();
      }
 
