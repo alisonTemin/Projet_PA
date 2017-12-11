@@ -13,14 +13,18 @@ public class Robot {
      * Health points
      */
     private int health;
+    private int x;
+    private int y;
 
     /**
      * Robot constructor
      * @param health : Starting health points
      */
-    public Robot(String name, int health){
+    public Robot(String name, int health, int x, int y){
         this.name = name;
         this.health = health;
+        this.x = x;
+        this.y = y;
     }
 
     /**
@@ -37,6 +41,14 @@ public class Robot {
      */
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public String getName() {

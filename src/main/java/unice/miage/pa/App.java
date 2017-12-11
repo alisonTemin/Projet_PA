@@ -6,22 +6,31 @@ import unice.miage.pa.Plugins.Graphism;
 import javax.swing.*;
 
 /**
- * Hello world!
+ * Main App
  *
  */
 public class App 
 {
     public static void main( String[] args ) {
         JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
 
-        Robot chappy = new Robot("Chappy", 100);
+        // panel who contains our bots
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
 
+        // Create two stupids bots
+        Robot chappy = new Robot("Chappy", 100, 25, 25);
+        Robot poirot = new Robot("Poirot", 100, 90, 90);
+
+        // Draw
         Graphism pg = new Graphism();
-        pg.drawRobot(frame, chappy);
-        frame.validate();
-        frame.repaint();
+        pg.drawRobot(mainPanel, chappy);
+        pg.drawRobot(mainPanel, poirot);
+
+        frame.add(mainPanel);
+        frame.setVisible(true);
     }
 }
