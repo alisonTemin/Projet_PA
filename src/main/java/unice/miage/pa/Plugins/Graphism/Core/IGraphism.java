@@ -1,4 +1,4 @@
-package unice.miage.pa.Plugins.Graphism;
+package unice.miage.pa.Plugins.Graphism.Core;
 
 import unice.miage.pa.Engine.Robot;
 
