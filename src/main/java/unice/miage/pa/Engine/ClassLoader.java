@@ -1,114 +1,93 @@
 package unice.miage.pa.Engine;
 
-
-import javafx.scene.shape.Path;
-
-import java.awt.List;
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.security.SecureClassLoader;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.jar.JarFile;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
-
-import javax.imageio.IIOException;
 
 public class ClassLoader extends SecureClassLoader {
 
-        ArrayList<File> path = new ArrayList<File>();
-        private String name;
+    ArrayList<File> path;
 
-        public ClassLoader(ArrayList<File> path) {
-            this.path = path;
+    private String name;
+
+    /**
+     * Classloader constructor.
+     * @param path path to file
+     */
+    public ClassLoader(ArrayList<File> path) {
+        this.path = path;
+    }
+
+    @Override
+    protected Class<?> findClass(String name) throws ClassNotFoundException {
+        byte[] b = null;
+        b = loadClassData(name);
+        return super.defineClass(name, b, 0, b.length);
+    }
+
+
+    public boolean validateZip(String pathToFile) {
+        try {
+            ZipFile zipFile = new ZipFile(pathToFile);
+            String zipName = zipFile.getName();
+            return true;
+        } catch (IOException e) {
+            return false;
         }
+    }
 
-        public ClassLoader() {
-            // TODO Auto-generated constructor stub
+    public boolean validateJar(String pathtoFile) {
+        try {
+            JarFile jarFile = new JarFile(pathtoFile);
+            String jarName = jarFile.getName();
+            return true;
+        } catch (IOException e) {
+            return false;
         }
-
-        @Override
-        protected Class<?> findClass(String name) throws ClassNotFoundException {
-            byte[] b = null;
-            b = loadClassData(name);
-            return super.defineClass(name, b, 0, b.length);
-        }
-
-        public boolean validateZip(String pathToFile) {
-            try {
-                ZipFile zipFile = new ZipFile(pathToFile.toString());
-                String zipname = zipFile.getName();
-                return true;
-            } catch (IOException e) {
-                return false;
-            }
-        }
-
-        public boolean validateJar(String pathtoFile) {
-            try {
-                JarFile jarFile = new JarFile(pathtoFile.toString());
-                String jarname = jarFile.getName();
-                return true;
-            } catch (IOException e) {
-                return false;
-            }
-
-        }
+    }
 
     private byte[] loadClassData(String name) throws ClassNotFoundException {
         name = name.replace('.', File.separatorChar);
         name += ".class";
-        byte[] result = null;
+
         for (File p : path){
             System.out.println(p.getAbsolutePath()+ File.separatorChar +name);
-                File fichier = new File(p.getAbsolutePath()+ File.separatorChar +name);
-                if(fichier.exists()){
-                    try {
-                        return recupTabBytes(fichier);
-                    } catch (FileNotFoundException e) {
-                        System.out.println(e.getMessage());
-                    }
+                File file = new File(p.getAbsolutePath()+ File.separatorChar +name);
+                if(file.exists()){
+                    return recupTabBytes(file);
                 }
         }
 
-
-        if (result == null) {
-            throw new ClassNotFoundException("File not found");
-        }
-
-        return result;
-
+        throw new ClassNotFoundException("File not found");
     }
 
-    public Class<?> findClassWithFile(File f) throws ClassNotFoundException {
-        byte[] b = null;
+    /**
+     * Récupération du tableau de bytes pour le fichier demandé
+     * @param file file to get as an array of bytes
+     *
+     * @return bytes array containing our class
+     */
+    private byte[] recupTabBytes(File file) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        FileInputStream stream = null;
+
+        //couldn't happen, has the file exists
         try {
-            b = this.recupTabBytes(f);
+            stream = new FileInputStream(file.getAbsoluteFile());
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return super.defineClass(null, b, 0, b.length);
-    }
 
-    // Récupération du tableau de bytes pour le fichier selectionner
-    private byte[] recupTabBytes(File leFichier) throws FileNotFoundException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        FileInputStream fichier = new FileInputStream(leFichier.getAbsoluteFile());
-        BufferedInputStream bis = new BufferedInputStream(fichier);
+        assert(stream != null);
+
+        BufferedInputStream bis = new BufferedInputStream(stream);
 
         boolean eof = false;
         while (!eof) {
@@ -125,18 +104,20 @@ public class ClassLoader extends SecureClassLoader {
         return baos.toByteArray();
     }
 
-    public static void main(String[] args) throws ClassNotFoundException, IOException {
-
+    /**
+     * to be removed, testing main
+     * @param args args
+     * @throws ClassNotFoundException when error
+     */
+    public static void main(String[] args) throws ClassNotFoundException {
         ArrayList<File> path = new ArrayList<File>();
         path.add(new File("../Plugins/out/production/Plugins"));
         ClassLoader classe = new ClassLoader(path);
         Class<?> maClasse = classe.loadClass("fr.unice.miage.pa.plugins.Strategy");
 
         System.out.println(maClasse);
-
     }
-
-    }
+}
 
 
 
