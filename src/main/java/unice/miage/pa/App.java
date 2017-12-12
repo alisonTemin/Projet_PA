@@ -33,9 +33,10 @@ public class App
         game.addBot(poirot);
 
         // Draw
-        Graphism pg = new Graphism();
+        Graphism pg = new Graphism(mainPanel);
         pg.drawRobot(mainPanel, chappy);
         pg.drawRobot(mainPanel, poirot);
+        pg.drawWeapon();
 
         frame.add(mainPanel);
         frame.setVisible(true);
