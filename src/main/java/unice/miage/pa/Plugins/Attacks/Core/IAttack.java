@@ -5,10 +5,10 @@ public interface IAttack {
     /**
      * Describe a critical attack using weapons who implements IAttack
      */
-    public void critical();
+    int critical();
 
     /**
      * Describe a basic attack
      */
-    public void base();
+    int base();
 }

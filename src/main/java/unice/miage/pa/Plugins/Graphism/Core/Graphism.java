@@ -1,6 +1,6 @@
 package unice.miage.pa.Plugins.Graphism.Core;
 
-import unice.miage.pa.Engine.Robot;
+import unice.miage.pa.Elements.Robot;
 import unice.miage.pa.Plugins.Plugin;
 
 import javax.swing.*;

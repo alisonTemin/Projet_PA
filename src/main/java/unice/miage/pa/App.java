@@ -1,6 +1,7 @@
 package unice.miage.pa;
 
-import unice.miage.pa.Engine.Robot;
+import unice.miage.pa.Elements.Robot;
+import unice.miage.pa.Engine.Board;
 import unice.miage.pa.Plugins.Graphism.Core.Graphism;
 
 import javax.swing.*;
@@ -26,6 +27,10 @@ public class App
         // Create two stupids bots
         Robot chappy = new Robot("Chappy", 100, 25, 25);
         Robot poirot = new Robot("Poirot", 100, 90, 90);
+
+        Board game = new Board();
+        game.addBot(chappy);
+        game.addBot(poirot);
 
         // Draw
         Graphism pg = new Graphism();

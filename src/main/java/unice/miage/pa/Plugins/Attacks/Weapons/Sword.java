@@ -8,11 +8,13 @@ import unice.miage.pa.Plugins.Attacks.Core.IAttack;
  */
 public class Sword implements IAttack {
 
-    public void critical(){
+    public int critical(){
         // Make a critical attack using Sword
+        return 30;
     }
 
-    public void base(){
+    public int base(){
         // Base attack using sword
+        return 5;
     }
 }

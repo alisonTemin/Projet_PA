@@ -1,4 +1,4 @@
-package unice.miage.pa.Engine;
+package unice.miage.pa.Elements;
 
 /**
  * A robot
