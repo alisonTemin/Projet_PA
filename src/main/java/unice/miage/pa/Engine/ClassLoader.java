@@ -86,7 +86,7 @@ public class ClassLoader extends SecureClassLoader {
 
 
         if (result == null) {
-            throw new ClassNotFoundException("Fichier pas trouvé");
+            throw new ClassNotFoundException("File not found");
         }
 
         return result;
