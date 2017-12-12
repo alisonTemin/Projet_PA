@@ -1,9 +1,12 @@
-package unice.miage.pa.Plugins;
+package unice.miage.pa.Plugins.Graphism;
+
+import unice.miage.pa.Engine.Robot;
+import unice.miage.pa.Plugins.Plugin;
 
 import javax.swing.*;
 import java.awt.*;
-import unice.miage.pa.Engine.Robot;
 
+@Plugin(name="Graphism")
 public class Graphism implements IGraphism {
 
     private Color colorRandom = new Color((int)(Math.random() * 0x1000000));

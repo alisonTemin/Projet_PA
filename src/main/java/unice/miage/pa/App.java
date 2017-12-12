@@ -1,7 +1,7 @@
 package unice.miage.pa;
 
 import unice.miage.pa.Engine.Robot;
-import unice.miage.pa.Plugins.Graphism;
+import unice.miage.pa.Plugins.Graphism.Graphism;
 
 import javax.swing.*;
 
@@ -12,6 +12,8 @@ import javax.swing.*;
 public class App 
 {
     public static void main( String[] args ) {
+        Package.getPackages();
+
         JFrame frame = new JFrame();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
