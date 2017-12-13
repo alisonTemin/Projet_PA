@@ -25,10 +25,9 @@ public class ClassLoader extends SecureClassLoader {
         this.path = path;
     }
 
-    @Override
-    protected Class<?> findClass(String name) throws ClassNotFoundException {
+    protected Class<?> findPlugin(String name) throws ClassNotFoundException {
         byte[] b = null;
-        b = loadClassData(name);
+        b = loadPluginData(name);
         return super.defineClass(name, b, 0, b.length);
     }
 
@@ -53,7 +52,7 @@ public class ClassLoader extends SecureClassLoader {
         }
     }
 
-    private byte[] loadClassData(String name) throws ClassNotFoundException {
+    private byte[] loadPluginData(String name) throws ClassNotFoundException {
         name = name.replace('.', File.separatorChar);
         name += ".class";
 
@@ -112,10 +111,10 @@ public class ClassLoader extends SecureClassLoader {
     public static void main(String[] args) throws ClassNotFoundException {
         ArrayList<File> path = new ArrayList<File>();
         path.add(new File("../Plugins/out/production/Plugins"));
-        ClassLoader classe = new ClassLoader(path);
-        Class<?> maClasse = classe.loadClass("fr.unice.miage.pa.plugins.Strategy");
+        ClassLoader plugin = new ClassLoader(path);
+        Class<?> myPlugin = plugin.loadClass("fr.unice.miage.pa.plugins.Strategy");
 
-        System.out.println(maClasse);
+        System.out.println(myPlugin);
     }
 }
 
