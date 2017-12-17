@@ -23,7 +23,7 @@ public class App
 
         // Create two stupids bots
         Robot chappy = new Robot("Chappy", 100, 25, 25);
-        Robot poirot = new Robot("Poirot", 100, 90, 90);
+        Robot poirot = new Robot("Poirot", 100, 200, 25);
 
         Board game = new Board();
         game.addBot(chappy);

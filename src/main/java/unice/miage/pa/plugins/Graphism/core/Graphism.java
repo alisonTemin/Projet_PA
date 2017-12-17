@@ -38,7 +38,7 @@ public class Graphism implements IGraphism {
          URI uri = this.getResourceURL("sword.png");
 
          try {
-             this.panel.add(this.makeImageComponent(uri, robot.getX()+100, robot.getY()));
+             this.panel.add(this.makeImageComponent(uri, robot.getX()+70, robot.getY()));
          } catch (IOException e) {
              e.printStackTrace();
          }
