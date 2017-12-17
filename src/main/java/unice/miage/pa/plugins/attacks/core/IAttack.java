@@ -1,4 +1,4 @@
-package unice.miage.pa.Plugins.Attacks.Core;
+package unice.miage.pa.plugins.attacks.core;
 
 public interface IAttack {
 

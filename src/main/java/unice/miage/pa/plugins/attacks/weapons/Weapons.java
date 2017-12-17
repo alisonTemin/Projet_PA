@@ -1,4 +1,4 @@
-package unice.miage.pa.Plugins.Attacks.Weapons;
+package unice.miage.pa.plugins.attacks.weapons;
 
 public enum Weapons {
 

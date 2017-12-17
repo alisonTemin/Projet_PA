@@ -1,6 +1,6 @@
-package unice.miage.pa.Plugins.Attacks.Weapons;
+package unice.miage.pa.plugins.attacks.weapons;
 
-import unice.miage.pa.Plugins.Attacks.Core.IAttack;
+import unice.miage.pa.plugins.attacks.core.IAttack;
 
 /**
  * A Sword

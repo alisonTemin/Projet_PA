@@ -1,6 +1,6 @@
-package unice.miage.pa.Engine;
+package unice.miage.pa.engine;
 
-import unice.miage.pa.Elements.Robot;
+import unice.miage.pa.elements.Robot;
 
 import java.util.ArrayList;
 

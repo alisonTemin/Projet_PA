@@ -1,4 +1,4 @@
-package unice.miage.pa.Plugins;
+package unice.miage.pa.plugins;
 
 public @interface Plugin {
     /**

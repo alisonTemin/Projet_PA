@@ -1,4 +1,4 @@
-package unice.miage.pa.Engine;
+package unice.miage.pa.engine;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -110,7 +110,7 @@ public class ClassLoader extends SecureClassLoader {
      */
     public static void main(String[] args) throws ClassNotFoundException {
         ArrayList<File> path = new ArrayList<File>();
-        path.add(new File("../Plugins/out/production/Plugins"));
+        path.add(new File("../plugins/out/production/plugins"));
         ClassLoader plugin = new ClassLoader(path);
         Class<?> myPlugin = plugin.loadClass("fr.unice.miage.pa.plugins.Strategy");
 

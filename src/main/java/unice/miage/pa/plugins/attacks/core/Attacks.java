@@ -1,13 +1,13 @@
-package unice.miage.pa.Plugins.Attacks.Core;
+package unice.miage.pa.plugins.attacks.core;
 
-import unice.miage.pa.Plugins.Attacks.Weapons.*;
-import unice.miage.pa.Plugins.Plugin;
+import unice.miage.pa.plugins.attacks.weapons.*;
+import unice.miage.pa.plugins.Plugin;
 
 import java.util.HashMap;
 import java.util.Random;
-import unice.miage.pa.Plugins.Attacks.Weapons.Weapons;
+import unice.miage.pa.plugins.attacks.weapons.Weapons;
 
-@Plugin(name="Attacks", required=1)
+@Plugin(name="attacks", required=1)
 public class Attacks {
 
     private HashMap<Weapons, IAttack> weapons;
@@ -24,7 +24,7 @@ public class Attacks {
     }
 
     /**
-     * Get every weapons described in Weapons enum
+     * Get every weapons described in weapons enum
      * @return Hashmap containing every name/weapon
      */
     public HashMap<Weapons, IAttack> getWeapons(){

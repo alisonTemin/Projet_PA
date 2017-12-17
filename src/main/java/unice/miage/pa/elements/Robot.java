@@ -1,4 +1,4 @@
-package unice.miage.pa.Elements;
+package unice.miage.pa.elements;
 
 import javax.swing.*;
 
