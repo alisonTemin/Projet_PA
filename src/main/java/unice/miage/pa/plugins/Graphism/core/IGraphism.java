@@ -5,6 +5,6 @@ import unice.miage.pa.elements.Robot;
 import javax.swing.*;
 
 public interface IGraphism {
-    public void drawRobot(JPanel panel, final Robot robot);
+    public void drawRobot(final Robot robot);
     public void drawWeapon(Robot robot);
 }

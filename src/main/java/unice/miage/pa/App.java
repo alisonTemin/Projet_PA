@@ -2,7 +2,7 @@ package unice.miage.pa;
 
 import unice.miage.pa.elements.Robot;
 import unice.miage.pa.engine.Board;
-import unice.miage.pa.plugins.Graphism.core.Graphism;
+import unice.miage.pa.plugins.graphism.core.Graphism;
 
 import javax.swing.*;
 
@@ -19,8 +19,7 @@ public class App
         frame.setSize(600, 400);
 
         // panel who contains our bots
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
+        JPanel mainPanel = new JPanel(null);
 
         // Create two stupids bots
         Robot chappy = new Robot("Chappy", 100, 25, 25);
@@ -32,9 +31,10 @@ public class App
 
         // Draw
         Graphism pg = new Graphism(mainPanel);
-        pg.drawRobot(mainPanel, chappy);
-        pg.drawRobot(mainPanel, poirot);
+        pg.drawRobot(chappy);
+        pg.drawRobot(poirot);
         pg.drawWeapon(chappy);
+        pg.drawWeapon(poirot);
 
         frame.add(mainPanel);
         frame.setVisible(true);

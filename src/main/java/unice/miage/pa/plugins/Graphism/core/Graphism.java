@@ -20,48 +20,48 @@ public class Graphism implements IGraphism {
     public Graphism(JPanel panel){
         this.panel = panel;
     }
-    private Color colorRandom = new Color((int)(Math.random() * 0x1000000));
 
     /**
      * Draw a robot on frame
      * @param robot : robot to draw
      */
-    public void drawRobot(JPanel panel, final Robot robot) {
-        // create our new robot
-       final JPanel robotPanel = new JPanel(null) {
-             @Override
-             public void paintComponent(Graphics g) {
-                 super.paintComponent(g);
-                 g.setColor(colorRandom);
-                 g.fillRect(robot.getX(), robot.getY(), 30, 30);
-                 // Write his name
-                 g.drawString(robot.getName(), robot.getX()-10, robot.getY()-10);
-             }
-        };
-        robot.setPanel(robotPanel);
-        // Append on main JFrame
-        panel.add(robotPanel);
+    public void drawRobot(final Robot robot) {
+        URI uri = this.getResourceURL(robot.getName().toLowerCase() + ".png");
+
+        try {
+            this.panel.add(this.makeImageComponent(uri, robot.getX(), robot.getY(), 200, 200));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
      }
 
      public void drawWeapon(Robot robot){
-         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-         URI uri = null;
-         try {
-             uri =  classLoader.getResource("sword.png").toURI();
-         } catch (URISyntaxException e) {
-             e.printStackTrace();
-         }
+         URI uri = this.getResourceURL("sword.png");
 
          try {
-             assert uri != null;
-
-             BufferedImage image = ImageIO.read(new File(uri));
-             ImageIcon weapon = new ImageIcon(image);
-             JLabel label = new JLabel(weapon);
-             label.setLocation(0, 0);
-             this.panel.add(label);
+             this.panel.add(this.makeImageComponent(uri, robot.getX()+100, robot.getY(), 200, 200));
          } catch (IOException e) {
              e.printStackTrace();
+         }
+     }
+
+     private JLabel makeImageComponent(URI uri, int x, int y, int width, int height) throws IOException {
+         BufferedImage image = ImageIO.read(new File(uri));
+         ImageIcon weapon = new ImageIcon(image);
+         JLabel label = new JLabel(weapon);
+         label.setBounds(x, y, width, height);
+         return label;
+     }
+
+    /**
+     * @return URI
+     */
+     private URI getResourceURL(String resourceName){
+         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+         try {
+             return classLoader.getResource(resourceName).toURI();
+         } catch (URISyntaxException e) {
+             return null;
          }
      }
 
