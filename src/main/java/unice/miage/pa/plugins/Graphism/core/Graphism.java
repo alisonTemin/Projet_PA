@@ -5,7 +5,6 @@ import unice.miage.pa.plugins.Plugin;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +28,7 @@ public class Graphism implements IGraphism {
         URI uri = this.getResourceURL(robot.getName().toLowerCase() + ".png");
 
         try {
-            this.panel.add(this.makeImageComponent(uri, robot.getX(), robot.getY(), 200, 200));
+            this.panel.add(this.makeImageComponent(uri, robot.getX(), robot.getY()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,10 +38,14 @@ public class Graphism implements IGraphism {
          URI uri = this.getResourceURL("sword.png");
 
          try {
-             this.panel.add(this.makeImageComponent(uri, robot.getX()+100, robot.getY(), 200, 200));
+             this.panel.add(this.makeImageComponent(uri, robot.getX()+100, robot.getY()));
          } catch (IOException e) {
              e.printStackTrace();
          }
+     }
+
+     private JLabel makeImageComponent(URI uri, int x, int y) throws IOException {
+        return this.makeImageComponent(uri, x, y, 200, 200);
      }
 
      private JLabel makeImageComponent(URI uri, int x, int y, int width, int height) throws IOException {
