@@ -13,8 +13,6 @@ import javax.swing.*;
 public class App 
 {
     public static void main( String[] args ) {
-        Package.getPackages();
-
         JFrame frame = new JFrame();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -36,7 +34,7 @@ public class App
         Graphism pg = new Graphism(mainPanel);
         pg.drawRobot(mainPanel, chappy);
         pg.drawRobot(mainPanel, poirot);
-        pg.drawWeapon();
+        pg.drawWeapon(chappy);
 
         frame.add(mainPanel);
         frame.setVisible(true);

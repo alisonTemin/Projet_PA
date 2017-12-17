@@ -6,5 +6,5 @@ import javax.swing.*;
 
 public interface IGraphism {
     public void drawRobot(JPanel panel, final Robot robot);
-    public void drawWeapon();
+    public void drawWeapon(Robot robot);
 }

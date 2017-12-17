@@ -1,5 +1,7 @@
 package unice.miage.pa.Elements;
 
+import javax.swing.*;
+
 /**
  * A robot
  */
@@ -15,6 +17,7 @@ public class Robot {
     private int health;
     private int x;
     private int y;
+    private JPanel panel;
 
     /**
      * Robot constructor
@@ -53,5 +56,13 @@ public class Robot {
 
     public String getName() {
         return name;
+    }
+
+    public void setPanel(JPanel panel) {
+        this.panel = panel;
+    }
+
+    public JPanel getPanel() {
+        return panel;
     }
 }
