@@ -29,12 +29,14 @@ public class App
         game.addBot(chappy);
         game.addBot(poirot);
 
+
         // Draw
         Graphism pg = new Graphism(mainPanel);
         pg.drawRobot(chappy);
         pg.drawRobot(poirot);
         pg.drawWeapon(chappy);
         pg.drawWeapon(poirot);
+        pg.moveRobot(chappy,50,50);
 
         frame.add(mainPanel);
         frame.setVisible(true);

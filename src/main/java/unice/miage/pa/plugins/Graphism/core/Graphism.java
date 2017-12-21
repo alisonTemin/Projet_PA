@@ -34,6 +34,10 @@ public class Graphism implements IGraphism {
         }
      }
 
+    public JPanel getPanelRobot(){
+        return this.panel;
+    }
+
      public void drawWeapon(Robot robot){
          URI uri = this.getResourceURL("sword.png");
 
@@ -66,6 +70,11 @@ public class Graphism implements IGraphism {
          } catch (URISyntaxException e) {
              return null;
          }
+     }
+
+     public void moveRobot(final Robot robot, int x, int y){
+         JPanel position = getPanelRobot();
+         position.setLocation(x,y);
      }
 
 
