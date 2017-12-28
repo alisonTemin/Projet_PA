@@ -2,6 +2,7 @@ package unice.miage.pa.plugins.graphism.core;
 
 import unice.miage.pa.elements.Robot;
 import unice.miage.pa.plugins.Plugin;
+import unice.miage.pa.plugins.attacks.weapons.Weapons;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -38,13 +39,34 @@ public class Graphism implements IGraphism {
         return this.panel;
     }
 
-     public void drawWeapon(Robot robot){
-         URI uri = this.getResourceURL("sword.png");
+     public void drawWeapon(Robot robot, Weapons weapon) {
+         if (weapon.equals(Weapons.Sword)) {
+             URI uri = this.getResourceURL("sword.png");
 
-         try {
-             this.panel.add(this.makeImageComponent(uri, robot.getX()+70, robot.getY()));
-         } catch (IOException e) {
-             e.printStackTrace();
+             try {
+                 this.panel.add(this.makeImageComponent(uri, robot.getX() + 70, robot.getY()));
+             } catch (IOException e) {
+                 e.printStackTrace();
+             }
+         }
+         else if(weapon.equals(Weapons.Gun)){
+             URI uri = this.getResourceURL("gun.png");
+             try {
+                 this.panel.add(this.makeImageComponent(uri, robot.getX() + 70, robot.getY()));
+             } catch (IOException e) {
+                 e.printStackTrace();
+             }
+
+         }
+         else if(weapon.equals(Weapons.MachineGun)){
+             URI uri = this.getResourceURL("machineGun.png");
+
+             try {
+                 this.panel.add(this.makeImageComponent(uri, robot.getX() + 90, robot.getY()));
+             } catch (IOException e) {
+                 e.printStackTrace();
+             }
+
          }
      }
 

@@ -2,6 +2,7 @@ package unice.miage.pa;
 
 import unice.miage.pa.elements.Robot;
 import unice.miage.pa.engine.Board;
+import unice.miage.pa.plugins.attacks.weapons.Weapons;
 import unice.miage.pa.plugins.graphism.core.Graphism;
 
 import javax.swing.*;
@@ -34,8 +35,8 @@ public class App
         Graphism pg = new Graphism(mainPanel);
         pg.drawRobot(chappy);
         pg.drawRobot(poirot);
-        pg.drawWeapon(chappy);
-        pg.drawWeapon(poirot);
+        pg.drawWeapon(chappy, Weapons.Gun);
+        pg.drawWeapon(poirot, Weapons.MachineGun);
         pg.moveRobot(chappy,50,50);
 
         frame.add(mainPanel);
