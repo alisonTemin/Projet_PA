@@ -21,6 +21,8 @@ public class Graphism implements IGraphism {
         this.panel = panel;
     }
 
+
+
     /**
      * Draw a robot on frame
      * @param robot : robot to draw
