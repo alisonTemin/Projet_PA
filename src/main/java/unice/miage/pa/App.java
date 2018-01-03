@@ -28,6 +28,7 @@ public class App
         Robot chappy = new Robot("Chappy", 100, 25, 25);
         Robot poirot = new Robot("Poirot", 100, 200, 25);
 
+
         Board game = new Board();
         game.addBot(chappy);
         game.addBot(poirot);
@@ -40,6 +41,8 @@ public class App
         pg.drawWeapon(chappy, Weapons.Sword);
         pg.drawWeapon(poirot, Weapons.Sword);
         pg.moveRobot(chappy,50,50);
+        pg.drawStats(chappy);
+        pg.drawStats(poirot);
 
 
 
