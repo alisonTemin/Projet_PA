@@ -12,9 +12,10 @@ public class Console extends JFrame {
     PrintStream aPrintStream = new PrintStream(new FilteredStream(new ByteArrayOutputStream(), aTextArea));
 
     public Console() {
-        setSize(300, 300);
+        setSize(450, 300);
         add("Center", new JScrollPane(aTextArea));
         setVisible(true);
+        setLocation(600, 0);
 
         System.setOut(aPrintStream); // catches System.out messages
         System.setErr(aPrintStream); // catches error messages

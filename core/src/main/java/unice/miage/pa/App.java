@@ -38,7 +38,6 @@ public class App
         System.out.println("Plugins path : " + pluginsPath);
 
         // TODO : Iterate over annotations to load every plugin
-
         Class<?> strategy = classLoader.loadPlugin("fr.unice.miage.pa.plugins.strategies.Strategy");
         Class<?> weapons = classLoader.loadPlugin("fr.unice.miage.pa.plugins.attacks.weapons.Weapons");
         Class<?> attacks = classLoader.loadPlugin("fr.unice.miage.pa.plugins.attacks.core.Attacks");
@@ -47,14 +46,6 @@ public class App
         Class<?> console = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.Console");
         Class<?> statusLife = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.status.Life");
         Class<?> statusEnergy = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.status.Energy");
-
-        try {
-            Object consoleInstance = __construct(console);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
 
         // Create two stupids bots
         Robot chappy = new Robot("Chappy", 100, 25, 25);
@@ -65,6 +56,7 @@ public class App
         game.addBot(poirot);
 
         try {
+            Object consoleInstance = __construct(console);
             Object graphismInstance = __construct(graphism, mainPanel);
             Object statusLifeInstance = __construct(statusLife, mainPanel);
             Object statusEnergyInstance = __construct(statusEnergy, mainPanel);
@@ -85,6 +77,8 @@ public class App
 
             System.out.println("Weapons ready to use : " + Arrays.toString(weaponsList));
 
+            // TODO : Call strategy related code using Traits
+
         } catch (NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
@@ -93,6 +87,17 @@ public class App
         frame.setVisible(true);
     }
 
+    /**
+     * Invoke a method using a PluginTrait
+     *
+     * @param pluginInstance instance to invoke on
+     * @param type "draw"
+     * @param on "robot"
+     * @param args ... Args array (TODO : Refactor, it's crappy, but working)
+     *
+     * @throws InvocationTargetException Instance target not good, probably a copy paste error
+     * @throws IllegalAccessException Method is protected / private
+     */
     private static void invokeMethodByTrait(Object pluginInstance, String type, Object on, Object... args) throws InvocationTargetException, IllegalAccessException {
         Method[] methods = pluginInstance.getClass().getMethods();
 
@@ -115,16 +120,41 @@ public class App
         }
     }
 
+    /**
+     *
+     * @param pluginClass pluginClass
+     * @return Object
+     *
+     * @throws NoSuchMethodException Constructor not found
+     * @throws IllegalAccessException Constructor protected / private
+     * @throws InvocationTargetException Wrong target class
+     * @throws InstantiationException Probably a param mismatch
+     */
     private static Object __construct(Class pluginClass) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor constructor = pluginClass.getDeclaredConstructor();
         return constructor.newInstance();
     }
 
+    /**
+     * Constructor with one object
+     * @param pluginClass pluginClass
+     * @param arg param
+     * @return Object
+     *
+     * @throws NoSuchMethodException Constructor not found
+     * @throws IllegalAccessException Constructor protected / private
+     * @throws InvocationTargetException Wrong target class
+     * @throws InstantiationException Probably a param mismatch
+     */
     private static Object __construct(Class pluginClass, Object arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor constructor = pluginClass.getDeclaredConstructor(arg.getClass());
         return constructor.newInstance(arg);
     }
 
+    /**
+     * Get plugin compiled classes using user.dir variables (to avoid mac/win issues)
+     * @return path to plugins classes "/robotwar/plugins/target/classes/"
+     */
     private static String computePluginsPath(){
         return System.getProperty("user.dir") +
                 "/plugins/target/classes/";
