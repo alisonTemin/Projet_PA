@@ -44,6 +44,8 @@ public class App
         Class<?> graphism = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.Graphism");
         Class<?> filteredStream = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.FilteredStream");
         Class<?> console = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.Console");
+        Class<?> statusLife = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.status.Life");
+        Class<?> statusEnergy = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.status.Energy");
 
         try {
             Object consoleInstance = __construct(console);
@@ -64,6 +66,8 @@ public class App
         try {
             Method drawRobot = graphism.getMethod("drawRobot", Object.class);
             Object graphismInstance = __construct(graphism, mainPanel);
+            Object statusLifeInstance = __construct(statusLife, mainPanel);
+            Object statusEnergyInstance = __construct(statusEnergy, mainPanel);
 
             drawRobot.invoke(graphismInstance, chappy);
             drawRobot.invoke(graphismInstance, poirot);
@@ -78,8 +82,14 @@ public class App
             drawWeapon.invoke(graphismInstance, poirot, weaponsList[0]);
 
             Method drawStats = graphism.getMethod("drawStats", Object.class);
+            Method robotLifeStatus = statusLife.getMethod("drawLife", Object.class);
+            Method robotEnergyStatus = statusEnergy.getMethod("drawEnergy", Object.class);
             drawStats.invoke(graphismInstance, chappy);
             drawStats.invoke(graphismInstance, poirot);
+            robotLifeStatus.invoke(statusLifeInstance, chappy);
+            robotLifeStatus.invoke(statusLifeInstance, poirot);
+            robotEnergyStatus.invoke(statusEnergyInstance, chappy);
+            robotEnergyStatus.invoke(statusEnergyInstance, poirot);
         } catch (NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }

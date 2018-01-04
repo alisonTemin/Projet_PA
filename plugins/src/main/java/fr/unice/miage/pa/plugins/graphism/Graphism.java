@@ -111,22 +111,7 @@ public class Graphism {
      }
 
      public void drawStats(Object robot) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-         int x = (Integer) this.callGetOnRobot("getX", robot);
-         int y = (Integer) this.callGetOnRobot("getY", robot);
-         int health = (Integer) this.callGetOnRobot("getHealth", robot);
 
-
-         JLabel vie = new JLabel("");
-         vie.setOpaque(true);
-         vie.setBounds(new Rectangle(x, y  , health, 10));
-         vie.setBackground(Color.green);
-         panel.add(vie);
-
-         JLabel energie = new JLabel("");
-         energie.setOpaque(true);
-         energie.setBounds(new Rectangle(x, y + 10 , health, 10));
-         energie.setBackground(Color.blue);
-         panel.add(energie);
      }
 
 
