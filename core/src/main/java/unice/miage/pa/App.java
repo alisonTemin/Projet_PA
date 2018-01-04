@@ -42,6 +42,16 @@ public class App
         Class<?> weapons = classLoader.loadPlugin("fr.unice.miage.pa.plugins.attacks.weapons.Weapons");
         Class<?> attacks = classLoader.loadPlugin("fr.unice.miage.pa.plugins.attacks.core.Attacks");
         Class<?> graphism = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.Graphism");
+        Class<?> filteredStream = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.FilteredStream");
+        Class<?> console = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.Console");
+
+        try {
+            Object consoleInstance = __construct(console);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
 
         // Create two stupids bots
         Robot chappy = new Robot("Chappy", 100, 25, 25);
@@ -53,7 +63,7 @@ public class App
 
         try {
             Method drawRobot = graphism.getMethod("drawRobot", Object.class);
-            Object graphismInstance = __construct(graphism, mainPanel);
+            Object graphismInstance = __constructArg(graphism, mainPanel);
 
             drawRobot.invoke(graphismInstance, chappy);
             drawRobot.invoke(graphismInstance, poirot);
@@ -79,12 +89,14 @@ public class App
 
         frame.add(mainPanel);
         frame.setVisible(true);
-
-        /*Console c1 = new Console();
-        System.out.println("test de la console");*/
     }
 
-    private static Object __construct(Class pluginClass, Object arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    private static Object __construct(Class pluginClass) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Constructor constructor = pluginClass.getDeclaredConstructor();
+        return constructor.newInstance();
+    }
+
+    private static Object __constructArg(Class pluginClass, Object arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor constructor = pluginClass.getDeclaredConstructor(arg.getClass());
         return constructor.newInstance(arg);
     }
