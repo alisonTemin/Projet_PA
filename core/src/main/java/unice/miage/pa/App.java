@@ -102,10 +102,11 @@ public class App
 
                 for (Method method : trait.getDeclaredMethods()) {
                     if(method.invoke(annot).equals(type)){
-                        if(args.length > 0)
+                        if(args.length == 1)
                             mt.invoke(pluginInstance, on, args[0]);
                         else
                             mt.invoke(pluginInstance, on);
+                        break;
                     }
                 }
             }
