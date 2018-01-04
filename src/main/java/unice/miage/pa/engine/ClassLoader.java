@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.security.SecureClassLoader;
 import java.util.ArrayList;
 import java.util.jar.JarFile;
@@ -25,7 +27,7 @@ public class ClassLoader extends SecureClassLoader {
         this.path = path;
     }
 
-    protected Class<?> findPlugin(String name) throws ClassNotFoundException {
+    private Class<?> loadPlugin(String name) throws ClassNotFoundException {
         byte[] b = null;
         b = loadPluginData(name);
         return super.defineClass(name, b, 0, b.length);
@@ -108,13 +110,19 @@ public class ClassLoader extends SecureClassLoader {
      * @param args args
      * @throws ClassNotFoundException when error
      */
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
         ArrayList<File> path = new ArrayList<File>();
         path.add(new File("../plugins/out/production/plugins"));
-        ClassLoader plugin = new ClassLoader(path);
-        Class<?> myPlugin = plugin.loadClass("fr.unice.miage.pa.plugins.Strategy");
 
-        System.out.println(myPlugin);
+        // Try to load Strategy plugin
+        ClassLoader plugin = new ClassLoader(path);
+        Class<?> strategy = plugin.loadPlugin("fr.unice.miage.pa.plugins.Strategy");
+
+        // Invoke a method (printAnything)
+        Method chosenMethod = strategy.getMethod("printAnything");
+        String test = (String) chosenMethod.invoke(strategy.newInstance());
+
+        System.out.println(test);
     }
 }
 
