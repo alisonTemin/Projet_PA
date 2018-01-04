@@ -1,4 +1,4 @@
-package fr.unice.miage.pa.plugins.graphism;
+package fr.unice.miage.pa.plugins;
 
 import javax.swing.*;
 

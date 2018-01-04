@@ -5,13 +5,14 @@ import fr.unice.miage.pa.plugins.attacks.weapons.Weapons;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 @Plugin(name="Graphism", type="core", required=1)
-public class Graphism implements IGraphism {
+public class Graphism {
 
     private JPanel panel;
 
@@ -19,15 +20,25 @@ public class Graphism implements IGraphism {
         this.panel = panel;
     }
 
+    private Object callGetOnRobot(String getterName, Object robot) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method getter = robot.getClass().getDeclaredMethod(getterName);
+        return getter.invoke(robot);
+    }
+
     /**
      * Draw a robot on frame
      * @param robot : robot to draw
      */
-    public void drawRobot(final IRobot robot) {
-        InputStream robotImage = this.getResourceURL(robot.getName().toLowerCase() + ".png");
+    public void drawRobot(final Object robot) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        String botName = (String) this.callGetOnRobot("getName", robot);
+
+        int x = (Integer) this.callGetOnRobot("getX", robot);
+        int y = (Integer) this.callGetOnRobot("getY", robot);
+
+        InputStream robotImage = this.getResourceURL(botName.toLowerCase() + ".png");
 
         try {
-            this.panel.add(this.makeImageComponent(robotImage, robot.getX(), robot.getY()));
+            this.panel.add(this.makeImageComponent(robotImage, x, y));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,13 +48,16 @@ public class Graphism implements IGraphism {
         return this.panel;
     }
 
-     public void drawWeapon(IRobot robot, Weapons weapon) {
+     public void drawWeapon(Object robot, Weapons weapon) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        int x = (Integer) this.callGetOnRobot("getX", robot);
+        int y = (Integer) this.callGetOnRobot("getY", robot);
+
         InputStream fileStream;
          if (weapon.equals(Weapons.Sword)) {
              fileStream = this.getResourceURL("sword.png");
 
              try {
-                 this.panel.add(this.makeImageComponent(fileStream, robot.getX() + 70, robot.getY()));
+                 this.panel.add(this.makeImageComponent(fileStream, x + 70, y));
              } catch (IOException e) {
                  e.printStackTrace();
              }
@@ -51,7 +65,7 @@ public class Graphism implements IGraphism {
          else if(weapon.equals(Weapons.Gun)){
              fileStream = this.getResourceURL("gun.png");
              try {
-                 this.panel.add(this.makeImageComponent(fileStream, robot.getX() + 70, robot.getY()));
+                 this.panel.add(this.makeImageComponent(fileStream, x + 70, y));
              } catch (IOException e) {
                  e.printStackTrace();
              }
@@ -61,7 +75,7 @@ public class Graphism implements IGraphism {
              fileStream = this.getResourceURL("machineGun.png");
 
              try {
-                 this.panel.add(this.makeImageComponent(fileStream, robot.getX() + 90, robot.getY()));
+                 this.panel.add(this.makeImageComponent(fileStream, x + 90, y));
              } catch (IOException e) {
                  e.printStackTrace();
              }
@@ -95,7 +109,7 @@ public class Graphism implements IGraphism {
          position.setLocation(x,y);
      }
 
-     public void drawStats(IRobot robot) {
+     /*public void drawStats(Object robot) {
          JLabel vie = new JLabel("");
          vie.setOpaque(true);
          vie.setBounds(new Rectangle((int)robot.getX(), (int)robot.getY()  , robot.getHealth(), 10));
@@ -107,7 +121,7 @@ public class Graphism implements IGraphism {
          energie.setBounds(new Rectangle((int)robot.getX(), (int)robot.getY() + 10 , robot.getHealth(), 10));
          energie.setBackground(Color.blue);
          panel.add(energie);
-     }
+     }*/
 
 
 }

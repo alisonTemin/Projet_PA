@@ -6,9 +6,11 @@ import unice.miage.pa.engine.ClassLoader;
 
 import javax.swing.*;
 import java.io.File;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Main App
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 
 public class App 
 {
-    public static void main( String[] args ) throws IllegalAccessException, InstantiationException {
+    public static void main( String[] args ) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         JFrame frame = new JFrame();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -32,55 +34,59 @@ public class App
         path.add(new File(pluginsPath));
 
         ClassLoader classLoader = new ClassLoader(path);
-        Class<?> strategy = null;
-        try {
-            strategy = classLoader.loadPlugin("fr.unice.miage.pa.plugins.strategies.Strategy");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        System.out.println("Plugins path : " + pluginsPath);
 
-        // Invoke a method (printAnything)
-        Method chosenMethod = null;
-        try {
-            chosenMethod = strategy.getMethod("printAnything");
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        try {
-            String test = (String) chosenMethod.invoke(strategy.newInstance());
-            System.out.println(test);
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+        // TODO : Iterate over annotations to load every plugin
+
+        Class<?> strategy = classLoader.loadPlugin("fr.unice.miage.pa.plugins.strategies.Strategy");
+        Class<?> weapons = classLoader.loadPlugin("fr.unice.miage.pa.plugins.attacks.weapons.Weapons");
+        Class<?> attacks = classLoader.loadPlugin("fr.unice.miage.pa.plugins.attacks.core.Attacks");
+        Class<?> graphism = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.Graphism");
 
         // Create two stupids bots
         Robot chappy = new Robot("Chappy", 100, 25, 25);
         Robot poirot = new Robot("Poirot", 100, 200, 25);
 
-
         Board game = new Board();
         game.addBot(chappy);
         game.addBot(poirot);
 
+        try {
+            Method drawRobot = graphism.getMethod("drawRobot", Object.class);
+            Object graphismInstance = __construct(graphism, mainPanel);
+
+            drawRobot.invoke(graphismInstance, chappy);
+            drawRobot.invoke(graphismInstance, poirot);
+
+            Method drawWeapon = graphism.getMethod("drawWeapon", Object.class, weapons);
+
+            Object[] weaponsList = weapons.getEnumConstants();
+
+            System.out.println("Weapons ready to use : " + Arrays.toString(weaponsList));
+
+            drawWeapon.invoke(graphismInstance, chappy, weaponsList[0]);
+            drawWeapon.invoke(graphismInstance, poirot, weaponsList[0]);
+
+        } catch (NoSuchMethodException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
         /*
-        // TODO WIP : Re-do from Plugins
-        // Draw
-        Graphism pg = new Graphism(mainPanel);
-        pg.drawRobot(chappy);
-        pg.drawRobot(poirot);
-        pg.drawWeapon(chappy, Weapons.Sword);
-        pg.drawWeapon(poirot, Weapons.Sword);
-        pg.moveRobot(chappy,50,50);
-        pg.drawStats(chappy);
-        pg.drawStats(poirot);
-
-
+            pg.moveRobot(chappy,50,50);
+            pg.drawStats(chappy);
+            pg.drawStats(poirot);
+        */
 
         frame.add(mainPanel);
         frame.setVisible(true);
 
-        Console c1 = new Console();
+        /*Console c1 = new Console();
         System.out.println("test de la console");*/
+    }
+
+    private static Object __construct(Class pluginClass, Object arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Constructor constructor = pluginClass.getDeclaredConstructor(arg.getClass());
+        return constructor.newInstance(arg);
     }
 
     private static String computePluginsPath(){

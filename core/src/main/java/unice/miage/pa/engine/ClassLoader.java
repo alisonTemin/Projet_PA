@@ -6,11 +6,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.security.SecureClassLoader;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.jar.JarInputStream;
 import java.util.zip.ZipFile;
 
 public class ClassLoader extends SecureClassLoader {
@@ -103,26 +104,7 @@ public class ClassLoader extends SecureClassLoader {
         }
         return baos.toByteArray();
     }
-
-    /**
-     * to be removed, testing main
-     * @param args args
-     * @throws ClassNotFoundException when error
-     */
-    public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
-        ArrayList<File> path = new ArrayList<File>();
-        path.add(new File("/Users/leonard/miageProjects/robotwar/plugins/out/production/plugins"));
-
-        // Try to load Strategy plugin
-        ClassLoader plugin = new ClassLoader(path);
-        Class<?> strategy = plugin.loadPlugin("fr.unice.miage.pa.plugins.Strategy");
-
-        // Invoke a method (printAnything)
-        Method chosenMethod = strategy.getMethod("printAnything");
-        String test = (String) chosenMethod.invoke(strategy.newInstance());
-
-        System.out.println(test);
-    }
+    
 }
 
 
