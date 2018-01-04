@@ -6,6 +6,7 @@ import unice.miage.pa.plugins.attacks.weapons.Weapons;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +21,8 @@ public class Graphism implements IGraphism {
     public Graphism(JPanel panel){
         this.panel = panel;
     }
+
+
 
     /**
      * Draw a robot on frame
@@ -97,6 +100,20 @@ public class Graphism implements IGraphism {
      public void moveRobot(final Robot robot, int x, int y){
          JPanel position = getPanelRobot();
          position.setLocation(x,y);
+     }
+
+     public void drawStats(Robot robot) {
+         JLabel vie = new JLabel("");
+         vie.setOpaque(true);
+         vie.setBounds(new Rectangle((int)robot.getX(), (int)robot.getY()  , robot.getHealth(), 10));
+         vie.setBackground(Color.green);
+         panel.add(vie);
+
+         JLabel energie = new JLabel("");
+         energie.setOpaque(true);
+         energie.setBounds(new Rectangle((int)robot.getX(), (int)robot.getY() + 10 , robot.getHealth(), 10));
+         energie.setBackground(Color.blue);
+         panel.add(energie);
      }
 
 

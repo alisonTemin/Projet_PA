@@ -3,6 +3,7 @@ package unice.miage.pa;
 import unice.miage.pa.elements.Robot;
 import unice.miage.pa.engine.Board;
 import unice.miage.pa.plugins.attacks.weapons.Weapons;
+import unice.miage.pa.plugins.graphism.core.Console;
 import unice.miage.pa.plugins.graphism.core.Graphism;
 
 import javax.swing.*;
@@ -11,6 +12,7 @@ import javax.swing.*;
  * Main App
  *
  */
+
 public class App 
 {
     public static void main( String[] args ) {
@@ -26,6 +28,7 @@ public class App
         Robot chappy = new Robot("Chappy", 100, 25, 25);
         Robot poirot = new Robot("Poirot", 100, 200, 25);
 
+
         Board game = new Board();
         game.addBot(chappy);
         game.addBot(poirot);
@@ -35,11 +38,18 @@ public class App
         Graphism pg = new Graphism(mainPanel);
         pg.drawRobot(chappy);
         pg.drawRobot(poirot);
-        pg.drawWeapon(chappy, Weapons.Gun);
-        pg.drawWeapon(poirot, Weapons.MachineGun);
+        pg.drawWeapon(chappy, Weapons.Sword);
+        pg.drawWeapon(poirot, Weapons.Sword);
         pg.moveRobot(chappy,50,50);
+        pg.drawStats(chappy);
+        pg.drawStats(poirot);
+
+
 
         frame.add(mainPanel);
         frame.setVisible(true);
+
+        Console c1 = new Console();
+        System.out.println("test de la console");
     }
 }
