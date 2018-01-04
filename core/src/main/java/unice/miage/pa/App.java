@@ -80,8 +80,8 @@ public class App
 
             Object[] weaponsList = weapons.getEnumConstants();
 
-            invokeMethodByTrait(graphismInstance, "drawWeapon", chappy, weaponsList[0]);
-            invokeMethodByTrait(graphismInstance, "drawWeapon", poirot, weaponsList[0]);
+            invokeMethodByTrait(graphismInstance, "drawWeapon", chappy, weaponsList[0], true);
+            invokeMethodByTrait(graphismInstance, "drawWeapon", poirot, weaponsList[0], false);
 
             System.out.println("Weapons ready to use : " + Arrays.toString(weaponsList));
 
@@ -104,6 +104,8 @@ public class App
                     if(method.invoke(annot).equals(type)){
                         if(args.length == 1)
                             mt.invoke(pluginInstance, on, args[0]);
+                        else if(args.length == 2)
+                            mt.invoke(pluginInstance, on, args[0], args[1]);
                         else
                             mt.invoke(pluginInstance, on);
                         break;
