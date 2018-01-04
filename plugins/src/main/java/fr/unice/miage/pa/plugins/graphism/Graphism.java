@@ -5,6 +5,7 @@ import fr.unice.miage.pa.plugins.attacks.weapons.Weapons;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -109,19 +110,24 @@ public class Graphism {
          position.setLocation(x,y);
      }
 
-     /*public void drawStats(Object robot) {
+     public void drawStats(Object robot) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+         int x = (Integer) this.callGetOnRobot("getX", robot);
+         int y = (Integer) this.callGetOnRobot("getY", robot);
+         int health = (Integer) this.callGetOnRobot("getHealth", robot);
+
+
          JLabel vie = new JLabel("");
          vie.setOpaque(true);
-         vie.setBounds(new Rectangle((int)robot.getX(), (int)robot.getY()  , robot.getHealth(), 10));
+         vie.setBounds(new Rectangle(x, y  , health, 10));
          vie.setBackground(Color.green);
          panel.add(vie);
 
          JLabel energie = new JLabel("");
          energie.setOpaque(true);
-         energie.setBounds(new Rectangle((int)robot.getX(), (int)robot.getY() + 10 , robot.getHealth(), 10));
+         energie.setBounds(new Rectangle(x, y + 10 , health, 10));
          energie.setBackground(Color.blue);
          panel.add(energie);
-     }*/
+     }
 
 
 }

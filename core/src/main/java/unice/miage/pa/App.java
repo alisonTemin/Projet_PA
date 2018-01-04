@@ -63,7 +63,7 @@ public class App
 
         try {
             Method drawRobot = graphism.getMethod("drawRobot", Object.class);
-            Object graphismInstance = __constructArg(graphism, mainPanel);
+            Object graphismInstance = __construct(graphism, mainPanel);
 
             drawRobot.invoke(graphismInstance, chappy);
             drawRobot.invoke(graphismInstance, poirot);
@@ -77,15 +77,12 @@ public class App
             drawWeapon.invoke(graphismInstance, chappy, weaponsList[0]);
             drawWeapon.invoke(graphismInstance, poirot, weaponsList[0]);
 
+            Method drawStats = graphism.getMethod("drawStats", Object.class);
+            drawStats.invoke(graphismInstance, chappy);
+            drawStats.invoke(graphismInstance, poirot);
         } catch (NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
-
-        /*
-            pg.moveRobot(chappy,50,50);
-            pg.drawStats(chappy);
-            pg.drawStats(poirot);
-        */
 
         frame.add(mainPanel);
         frame.setVisible(true);
@@ -96,7 +93,7 @@ public class App
         return constructor.newInstance();
     }
 
-    private static Object __constructArg(Class pluginClass, Object arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    private static Object __construct(Class pluginClass, Object arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor constructor = pluginClass.getDeclaredConstructor(arg.getClass());
         return constructor.newInstance(arg);
     }
