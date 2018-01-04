@@ -8,11 +8,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 @Plugin(name="Graphism", type="core", required=1)
 public class Graphism implements IGraphism {
@@ -23,13 +20,11 @@ public class Graphism implements IGraphism {
         this.panel = panel;
     }
 
-
-
     /**
      * Draw a robot on frame
      * @param robot : robot to draw
      */
-    public void drawRobot(final Robot robot) {
+    @PluginAction public void drawRobot(final Robot robot) {
         InputStream robotImage = this.getResourceURL(robot.getName().toLowerCase() + ".png");
 
         try {

@@ -27,7 +27,7 @@ public class ClassLoader extends SecureClassLoader {
         this.path = path;
     }
 
-    private Class<?> loadPlugin(String name) throws ClassNotFoundException {
+    public Class<?> loadPlugin(String name) throws ClassNotFoundException {
         byte[] b = null;
         b = loadPluginData(name);
         return super.defineClass(name, b, 0, b.length);
@@ -59,11 +59,10 @@ public class ClassLoader extends SecureClassLoader {
         name += ".class";
 
         for (File p : path){
-            System.out.println(p.getAbsolutePath()+ File.separatorChar +name);
-                File file = new File(p.getAbsolutePath()+ File.separatorChar +name);
-                if(file.exists()){
-                    return recupTabBytes(file);
-                }
+            File file = new File(p.getAbsolutePath()+ File.separatorChar +name);
+            if(file.exists()){
+                return recupTabBytes(file);
+            }
         }
 
         throw new ClassNotFoundException("File not found");
@@ -112,7 +111,7 @@ public class ClassLoader extends SecureClassLoader {
      */
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
         ArrayList<File> path = new ArrayList<File>();
-        path.add(new File("../plugins/out/production/plugins"));
+        path.add(new File("/Users/leonard/miageProjects/robotwar/plugins/out/production/plugins"));
 
         // Try to load Strategy plugin
         ClassLoader plugin = new ClassLoader(path);

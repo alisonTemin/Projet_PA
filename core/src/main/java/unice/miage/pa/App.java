@@ -2,11 +2,13 @@ package unice.miage.pa;
 
 import unice.miage.pa.elements.Robot;
 import unice.miage.pa.engine.Board;
-import unice.miage.pa.plugins.attacks.weapons.Weapons;
-import unice.miage.pa.plugins.graphism.core.Console;
-import unice.miage.pa.plugins.graphism.core.Graphism;
+import unice.miage.pa.engine.ClassLoader;
 
 import javax.swing.*;
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 /**
  * Main App
@@ -15,7 +17,7 @@ import javax.swing.*;
 
 public class App 
 {
-    public static void main( String[] args ) {
+    public static void main( String[] args ) throws IllegalAccessException, InstantiationException {
         JFrame frame = new JFrame();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -23,6 +25,33 @@ public class App
 
         // panel who contains our bots
         JPanel mainPanel = new JPanel(null);
+
+        String pluginsPath = computePluginsPath();
+
+        ArrayList<File> path = new ArrayList<File>();
+        path.add(new File(pluginsPath));
+
+        ClassLoader plugin = new ClassLoader(path);
+        Class<?> strategy = null;
+        try {
+            strategy = plugin.loadPlugin("fr.unice.miage.pa.plugins.Strategy");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Invoke a method (printAnything)
+        Method chosenMethod = null;
+        try {
+            chosenMethod = strategy.getMethod("printAnything");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        try {
+            String test = (String) chosenMethod.invoke(strategy.newInstance());
+            System.out.println(test);
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
 
         // Create two stupids bots
         Robot chappy = new Robot("Chappy", 100, 25, 25);
@@ -33,7 +62,8 @@ public class App
         game.addBot(chappy);
         game.addBot(poirot);
 
-
+        /*
+        // TODO WIP : Re-do from Plugins
         // Draw
         Graphism pg = new Graphism(mainPanel);
         pg.drawRobot(chappy);
@@ -50,6 +80,12 @@ public class App
         frame.setVisible(true);
 
         Console c1 = new Console();
-        System.out.println("test de la console");
+        System.out.println("test de la console");*/
+    }
+
+    private static String computePluginsPath(){
+
+        return System.getProperty("user.dir") +
+                "/plugins/out/production/plugins";
     }
 }
