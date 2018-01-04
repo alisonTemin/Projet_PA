@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -29,10 +30,10 @@ public class Graphism implements IGraphism {
      * @param robot : robot to draw
      */
     public void drawRobot(final Robot robot) {
-        URI uri = this.getResourceURL(robot.getName().toLowerCase() + ".png");
+        InputStream robotImage = this.getResourceURL(robot.getName().toLowerCase() + ".png");
 
         try {
-            this.panel.add(this.makeImageComponent(uri, robot.getX(), robot.getY()));
+            this.panel.add(this.makeImageComponent(robotImage, robot.getX(), robot.getY()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,29 +44,30 @@ public class Graphism implements IGraphism {
     }
 
      public void drawWeapon(Robot robot, Weapons weapon) {
+        InputStream fileStream;
          if (weapon.equals(Weapons.Sword)) {
-             URI uri = this.getResourceURL("sword.png");
+             fileStream = this.getResourceURL("sword.png");
 
              try {
-                 this.panel.add(this.makeImageComponent(uri, robot.getX() + 70, robot.getY()));
+                 this.panel.add(this.makeImageComponent(fileStream, robot.getX() + 70, robot.getY()));
              } catch (IOException e) {
                  e.printStackTrace();
              }
          }
          else if(weapon.equals(Weapons.Gun)){
-             URI uri = this.getResourceURL("gun.png");
+             fileStream = this.getResourceURL("gun.png");
              try {
-                 this.panel.add(this.makeImageComponent(uri, robot.getX() + 70, robot.getY()));
+                 this.panel.add(this.makeImageComponent(fileStream, robot.getX() + 70, robot.getY()));
              } catch (IOException e) {
                  e.printStackTrace();
              }
 
          }
          else if(weapon.equals(Weapons.MachineGun)){
-             URI uri = this.getResourceURL("machineGun.png");
+             fileStream = this.getResourceURL("machineGun.png");
 
              try {
-                 this.panel.add(this.makeImageComponent(uri, robot.getX() + 90, robot.getY()));
+                 this.panel.add(this.makeImageComponent(fileStream, robot.getX() + 90, robot.getY()));
              } catch (IOException e) {
                  e.printStackTrace();
              }
@@ -73,12 +75,12 @@ public class Graphism implements IGraphism {
          }
      }
 
-     private JLabel makeImageComponent(URI uri, int x, int y) throws IOException {
-        return this.makeImageComponent(uri, x, y, 200, 200);
+     private JLabel makeImageComponent(InputStream input, int x, int y) throws IOException {
+        return this.makeImageComponent(input, x, y, 200, 200);
      }
 
-     private JLabel makeImageComponent(URI uri, int x, int y, int width, int height) throws IOException {
-         BufferedImage image = ImageIO.read(new File(uri));
+     private JLabel makeImageComponent(InputStream input, int x, int y, int width, int height) throws IOException {
+         BufferedImage image = ImageIO.read(input);
          ImageIcon weapon = new ImageIcon(image);
          JLabel label = new JLabel(weapon);
          label.setBounds(x, y, width, height);
@@ -88,13 +90,10 @@ public class Graphism implements IGraphism {
     /**
      * @return URI
      */
-     private URI getResourceURL(String resourceName){
+     private InputStream getResourceURL(String resourceName){
          ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-         try {
-             return classLoader.getResource(resourceName).toURI();
-         } catch (URISyntaxException e) {
-             return null;
-         }
+
+         return classLoader.getResourceAsStream(resourceName);
      }
 
      public void moveRobot(final Robot robot, int x, int y){

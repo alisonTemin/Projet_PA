@@ -24,6 +24,9 @@
           <descriptors>
             <descriptor>app.xml</descriptor>
           </descriptors>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
           <archive>
             <manifest>
               <mainClass>unice.miage.pa.App</mainClass>
