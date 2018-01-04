@@ -81,11 +81,8 @@ public class App
             drawWeapon.invoke(graphismInstance, chappy, weaponsList[0]);
             drawWeapon.invoke(graphismInstance, poirot, weaponsList[0]);
 
-            Method drawStats = graphism.getMethod("drawStats", Object.class);
             Method robotLifeStatus = statusLife.getMethod("drawLife", Object.class);
             Method robotEnergyStatus = statusEnergy.getMethod("drawEnergy", Object.class);
-            drawStats.invoke(graphismInstance, chappy);
-            drawStats.invoke(graphismInstance, poirot);
             robotLifeStatus.invoke(statusLifeInstance, chappy);
             robotLifeStatus.invoke(statusLifeInstance, poirot);
             robotEnergyStatus.invoke(statusEnergyInstance, chappy);
