@@ -1,5 +1,4 @@
-package fr.unice.miage.pa.plugins;
-
+package fr.unice.miage.pa.plugins.strategies;
 
 public class Strategy {
 

@@ -1,8 +1,7 @@
-package unice.miage.pa.plugins.graphism.core;
+package fr.unice.miage.pa.plugins.graphism;
 
-import unice.miage.pa.elements.Robot;
-import unice.miage.pa.plugins.Plugin;
-import unice.miage.pa.plugins.attacks.weapons.Weapons;
+import fr.unice.miage.pa.plugins.Plugin;
+import fr.unice.miage.pa.plugins.attacks.weapons.Weapons;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,7 +23,7 @@ public class Graphism implements IGraphism {
      * Draw a robot on frame
      * @param robot : robot to draw
      */
-    @PluginAction public void drawRobot(final Robot robot) {
+    public void drawRobot(final IRobot robot) {
         InputStream robotImage = this.getResourceURL(robot.getName().toLowerCase() + ".png");
 
         try {
@@ -38,7 +37,7 @@ public class Graphism implements IGraphism {
         return this.panel;
     }
 
-     public void drawWeapon(Robot robot, Weapons weapon) {
+     public void drawWeapon(IRobot robot, Weapons weapon) {
         InputStream fileStream;
          if (weapon.equals(Weapons.Sword)) {
              fileStream = this.getResourceURL("sword.png");
@@ -91,12 +90,12 @@ public class Graphism implements IGraphism {
          return classLoader.getResourceAsStream(resourceName);
      }
 
-     public void moveRobot(final Robot robot, int x, int y){
+     public void moveRobot(final Object robot, int x, int y){
          JPanel position = getPanelRobot();
          position.setLocation(x,y);
      }
 
-     public void drawStats(Robot robot) {
+     public void drawStats(IRobot robot) {
          JLabel vie = new JLabel("");
          vie.setOpaque(true);
          vie.setBounds(new Rectangle((int)robot.getX(), (int)robot.getY()  , robot.getHealth(), 10));

@@ -1,15 +1,7 @@
-package unice.miage.pa.plugins.graphism.core;
+package fr.unice.miage.pa.plugins.graphism;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileWriter;
-import java.io.FilterOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
-
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
+import java.io.*;
 
 public class Console extends JFrame {
     JTextArea aTextArea = new JTextArea();

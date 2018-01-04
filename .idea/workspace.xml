@@ -3,21 +3,25 @@
   <component name="ChangeListManager">
     <list default="true" id="59722aed-d059-4121-9770-beda65535d87" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/core/pom.xml" afterPath="$PROJECT_DIR$/core/pom.xml" />
+      <change beforePath="$PROJECT_DIR$/core/robotwar-core.iml" afterPath="$PROJECT_DIR$/core/robotwar-core.iml" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/App.java" afterPath="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/App.java" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/engine/ClassLoader.java" afterPath="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/engine/ClassLoader.java" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/plugins/Plugin.java" afterPath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/Plugin.java" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/plugins/PluginAction.java" afterPath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/PluginTrait.java" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/plugins/attacks/core/Attack.java" afterPath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/core/Attack.java" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/plugins/attacks/core/Attacks.java" afterPath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/core/Attacks.java" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/plugins/attacks/core/IAttack.java" afterPath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/core/IAttack.java" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/plugins/attacks/weapons/Gun.java" afterPath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/weapons/Gun.java" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/plugins/attacks/weapons/MachineGun.java" afterPath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/weapons/MachineGun.java" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/plugins/attacks/weapons/Sword.java" afterPath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/weapons/Sword.java" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/plugins/attacks/weapons/Weapons.java" afterPath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/weapons/Weapons.java" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/plugins/graphism/core/Console.java" afterPath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/graphism/Console.java" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/plugins/graphism/core/Graphism.java" afterPath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/graphism/Graphism.java" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/plugins/graphism/core/IGraphism.java" afterPath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/graphism/IGraphism.java" />
-      <change beforePath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/Strategy.java" afterPath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/strategies/Strategy.java" />
+      <change beforePath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/Builder.java" afterPath="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/Builder.java" />
+      <change beforePath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/Plugin.java" afterPath="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/Plugin.java" />
+      <change beforePath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/PluginTrait.java" afterPath="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/PluginTrait.java" />
+      <change beforePath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/core/Attack.java" afterPath="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/core/Attack.java" />
+      <change beforePath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/core/Attacks.java" afterPath="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/core/Attacks.java" />
+      <change beforePath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/core/IAttack.java" afterPath="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/core/IAttack.java" />
+      <change beforePath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/weapons/Gun.java" afterPath="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/weapons/Gun.java" />
+      <change beforePath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/weapons/MachineGun.java" afterPath="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/weapons/MachineGun.java" />
+      <change beforePath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/weapons/Sword.java" afterPath="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/weapons/Sword.java" />
+      <change beforePath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/weapons/Weapons.java" afterPath="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/weapons/Weapons.java" />
+      <change beforePath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/graphism/Console.java" afterPath="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/graphism/Console.java" />
+      <change beforePath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/graphism/Graphism.java" afterPath="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/graphism/Graphism.java" />
+      <change beforePath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/graphism/IGraphism.java" afterPath="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/graphism/IGraphism.java" />
+      <change beforePath="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/strategies/Strategy.java" afterPath="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/strategies/Strategy.java" />
+      <change beforePath="$PROJECT_DIR$/plugins/robotwar-plugins.iml" afterPath="$PROJECT_DIR$/plugins/robotwar-plugins.iml" />
     </list>
     <ignored path="$PROJECT_DIR$/plugins/target/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -34,11 +38,29 @@
       <file leaf-file-name="App.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/unice/miage/pa/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="65" column="20" lean-forward="false" selection-start-line="65" selection-start-column="20" selection-end-line="65" selection-end-column="20" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="401">
+              <caret line="49" column="24" lean-forward="true" selection-start-line="49" selection-start-column="24" selection-end-line="49" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClassLoader.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/java/lang/ClassLoader.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="331">
+              <caret line="762" column="0" lean-forward="false" selection-start-line="762" selection-start-column="0" selection-end-line="762" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -46,86 +68,28 @@
       <file leaf-file-name="ClassLoader.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/unice/miage/pa/engine/ClassLoader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-543">
-              <caret line="67" column="37" lean-forward="false" selection-start-line="67" selection-start-column="37" selection-end-line="67" selection-end-column="37" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#671#672#0" expanded="true" />
-                <element signature="e#703#704#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Console.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/graphism/Console.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="26" column="11" lean-forward="false" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
+            <state relative-caret-position="-678">
+              <caret line="65" column="13" lean-forward="true" selection-start-line="65" selection-start-column="13" selection-end-line="65" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Graphism.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/graphism/Graphism.java">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/plugins/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="3" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#500#501#0" expanded="true" />
-                <element signature="e#534#535#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Gun.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/weapons/Gun.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+            <state relative-caret-position="270">
+              <caret line="18" column="17" lean-forward="false" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MachineGun.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/weapons/MachineGun.java">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Sword.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/weapons/Sword.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Weapons.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/weapons/Weapons.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="12" lean-forward="false" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Attack.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/core/Attack.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+            <state relative-caret-position="212">
+              <caret line="23" column="20" lean-forward="false" selection-start-line="23" selection-start-column="20" selection-end-line="26" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -144,10 +108,25 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/core/pom.xml" />
         <option value="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/plugins/graphism/core/Graphism.java" />
         <option value="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/graphism/Graphism.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/engine/ClassLoader.java" />
+        <option value="$PROJECT_DIR$/plugins/pom.xml" />
+        <option value="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/weapons/Weapons.java" />
+        <option value="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/Plugin.java" />
+        <option value="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/PluginTrait.java" />
+        <option value="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/strategies/Strategy.java" />
+        <option value="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/graphism/IRobot.java" />
+        <option value="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/core/IAttack.java" />
+        <option value="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/core/Attacks.java" />
+        <option value="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/weapons/MachineGun.java" />
+        <option value="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/weapons/Sword.java" />
+        <option value="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/weapons/Gun.java" />
+        <option value="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/graphism/IGraphism.java" />
+        <option value="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/graphism/Graphism.java" />
+        <option value="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/core/Attack.java" />
+        <option value="$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/graphism/Console.java" />
+        <option value="$PROJECT_DIR$/core/pom.xml" />
         <option value="$PROJECT_DIR$/core/src/main/java/unice/miage/pa/App.java" />
       </list>
     </option>
@@ -203,18 +182,79 @@
             <path>
               <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
               <item name="robotwar" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="robotwar" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="robotwar" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="pa" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="robotwar" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="pa" type="462c0819:PsiDirectoryNode" />
+              <item name="elements" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="robotwar" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="pa" type="462c0819:PsiDirectoryNode" />
+              <item name="engine" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="robotwar" type="462c0819:PsiDirectoryNode" />
               <item name="plugins" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
               <item name="robotwar" type="462c0819:PsiDirectoryNode" />
               <item name="plugins" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="robotwar" type="462c0819:PsiDirectoryNode" />
+              <item name="plugins" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="classes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
+              <item name="robotwar" type="462c0819:PsiDirectoryNode" />
+              <item name="plugins" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="classes" type="462c0819:PsiDirectoryNode" />
               <item name="fr" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
               <item name="robotwar" type="462c0819:PsiDirectoryNode" />
               <item name="plugins" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="classes" type="462c0819:PsiDirectoryNode" />
               <item name="fr" type="462c0819:PsiDirectoryNode" />
               <item name="unice" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -222,6 +262,8 @@
               <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
               <item name="robotwar" type="462c0819:PsiDirectoryNode" />
               <item name="plugins" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="classes" type="462c0819:PsiDirectoryNode" />
               <item name="fr" type="462c0819:PsiDirectoryNode" />
               <item name="unice" type="462c0819:PsiDirectoryNode" />
               <item name="miage" type="462c0819:PsiDirectoryNode" />
@@ -230,6 +272,8 @@
               <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
               <item name="robotwar" type="462c0819:PsiDirectoryNode" />
               <item name="plugins" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="classes" type="462c0819:PsiDirectoryNode" />
               <item name="fr" type="462c0819:PsiDirectoryNode" />
               <item name="unice" type="462c0819:PsiDirectoryNode" />
               <item name="miage" type="462c0819:PsiDirectoryNode" />
@@ -239,6 +283,8 @@
               <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
               <item name="robotwar" type="462c0819:PsiDirectoryNode" />
               <item name="plugins" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="classes" type="462c0819:PsiDirectoryNode" />
               <item name="fr" type="462c0819:PsiDirectoryNode" />
               <item name="unice" type="462c0819:PsiDirectoryNode" />
               <item name="miage" type="462c0819:PsiDirectoryNode" />
@@ -249,77 +295,14 @@
               <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
               <item name="robotwar" type="462c0819:PsiDirectoryNode" />
               <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
-              <item name="robotwar" type="462c0819:PsiDirectoryNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
-              <item name="robotwar" type="462c0819:PsiDirectoryNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="Plugins" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
-              <item name="robotwar" type="462c0819:PsiDirectoryNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="Plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="fr" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
-              <item name="robotwar" type="462c0819:PsiDirectoryNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="Plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="fr" type="462c0819:PsiDirectoryNode" />
-              <item name="unice" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
-              <item name="robotwar" type="462c0819:PsiDirectoryNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="Plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="fr" type="462c0819:PsiDirectoryNode" />
-              <item name="unice" type="462c0819:PsiDirectoryNode" />
-              <item name="miage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
-              <item name="robotwar" type="462c0819:PsiDirectoryNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="Plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="fr" type="462c0819:PsiDirectoryNode" />
-              <item name="unice" type="462c0819:PsiDirectoryNode" />
-              <item name="miage" type="462c0819:PsiDirectoryNode" />
-              <item name="pa" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="robotwar" type="b2602c69:ProjectViewProjectNode" />
-              <item name="robotwar" type="462c0819:PsiDirectoryNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="Plugins" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="classes" type="462c0819:PsiDirectoryNode" />
               <item name="fr" type="462c0819:PsiDirectoryNode" />
               <item name="unice" type="462c0819:PsiDirectoryNode" />
               <item name="miage" type="462c0819:PsiDirectoryNode" />
               <item name="pa" type="462c0819:PsiDirectoryNode" />
               <item name="plugins" type="462c0819:PsiDirectoryNode" />
+              <item name="strategies" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -332,12 +315,18 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="$USER_HOME$/.nvm/versions/node/v8.1.3/bin/node" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/plugins/src/main/java" />
+      <recent name="$PROJECT_DIR$/plugins/src/main" />
+      <recent name="$PROJECT_DIR$/plugins/src" />
       <recent name="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins" />
       <recent name="$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/strategies" />
-      <recent name="$PROJECT_DIR$/core/src/main" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -352,13 +341,27 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Maven.Core">
+  <component name="RunManager" selected="Application.Unnamed">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <module />
+    </configuration>
+    <configuration name="Unnamed" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="unice.miage.pa.App" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="robotwar-core" />
+      <envs />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
@@ -442,6 +445,31 @@
         </option>
       </MavenSettings>
     </configuration>
+    <configuration name="Plugins" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="compile" />
+                <option value="-X" />
+              </list>
+            </option>
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$/plugins" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -482,9 +510,11 @@
       <option name="PROGRAM_PARAMETERS" />
       <predefined_log_file id="idea.log" enabled="true" />
     </configuration>
-    <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="Maven.Build everything" />
-      <item index="1" class="java.lang.String" itemvalue="Maven.Core" />
+    <list size="4">
+      <item index="0" class="java.lang.String" itemvalue="Application.Unnamed" />
+      <item index="1" class="java.lang.String" itemvalue="Maven.Build everything" />
+      <item index="2" class="java.lang.String" itemvalue="Maven.Plugins" />
+      <item index="3" class="java.lang.String" itemvalue="Maven.Core" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -500,12 +530,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1515085137505</updated>
-      <workItem from="1515085138976" duration="2550000" />
+      <workItem from="1515085138976" duration="5053000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2550000" />
+    <option name="totallyTimeSpent" value="5053000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="0" />
@@ -513,29 +543,30 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32992327" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32992327" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32992327" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32992327" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32992327" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24964234" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39897698" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -546,90 +577,23 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/core/src/main/java/unice/miage/pa/engine/ClassLoader.java</url>
+          <line>59</line>
+          <properties />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-189">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="45" column="14" lean-forward="false" selection-start-line="45" selection-start-column="14" selection-end-line="45" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/javax/imageio/ImageIO.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-421">
           <caret line="1295" column="32" lean-forward="false" selection-start-line="1295" selection-start-column="32" selection-end-line="1295" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/graphism/Console.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="26" column="11" lean-forward="false" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/graphism/Graphism.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="3" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#500#501#0" expanded="true" />
-            <element signature="e#534#535#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/weapons/Gun.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/weapons/MachineGun.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/weapons/Sword.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/weapons/Weapons.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="12" lean-forward="false" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plugins/fr/unice/miage/pa/plugins/attacks/core/Attack.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -642,34 +606,277 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/out/production/Plugins/Plugins.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/unice/miage/pa/elements/Robot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="32" column="7" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/PluginTrait.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/Plugin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="7" lean-forward="true" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/Builder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="7" column="1" lean-forward="false" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/graphism/Graphism.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="100" column="50" lean-forward="true" selection-start-line="100" selection-start-column="50" selection-end-line="100" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#952#953#0" expanded="false" />
+            <element signature="e#985#986#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/graphism/IRobot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="20" column="8" lean-forward="false" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/core/IAttack.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/graphism/IGraphism.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="28" lean-forward="true" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/weapons/Weapons.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="12" lean-forward="false" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/weapons/Sword.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="2" lean-forward="false" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/weapons/MachineGun.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/weapons/Gun.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="15" lean-forward="false" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/core/Attacks.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-18">
+          <caret line="16" column="26" lean-forward="false" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#454#472#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/strategies/Strategy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="45" lean-forward="false" selection-start-line="0" selection-start-column="45" selection-end-line="0" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/attacks/core/Attack.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="15" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/src/main/java/fr/unice/miage/pa/plugins/graphism/Console.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugins/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="17" lean-forward="false" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="23" column="20" lean-forward="false" selection-start-line="23" selection-start-column="20" selection-end-line="26" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/java/lang/ClassLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="762" column="0" lean-forward="false" selection-start-line="762" selection-start-column="0" selection-end-line="762" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/unice/miage/pa/engine/ClassLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-543">
-          <caret line="67" column="37" lean-forward="false" selection-start-line="67" selection-start-column="37" selection-end-line="67" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#671#672#0" expanded="true" />
-            <element signature="e#703#704#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-678">
+          <caret line="65" column="13" lean-forward="true" selection-start-line="65" selection-start-column="13" selection-end-line="65" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/unice/miage/pa/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="65" column="20" lean-forward="false" selection-start-line="65" selection-start-column="20" selection-end-line="65" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="401">
+          <caret line="49" column="24" lean-forward="true" selection-start-line="49" selection-start-column="24" selection-end-line="49" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
   </component>
   <component name="masterDetails">
     <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>robotwar-plugins</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
       <state key="ProjectJDKs.UI">
         <settings>
           <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: junit:junit:3.8.1</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

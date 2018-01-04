@@ -1,11 +1,10 @@
-package unice.miage.pa.plugins.attacks.core;
+package fr.unice.miage.pa.plugins.attacks.core;
 
-import unice.miage.pa.plugins.attacks.weapons.*;
-import unice.miage.pa.plugins.Plugin;
-
+import fr.unice.miage.pa.plugins.attacks.weapons.*;
+import fr.unice.miage.pa.plugins.attacks.weapons.Weapons;
+import fr.unice.miage.pa.plugins.Plugin;
 import java.util.HashMap;
 import java.util.Random;
-import unice.miage.pa.plugins.attacks.weapons.Weapons;
 
 @Plugin(name="attacks", type="actions", required=1)
 public class Attacks {

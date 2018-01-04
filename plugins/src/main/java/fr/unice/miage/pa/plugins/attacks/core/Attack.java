@@ -1,4 +1,4 @@
-package unice.miage.pa.plugins.attacks.core;
+package fr.unice.miage.pa.plugins.attacks.core;
 
 public @interface Attack {
 

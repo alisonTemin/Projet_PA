@@ -31,10 +31,10 @@ public class App
         ArrayList<File> path = new ArrayList<File>();
         path.add(new File(pluginsPath));
 
-        ClassLoader plugin = new ClassLoader(path);
+        ClassLoader classLoader = new ClassLoader(path);
         Class<?> strategy = null;
         try {
-            strategy = plugin.loadPlugin("fr.unice.miage.pa.plugins.Strategy");
+            strategy = classLoader.loadPlugin("fr.unice.miage.pa.plugins.strategies.Strategy");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -86,6 +86,6 @@ public class App
     private static String computePluginsPath(){
 
         return System.getProperty("user.dir") +
-                "/plugins/out/production/plugins";
+                "/plugins/target/classes/";
     }
 }
