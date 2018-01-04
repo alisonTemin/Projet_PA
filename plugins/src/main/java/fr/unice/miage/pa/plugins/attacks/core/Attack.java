@@ -5,10 +5,10 @@ public @interface Attack {
     /**
      * Describe a critical attack using weapons who implements IAttack
      */
-    int critical();
+    int healthPoints();
 
     /**
      * Describe a basic attack
      */
-    int base();
+    int energyPoints();
 }
