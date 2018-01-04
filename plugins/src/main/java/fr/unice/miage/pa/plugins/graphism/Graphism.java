@@ -1,6 +1,7 @@
 package fr.unice.miage.pa.plugins.graphism;
 
 import fr.unice.miage.pa.plugins.Plugin;
+import fr.unice.miage.pa.plugins.PluginTrait;
 import fr.unice.miage.pa.plugins.attacks.weapons.Weapons;
 
 import javax.imageio.ImageIO;
@@ -30,6 +31,7 @@ public class Graphism {
      * Draw a robot on frame
      * @param robot : robot to draw
      */
+    @PluginTrait(type="drawRobot", on="gui")
     public void drawRobot(final Object robot) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         String botName = (String) this.callGetOnRobot("getName", robot);
 
@@ -49,6 +51,7 @@ public class Graphism {
         return this.panel;
     }
 
+    @PluginTrait(type="drawWeapon", on="gui")
      public void drawWeapon(Object robot, Weapons weapon) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         int x = (Integer) this.callGetOnRobot("getX", robot);
         int y = (Integer) this.callGetOnRobot("getY", robot);
@@ -105,13 +108,29 @@ public class Graphism {
          return classLoader.getResourceAsStream(resourceName);
      }
 
+     @PluginTrait(type="move", on="robot")
      public void moveRobot(final Object robot, int x, int y){
          JPanel position = getPanelRobot();
          position.setLocation(x,y);
      }
 
-     public void drawStats(Object robot) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public void drawStats(Object robot) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+         int x = (Integer) this.callGetOnRobot("getX", robot);
+         int y = (Integer) this.callGetOnRobot("getY", robot);
+         int health = (Integer) this.callGetOnRobot("getHealth", robot);
 
+
+         JLabel vie = new JLabel("");
+         vie.setOpaque(true);
+         vie.setBounds(new Rectangle(x, y  , health, 10));
+         vie.setBackground(Color.green);
+         panel.add(vie);
+
+         JLabel energie = new JLabel("");
+         energie.setOpaque(true);
+         energie.setBounds(new Rectangle(x, y + 10 , health, 10));
+         energie.setBackground(Color.blue);
+         panel.add(energie);
      }
 
 
