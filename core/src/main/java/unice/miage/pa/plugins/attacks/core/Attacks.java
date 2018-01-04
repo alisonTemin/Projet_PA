@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Random;
 import unice.miage.pa.plugins.attacks.weapons.Weapons;
 
-@Plugin(name="attacks", required=1)
+@Plugin(name="attacks", type="actions", required=1)
 public class Attacks {
 
     private HashMap<Weapons, IAttack> weapons;

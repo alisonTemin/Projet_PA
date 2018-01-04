@@ -12,4 +12,10 @@ public @interface Plugin {
      * @return time to complete attack
      */
     int required() default 0;
+
+    /**
+     *
+     * @return
+     */
+    String type();
 }

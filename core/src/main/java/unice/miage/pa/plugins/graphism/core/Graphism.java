@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-@Plugin(name="Graphism", required=1)
+@Plugin(name="Graphism", type="core", required=1)
 public class Graphism implements IGraphism {
 
     private JPanel panel;

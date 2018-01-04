@@ -1,6 +1,6 @@
 package unice.miage.pa.plugins.attacks.core;
 
-public interface IAttack {
+public @interface Attack {
 
     /**
      * Describe a critical attack using weapons who implements IAttack
