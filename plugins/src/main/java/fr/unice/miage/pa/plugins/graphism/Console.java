@@ -11,7 +11,6 @@ public class Console extends JFrame {
     JTextArea aTextArea = new JTextArea();
     PrintStream aPrintStream = new PrintStream(new FilteredStream(new ByteArrayOutputStream(), aTextArea));
 
-    @PluginTrait(type="openConsole", on="core")
     public Console() {
         setSize(300, 300);
         add("Center", new JScrollPane(aTextArea));

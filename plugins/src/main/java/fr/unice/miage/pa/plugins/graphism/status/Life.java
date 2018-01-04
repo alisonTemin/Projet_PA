@@ -1,6 +1,7 @@
 package fr.unice.miage.pa.plugins.graphism.status;
 
 import fr.unice.miage.pa.plugins.Plugin;
+import fr.unice.miage.pa.plugins.PluginTrait;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +24,7 @@ public class Life {
         return getter.invoke(robot);
     }
 
+    @PluginTrait(type="draw", on="robot")
     public void drawLife(Object robot) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         int x = (Integer) this.callGetOnRobot("getX", robot);
         int y = (Integer) this.callGetOnRobot("getY", robot);

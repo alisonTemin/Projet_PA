@@ -6,6 +6,7 @@ import unice.miage.pa.engine.ClassLoader;
 
 import javax.swing.*;
 import java.io.File;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -64,35 +65,51 @@ public class App
         game.addBot(poirot);
 
         try {
-            Method drawRobot = graphism.getMethod("drawRobot", Object.class);
             Object graphismInstance = __construct(graphism, mainPanel);
             Object statusLifeInstance = __construct(statusLife, mainPanel);
             Object statusEnergyInstance = __construct(statusEnergy, mainPanel);
 
-            drawRobot.invoke(graphismInstance, chappy);
-            drawRobot.invoke(graphismInstance, poirot);
+            invokeMethodByTrait(statusEnergyInstance, "draw", chappy);
+            invokeMethodByTrait(statusEnergyInstance, "draw", poirot);
 
-            Method drawWeapon = graphism.getMethod("drawWeapon", Object.class, weapons);
+            invokeMethodByTrait(statusLifeInstance, "draw", chappy);
+            invokeMethodByTrait(statusLifeInstance, "draw", poirot);
+
+            invokeMethodByTrait(graphismInstance, "drawRobot", chappy);
+            invokeMethodByTrait(graphismInstance, "drawRobot", poirot);
 
             Object[] weaponsList = weapons.getEnumConstants();
 
+            invokeMethodByTrait(graphismInstance, "drawWeapon", chappy, weaponsList[0]);
+            invokeMethodByTrait(graphismInstance, "drawWeapon", poirot, weaponsList[0]);
+
             System.out.println("Weapons ready to use : " + Arrays.toString(weaponsList));
 
-            drawWeapon.invoke(graphismInstance, chappy, weaponsList[0]);
-            drawWeapon.invoke(graphismInstance, poirot, weaponsList[0]);
-
-            Method robotLifeStatus = statusLife.getMethod("drawLife", Object.class);
-            Method robotEnergyStatus = statusEnergy.getMethod("drawEnergy", Object.class);
-            robotLifeStatus.invoke(statusLifeInstance, chappy);
-            robotLifeStatus.invoke(statusLifeInstance, poirot);
-            robotEnergyStatus.invoke(statusEnergyInstance, chappy);
-            robotEnergyStatus.invoke(statusEnergyInstance, poirot);
         } catch (NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
 
         frame.add(mainPanel);
         frame.setVisible(true);
+    }
+
+    private static void invokeMethodByTrait(Object pluginInstance, String type, Object on, Object... args) throws InvocationTargetException, IllegalAccessException {
+        Method[] methods = pluginInstance.getClass().getMethods();
+
+        for(Method mt : methods) {
+            for(Annotation annot : mt.getAnnotations()){
+                Class<? extends Annotation> trait = annot.annotationType();
+
+                for (Method method : trait.getDeclaredMethods()) {
+                    if(method.invoke(annot).equals(type)){
+                        if(args.length > 0)
+                            mt.invoke(pluginInstance, on, args[0]);
+                        else
+                            mt.invoke(pluginInstance, on);
+                    }
+                }
+            }
+        }
     }
 
     private static Object __construct(Class pluginClass) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
