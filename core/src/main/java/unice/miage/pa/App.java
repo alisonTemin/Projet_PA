@@ -20,7 +20,7 @@ import java.util.Arrays;
 
 public class App 
 {
-    public static void main( String[] args ) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public static void main( String[] args ) throws IllegalAccessException, InstantiationException, ClassNotFoundException, InterruptedException {
         JFrame frame = new JFrame();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -79,8 +79,9 @@ public class App
 
             Object[] weaponsList = weapons.getEnumConstants();
 
-            invokeMethodByTrait(graphismInstance, "drawWeapon", chappy, weaponsList[0], true);
-            invokeMethodByTrait(graphismInstance, "drawWeapon", poirot, weaponsList[0], false);
+            // TODO : Find a way to move weapons with bots
+            //Object chappyWeapon = invokeMethodByTrait(graphismInstance, "drawWeapon", chappy, weaponsList[0], true);
+            //Object poirotWeapon = invokeMethodByTrait(graphismInstance, "drawWeapon", poirot, weaponsList[0], false);
 
             System.out.println("Weapons ready to use : " + Arrays.toString(weaponsList));
 
@@ -90,7 +91,9 @@ public class App
             while (System.currentTimeMillis() < endTime) {
                 int nextChappyMove = (Integer) invokeMethodByTrait(moveInstance, "move", null);
                 invokeMethodByTrait(graphismInstance, "move", chappyLabel, nextChappyMove);
+                Thread.sleep(300);
             }
+
             // TODO : Call strategy related code using Traits
 
         } catch (NoSuchMethodException | InvocationTargetException e) {

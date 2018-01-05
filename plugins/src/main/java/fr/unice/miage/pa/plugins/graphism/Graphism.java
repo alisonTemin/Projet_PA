@@ -53,7 +53,7 @@ public class Graphism {
     }
 
     @PluginTrait(type="drawWeapon", on="robot")
-     public void drawWeapon(Object robot, Weapons weapon, boolean isAtLeft) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+     public JLabel drawWeapon(Object robot, Weapons weapon, boolean isAtLeft) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         int x = (Integer) this.callGetOnRobot("getX", robot);
         int y = (Integer) this.callGetOnRobot("getY", robot);
 
@@ -62,13 +62,15 @@ public class Graphism {
         if(isAtLeft){
             weaponX = x + 70;
         }
+        JLabel weaponLabel = null;
 
         InputStream fileStream;
          if (weapon.equals(Weapons.Sword)) {
              fileStream = this.getResourceURL("sword.png");
 
              try {
-                 this.panel.add(this.makeImageComponent(fileStream, weaponX, y, isAtLeft));
+                 weaponLabel = this.makeImageComponent(fileStream, weaponX, y, isAtLeft);
+                 this.panel.add(weaponLabel);
              } catch (IOException e) {
                  e.printStackTrace();
              }
@@ -76,7 +78,8 @@ public class Graphism {
          else if(weapon.equals(Weapons.Gun)){
              fileStream = this.getResourceURL("gun.png");
              try {
-                 this.panel.add(this.makeImageComponent(fileStream, weaponX, y, isAtLeft));
+                 weaponLabel = this.makeImageComponent(fileStream, weaponX, y, isAtLeft);
+                 this.panel.add(weaponLabel);
              } catch (IOException e) {
                  e.printStackTrace();
              }
@@ -86,12 +89,15 @@ public class Graphism {
              fileStream = this.getResourceURL("machineGun.png");
 
              try {
-                 this.panel.add(this.makeImageComponent(fileStream, weaponX, y, isAtLeft));
+                 weaponLabel = this.makeImageComponent(fileStream, weaponX, y, isAtLeft);
+                 this.panel.add(weaponLabel);
              } catch (IOException e) {
                  e.printStackTrace();
              }
 
          }
+
+         return weaponLabel;
      }
 
      private JLabel makeImageComponent(InputStream input, int x, int y, boolean invert) throws IOException {

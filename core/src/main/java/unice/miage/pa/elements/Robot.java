@@ -66,4 +66,8 @@ public class Robot {
     public JLabel getLabel() {
         return this.label;
     }
+
+    public void setWeapon(Object weapon) {
+        this.weapon = (JLabel) weapon;
+    }
 }
