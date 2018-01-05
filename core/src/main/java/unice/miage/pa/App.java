@@ -46,6 +46,10 @@ public class App
         Class<?> console = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.Console");
         Class<?> statusLife = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.status.Life");
         Class<?> statusEnergy = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.status.Energy");
+        Class<?> randomMove = classLoader.loadPlugin("fr.unice.miage.pa.plugins.movement.RandomMove");
+
+        frame.add(mainPanel);
+        frame.setVisible(true);
 
         // Create two stupids bots
         Robot chappy = new Robot("Chappy", 100, 25, 25);
@@ -67,8 +71,11 @@ public class App
             invokeMethodByTrait(statusLifeInstance, "draw", chappy);
             invokeMethodByTrait(statusLifeInstance, "draw", poirot);
 
-            invokeMethodByTrait(graphismInstance, "drawRobot", chappy);
-            invokeMethodByTrait(graphismInstance, "drawRobot", poirot);
+            Object chappyLabel = invokeMethodByTrait(graphismInstance, "drawRobot", chappy);
+            Object poirotLabel = invokeMethodByTrait(graphismInstance, "drawRobot", poirot);
+
+            chappy.setLabel(chappyLabel);
+            poirot.setLabel(poirotLabel);
 
             Object[] weaponsList = weapons.getEnumConstants();
 
@@ -77,14 +84,19 @@ public class App
 
             System.out.println("Weapons ready to use : " + Arrays.toString(weaponsList));
 
+            Object moveInstance = __construct(randomMove);
+
+            long endTime = System.currentTimeMillis() + 15000;
+            while (System.currentTimeMillis() < endTime) {
+                int nextChappyMove = (Integer) invokeMethodByTrait(moveInstance, "move", null);
+                invokeMethodByTrait(graphismInstance, "move", chappyLabel, nextChappyMove);
+            }
             // TODO : Call strategy related code using Traits
 
         } catch (NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
 
-        frame.add(mainPanel);
-        frame.setVisible(true);
     }
 
     /**
@@ -98,7 +110,7 @@ public class App
      * @throws InvocationTargetException Instance target not good, probably a copy paste error
      * @throws IllegalAccessException Method is protected / private
      */
-    private static void invokeMethodByTrait(Object pluginInstance, String type, Object on, Object... args) throws InvocationTargetException, IllegalAccessException {
+    private static Object invokeMethodByTrait(Object pluginInstance, String type, Object on, Object... args) throws InvocationTargetException, IllegalAccessException {
         Method[] methods = pluginInstance.getClass().getMethods();
 
         for(Method mt : methods) {
@@ -108,16 +120,19 @@ public class App
                 for (Method method : trait.getDeclaredMethods()) {
                     if(method.invoke(annot).equals(type)){
                         if(args.length == 1)
-                            mt.invoke(pluginInstance, on, args[0]);
+                            return mt.invoke(pluginInstance, on, args[0]);
                         else if(args.length == 2)
-                            mt.invoke(pluginInstance, on, args[0], args[1]);
+                            return mt.invoke(pluginInstance, on, args[0], args[1]);
+                        else if(on == null)
+                            return mt.invoke(pluginInstance);
                         else
-                            mt.invoke(pluginInstance, on);
-                        break;
+                            return mt.invoke(pluginInstance, on);
                     }
                 }
             }
         }
+
+        return null;
     }
 
     /**

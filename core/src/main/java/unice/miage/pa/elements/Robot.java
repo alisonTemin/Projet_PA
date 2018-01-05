@@ -17,7 +17,8 @@ public class Robot {
     private int health;
     private int x;
     private int y;
-    private JPanel panel;
+    private JLabel label;
+    private JLabel weapon;
 
     /**
      * Robot constructor
@@ -58,11 +59,11 @@ public class Robot {
         return name;
     }
 
-    public void setPanel(JPanel panel) {
-        this.panel = panel;
+    public void setLabel(Object panel) {
+        this.label = label;
     }
 
-    public JPanel getPanel() {
-        return panel;
+    public JLabel getLabel() {
+        return this.label;
     }
 }

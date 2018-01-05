@@ -29,25 +29,27 @@ public class Graphism {
      * @param robot : robot to draw
      */
     @PluginTrait(type="drawRobot", on="robot")
-    public void drawRobot(final Object robot) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public JLabel drawRobot(Object robot) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         String botName = (String) this.callGetOnRobot("getName", robot);
 
         int x = (Integer) this.callGetOnRobot("getX", robot);
         int y = (Integer) this.callGetOnRobot("getY", robot);
 
         InputStream robotImage = this.getResourceURL(botName.toLowerCase() + ".png");
-
         try {
-            this.panel.add(this.makeImageComponent(robotImage, x, y, false));
+            JLabel robotLabel = this.makeImageComponent(robotImage, x, y, false);
+            this.panel.add(robotLabel);
+            return robotLabel;
+
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
      }
 
     @PluginTrait(type="move", on="robot")
-    public void moveRobot(final Object robot, int x, int y){
-        JPanel position = getPanelRobot();
-        position.setLocation(x,y);
+    public void moveRobot(JLabel label, int x) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        label.setLocation(x,label.getY());
     }
 
     @PluginTrait(type="drawWeapon", on="robot")
@@ -106,7 +108,6 @@ public class Graphism {
              image = op.filter(image, null);
          }
 
-
          ImageIcon weapon = new ImageIcon(image);
          JLabel label = new JLabel(weapon);
          label.setBounds(x, y, width, height);
@@ -122,12 +123,13 @@ public class Graphism {
          return classLoader.getResourceAsStream(resourceName);
      }
 
-    public JPanel getPanelRobot(){
-        return this.panel;
-    }
-
     private Object callGetOnRobot(String getterName, Object robot) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method getter = robot.getClass().getDeclaredMethod(getterName);
         return getter.invoke(robot);
+    }
+
+    private Object callSetOnRobot(String setterName, Object robot, Object param) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method setter = robot.getClass().getDeclaredMethod(setterName, Object.class);
+        return setter.invoke(robot, param);
     }
 }
