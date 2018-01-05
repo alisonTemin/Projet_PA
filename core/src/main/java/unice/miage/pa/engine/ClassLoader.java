@@ -6,12 +6,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.security.SecureClassLoader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.jar.JarInputStream;
 import java.util.zip.ZipFile;
 
 public class ClassLoader extends SecureClassLoader {
@@ -78,13 +80,40 @@ public class ClassLoader extends SecureClassLoader {
         int fr = pluginName.indexOf("fr");
         pluginName = pluginName.substring(fr, pluginName.length());
 
+        if(pluginName.equals("fr.unice.miage.pa.plugins.Plugin"))
+            return null;
+
         File file = new File(plugin.getAbsolutePath());
         if(file.exists()){
             byte[] pluginBytecode = recupTabBytes(file);
-            return this.defineClass(pluginName, pluginBytecode, 0, pluginBytecode.length);
+            try {
+                Class<?> clazz = this.defineClass(pluginName, pluginBytecode, 0, pluginBytecode.length);
+                HashMap values = (HashMap) annotationValues(clazz);
+                if(values.containsKey("required"))
+                    return clazz;
+                if(values.containsKey("distance"))
+                    return clazz;
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
-        throw new Exception("Plugin not found");
+        return null;
+    }
+
+    public static Object annotationValues(Object annotated) throws InvocationTargetException, IllegalAccessException {
+        HashMap<String, Object> annotationsMap = new HashMap<>();
+
+        Annotation[] annotations = ((Class) annotated).getAnnotations();
+
+        for(Annotation annot : annotations){
+            Class<? extends Annotation> currentAnnotation = annot.annotationType();
+            for(Method method : currentAnnotation.getDeclaredMethods()){
+                annotationsMap.put(method.getName(), method.invoke(annot));
+            }
+        }
+
+        return annotationsMap;
     }
 
     private byte[] loadPluginData(String name) throws ClassNotFoundException {

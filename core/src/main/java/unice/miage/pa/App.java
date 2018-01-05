@@ -48,13 +48,14 @@ public class App
         for(File plugin : repository){
             try {
                 Class<?> loadedPlugin = classLoader.loadPluginFromFile(plugin);
-                plugins.put(loadedPlugin.getSimpleName(), loadedPlugin);
+                if(loadedPlugin != null)
+                    plugins.put(loadedPlugin.getSimpleName(), loadedPlugin);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        HashMap strategyAnnotations = (HashMap) annotationValues(plugins.get("Strategy"));
+        HashMap strategyAnnotations = (HashMap) ClassLoader.annotationValues(plugins.get("Strategy"));
 
         frame.add(mainPanel);
         frame.setVisible(true);
@@ -96,7 +97,7 @@ public class App
             chappy.setWeapon(plugins.get("Sword"));
             poirot.setWeapon(plugins.get("Sword"));
 
-            HashMap weaponCapabilities = (HashMap) annotationValues(plugins.get("Sword"));
+            HashMap weaponCapabilities = (HashMap) ClassLoader.annotationValues(plugins.get("Sword"));
 
             Object moveInstance = __construct(plugins.get("RandomMove"));
 
@@ -122,21 +123,6 @@ public class App
             e.printStackTrace();
         }
 
-    }
-
-    private static Object annotationValues(Object annotated) throws InvocationTargetException, IllegalAccessException {
-        HashMap<String, Object> annotationsMap = new HashMap<>();
-
-        Annotation[] annotations = ((Class) annotated).getAnnotations();
-
-        for(Annotation annot : annotations){
-            Class<? extends Annotation> currentAnnotation = annot.annotationType();
-            for(Method method : currentAnnotation.getDeclaredMethods()){
-                annotationsMap.put(method.getName(), method.invoke(annot));
-            }
-        }
-
-        return annotationsMap;
     }
 
     /**
