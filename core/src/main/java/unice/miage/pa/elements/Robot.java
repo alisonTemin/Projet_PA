@@ -18,7 +18,7 @@ public class Robot {
     private int x;
     private int y;
     private JLabel label;
-    private JLabel weapon;
+    private Object weapon;
 
     /**
      * Robot constructor
@@ -68,7 +68,7 @@ public class Robot {
     }
 
     public void setWeapon(Object weapon) {
-        this.weapon = (JLabel) weapon;
+        this.weapon = weapon;
     }
 
     public void setX(int x) {

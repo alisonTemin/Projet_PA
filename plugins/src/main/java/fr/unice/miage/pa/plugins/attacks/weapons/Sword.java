@@ -8,7 +8,7 @@ import fr.unice.miage.pa.plugins.attacks.core.IAttack;
  * use AttackAnnotation
  */
 
-@Weapon(consumeEnergy = 30, baseAttack = 5, criticalAttack = 30)
+@Weapon(distance = 10, consumeEnergy = 30, baseAttack = 5, criticalAttack = 30)
 public class Sword implements IAttack {
 
     @Attack(healthPoints = 10, energyPoints = 40)

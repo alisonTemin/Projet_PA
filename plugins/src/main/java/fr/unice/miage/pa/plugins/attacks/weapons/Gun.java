@@ -3,7 +3,7 @@ package fr.unice.miage.pa.plugins.attacks.weapons;
 import fr.unice.miage.pa.plugins.attacks.core.Attack;
 import fr.unice.miage.pa.plugins.attacks.core.IAttack;
 
-@Weapon(consumeEnergy = 10, baseAttack = 10, criticalAttack = 50)
+@Weapon(distance = 50, consumeEnergy = 10, baseAttack = 10, criticalAttack = 50)
 public class Gun implements IAttack {
     @Attack(healthPoints = 10, energyPoints = 40)
     public int critical() {

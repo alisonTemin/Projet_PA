@@ -12,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * Main App
@@ -83,7 +84,13 @@ public class App
             //Object chappyWeapon = invokeMethodByTrait(graphismInstance, "drawWeapon", chappy, weaponsList[0], true);
             //Object poirotWeapon = invokeMethodByTrait(graphismInstance, "drawWeapon", poirot, weaponsList[0], false);
 
+            Class<?> swordWeapon = classLoader.loadPlugin("fr.unice.miage.pa.plugins.attacks.weapons.Sword");
             System.out.println("Weapons ready to use : " + Arrays.toString(weaponsList));
+
+            chappy.setWeapon(swordWeapon);
+            poirot.setWeapon(swordWeapon);
+
+            HashMap weaponCapabilities = (HashMap) annotationValues(swordWeapon);
 
             Object moveInstance = __construct(randomMove);
 
@@ -92,6 +99,14 @@ public class App
                 int nextChappyMove = (Integer) invokeMethodByTrait(moveInstance, "move", null);
                 invokeMethodByTrait(graphismInstance, "move", chappyLabel, nextChappyMove);
                 chappy.setX(nextChappyMove);
+
+                System.out.println("Weapon capabilities :" + weaponCapabilities);
+
+                int weaponDistance = (Integer) weaponCapabilities.get("distance");
+
+                /* TODO : Check current robot location
+                    If robot X can be attacked with current weapon distance (using weaponCapabilities->distance up)
+                */
                 Thread.sleep(300);
             }
 
@@ -101,6 +116,21 @@ public class App
             e.printStackTrace();
         }
 
+    }
+
+    private static Object annotationValues(Object annotated) throws InvocationTargetException, IllegalAccessException {
+        HashMap<String, Object> annotationsMap = new HashMap<>();
+
+        Annotation[] annotations = ((Class) annotated).getAnnotations();
+
+        for(Annotation annot : annotations){
+            Class<? extends Annotation> currentAnnotation = annot.annotationType();
+            for(Method method : currentAnnotation.getDeclaredMethods()){
+                annotationsMap.put(method.getName(), method.invoke(annot));
+            }
+        }
+
+        return annotationsMap;
     }
 
     /**
