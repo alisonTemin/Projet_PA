@@ -1,5 +1,6 @@
 package unice.miage.pa;
 
+import fr.unice.miage.pa.plugins.attacks.core.Attacks;
 import unice.miage.pa.elements.Robot;
 import unice.miage.pa.engine.Board;
 import unice.miage.pa.engine.ClassLoader;
@@ -98,6 +99,7 @@ public class App
             //Object chappyWeapon = invokeMethodByTrait(graphismInstance, "drawWeapon", chappy, weaponsList[0], true);
             //Object poirotWeapon = invokeMethodByTrait(graphismInstance, "drawWeapon", poirot, weaponsList[0], false);
 
+
             System.out.println("Weapons ready to use : " + Arrays.toString(weaponsList));
 
             chappy.setWeapon(plugins.get("Sword"));
@@ -116,6 +118,10 @@ public class App
                 System.out.println("Weapon capabilities :" + weaponCapabilities);
 
                 int weaponDistance = (Integer) weaponCapabilities.get("distance");
+
+                Object strategy = __construct(plugins.get("Strategy"));
+                strategy.getClass().getDeclaredMethod("attack");
+
 
                 /* TODO : Check current robot location
                     If robot X can be attacked with current weapon distance (using weaponCapabilities->distance up)
