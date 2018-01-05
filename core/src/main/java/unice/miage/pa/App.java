@@ -212,6 +212,10 @@ public class App
      */
     private static String computePluginsPath(){
         return System.getProperty("user.dir") +
-                "/plugins/target/classes/";
+                File.separatorChar + "plugins"+
+                File.separatorChar + "target" +
+                File.separatorChar + "classes"+
+                File.separatorChar;
+
     }
 }
