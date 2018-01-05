@@ -34,6 +34,23 @@ public class ClassLoader extends SecureClassLoader {
         return super.defineClass(name, b, 0, b.length);
     }
 
+    public static List<File> findEveryPlugin(File node, List<File> test, String suffix) {
+        // Cause it's crappy.
+        if(node == null || test == null) System.exit(0);
+
+        if(node.isDirectory()) {
+            for(File file : node.listFiles()) {
+                // recursive, beware
+                findEveryPlugin(file, test, suffix);
+            }
+        } else if(node.isFile() && node.getName().endsWith(suffix)) {
+            // Hacky but working
+            test.add(node);
+        }
+
+        return test;
+    }
+
 
     public boolean validateZip(String pathToFile) {
         try {
@@ -53,6 +70,21 @@ public class ClassLoader extends SecureClassLoader {
         } catch (IOException e) {
             return false;
         }
+    }
+
+    public Class<?> loadPluginFromFile(File plugin) throws Exception {
+        String pluginName = plugin.getAbsolutePath().replace(".class", "");
+        pluginName = pluginName.replace("/", ".");
+        int fr = pluginName.indexOf("fr");
+        pluginName = pluginName.substring(fr, pluginName.length());
+
+        File file = new File(plugin.getAbsolutePath());
+        if(file.exists()){
+            byte[] pluginBytecode = recupTabBytes(file);
+            return this.defineClass(pluginName, pluginBytecode, 0, pluginBytecode.length);
+        }
+
+        throw new Exception("Plugin not found");
     }
 
     private byte[] loadPluginData(String name) throws ClassNotFoundException {

@@ -6,6 +6,7 @@ import unice.miage.pa.engine.ClassLoader;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -13,6 +14,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Main App
@@ -21,7 +23,7 @@ import java.util.HashMap;
 
 public class App 
 {
-    public static void main( String[] args ) throws IllegalAccessException, InstantiationException, ClassNotFoundException, InterruptedException {
+    public static void main( String[] args ) throws IllegalAccessException, InstantiationException, ClassNotFoundException, InterruptedException, InvocationTargetException {
         JFrame frame = new JFrame();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -38,16 +40,21 @@ public class App
         ClassLoader classLoader = new ClassLoader(path);
         System.out.println("Plugins path : " + pluginsPath);
 
-        // TODO : Iterate over annotations to load every plugin
-        Class<?> strategy = classLoader.loadPlugin("fr.unice.miage.pa.plugins.strategies.Strategy");
-        Class<?> weapons = classLoader.loadPlugin("fr.unice.miage.pa.plugins.attacks.weapons.Weapons");
-        Class<?> attacks = classLoader.loadPlugin("fr.unice.miage.pa.plugins.attacks.core.Attacks");
-        Class<?> graphism = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.Graphism");
-        Class<?> filteredStream = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.FilteredStream");
-        Class<?> console = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.Console");
-        Class<?> statusLife = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.status.Life");
-        Class<?> statusEnergy = classLoader.loadPlugin("fr.unice.miage.pa.plugins.graphism.status.Energy");
-        Class<?> randomMove = classLoader.loadPlugin("fr.unice.miage.pa.plugins.movement.RandomMove");
+        File pluginsRepository = new File(pluginsPath);
+
+        List<File> repository = ClassLoader.findEveryPlugin(pluginsRepository, new ArrayList<>(), ".class");
+
+        HashMap<String, Class<?>> plugins = new HashMap<>();
+        for(File plugin : repository){
+            try {
+                Class<?> loadedPlugin = classLoader.loadPluginFromFile(plugin);
+                plugins.put(loadedPlugin.getSimpleName(), loadedPlugin);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        HashMap strategyAnnotations = (HashMap) annotationValues(plugins.get("Strategy"));
 
         frame.add(mainPanel);
         frame.setVisible(true);
@@ -61,10 +68,10 @@ public class App
         game.addBot(poirot);
 
         try {
-            Object consoleInstance = __construct(console);
-            Object graphismInstance = __construct(graphism, mainPanel);
-            Object statusLifeInstance = __construct(statusLife, mainPanel);
-            Object statusEnergyInstance = __construct(statusEnergy, mainPanel);
+            Object consoleInstance = __construct(plugins.get("Console"));
+            Object graphismInstance = __construct(plugins.get("Graphism"), mainPanel);
+            Object statusLifeInstance = __construct(plugins.get("Life"), mainPanel);
+            Object statusEnergyInstance = __construct(plugins.get("Energy"), mainPanel);
 
             invokeMethodByTrait(statusEnergyInstance, "draw", chappy);
             invokeMethodByTrait(statusEnergyInstance, "draw", poirot);
@@ -78,21 +85,20 @@ public class App
             chappy.setLabel(chappyLabel);
             poirot.setLabel(poirotLabel);
 
-            Object[] weaponsList = weapons.getEnumConstants();
+            Object[] weaponsList = plugins.get("Weapons").getEnumConstants();
 
             // TODO : Find a way to move weapons with bots
             //Object chappyWeapon = invokeMethodByTrait(graphismInstance, "drawWeapon", chappy, weaponsList[0], true);
             //Object poirotWeapon = invokeMethodByTrait(graphismInstance, "drawWeapon", poirot, weaponsList[0], false);
 
-            Class<?> swordWeapon = classLoader.loadPlugin("fr.unice.miage.pa.plugins.attacks.weapons.Sword");
             System.out.println("Weapons ready to use : " + Arrays.toString(weaponsList));
 
-            chappy.setWeapon(swordWeapon);
-            poirot.setWeapon(swordWeapon);
+            chappy.setWeapon(plugins.get("Sword"));
+            poirot.setWeapon(plugins.get("Sword"));
 
-            HashMap weaponCapabilities = (HashMap) annotationValues(swordWeapon);
+            HashMap weaponCapabilities = (HashMap) annotationValues(plugins.get("Sword"));
 
-            Object moveInstance = __construct(randomMove);
+            Object moveInstance = __construct(plugins.get("RandomMove"));
 
             long endTime = System.currentTimeMillis() + 15000;
             while (System.currentTimeMillis() < endTime) {
@@ -112,7 +118,7 @@ public class App
 
             // TODO : Call strategy related code using Traits
 
-        } catch (NoSuchMethodException | InvocationTargetException e) {
+        } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
 
