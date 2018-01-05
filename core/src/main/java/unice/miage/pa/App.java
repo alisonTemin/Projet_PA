@@ -23,6 +23,10 @@ import java.util.List;
 
 public class App 
 {
+    /**
+     * When launching from java -jar, we need to be at project path (where plugins dir is located, if not, the Autoload can't work)
+     * @param args args
+     */
     public static void main( String[] args ) throws IllegalAccessException, InstantiationException, ClassNotFoundException, InterruptedException, InvocationTargetException {
         JFrame frame = new JFrame();
 
@@ -48,8 +52,10 @@ public class App
         for(File plugin : repository){
             try {
                 Class<?> loadedPlugin = classLoader.loadPluginFromFile(plugin);
-                if(loadedPlugin != null)
+                if(loadedPlugin != null){
+                    System.out.println("Plugin loaded " + loadedPlugin.getSimpleName());
                     plugins.put(loadedPlugin.getSimpleName(), loadedPlugin);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
