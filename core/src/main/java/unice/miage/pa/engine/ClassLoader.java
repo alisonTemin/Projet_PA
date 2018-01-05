@@ -77,10 +77,15 @@ public class ClassLoader extends SecureClassLoader {
     public Class<?> loadPluginFromFile(File plugin) throws Exception {
         String pluginName = plugin.getAbsolutePath().replace(".class", "");
         pluginName = pluginName.replace("/", ".");
+
+        // Handle windows paths
+        pluginName = pluginName.replace("\\", ".");
+
         int fr = pluginName.indexOf("fr");
         pluginName = pluginName.substring(fr, pluginName.length());
 
-        if(pluginName.equals("fr.unice.miage.pa.plugins.Plugin"))
+        // Blacklist annotations loading
+        if(pluginName.equals("fr.unice.miage.pa.plugins.Plugin") || pluginName.equals("fr.unice.miage.pa.plugins.attacks.weapons.Weapon"))
             return null;
 
         File file = new File(plugin.getAbsolutePath());
