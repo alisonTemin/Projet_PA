@@ -1,5 +1,12 @@
 package fr.unice.miage.pa.plugins;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
 public @interface Plugin {
     /**
      * Define if attack is critical or not
@@ -14,8 +21,8 @@ public @interface Plugin {
     int required() default 0;
 
     /**
-     *
-     * @return
+     * PluginType (system, enhancement, core..)
+     * @return String pluginType
      */
     String type();
 }

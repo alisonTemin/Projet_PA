@@ -70,4 +70,8 @@ public class Robot {
     public void setWeapon(Object weapon) {
         this.weapon = (JLabel) weapon;
     }
+
+    public void setX(int x) {
+        this.x = x;
+    }
 }
