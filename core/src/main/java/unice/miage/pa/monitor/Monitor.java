@@ -68,10 +68,9 @@ public class Monitor {
         Object strategyInstanceJoueur2 = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), poirot, chappy, weaponCapabilities);
 
         // TODO Implement round system
-        long endTime = System.currentTimeMillis() + 36000;
         boolean winnerFound = false;
 
-        while (System.currentTimeMillis() < endTime && !winnerFound) {
+        while (!winnerFound) {
             if (rounds % 2 ==0) {
                 this.launchBot(chappy, weaponCapabilities, strategyInstanceJoueur1);
             } else {
