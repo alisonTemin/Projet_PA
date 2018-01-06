@@ -3,6 +3,7 @@ package unice.miage.pa.monitor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 import unice.miage.pa.elements.Robot;
 import unice.miage.pa.engine.Board;
@@ -77,11 +78,7 @@ public class Monitor {
                 this.launchBot(poirot, weaponCapabilities, strategyInstanceJoueur2);
             }
 
-            ReflectionUtil.invokeMethodByTrait(plugins.get("Energy"+chappy.getName()), "update", chappy);
-            ReflectionUtil.invokeMethodByTrait(plugins.get("Energy"+poirot.getName()), "update", poirot);
-
-            ReflectionUtil.invokeMethodByTrait(plugins.get("Life"+chappy.getName()), "update", chappy);
-            ReflectionUtil.invokeMethodByTrait(plugins.get("Life"+poirot.getName()), "update", poirot);
+            this.updateBars(chappy, poirot);
 
             for(String botName : currentBots.keySet()){
                 if(currentBots.get(botName).getHealth() == 0){
@@ -92,6 +89,21 @@ public class Monitor {
             rounds--;
             Thread.sleep(100);
         }
+    }
+
+    /**
+     * Update energy / life bars
+     * @param chappy
+     * @param poirot
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
+    private void updateBars(Robot chappy, Robot poirot) throws InvocationTargetException, IllegalAccessException {
+        ReflectionUtil.invokeMethodByTrait(plugins.get("Energy"+chappy.getName()), "update", chappy);
+        ReflectionUtil.invokeMethodByTrait(plugins.get("Energy"+poirot.getName()), "update", poirot);
+
+        ReflectionUtil.invokeMethodByTrait(plugins.get("Life"+chappy.getName()), "update", chappy);
+        ReflectionUtil.invokeMethodByTrait(plugins.get("Life"+poirot.getName()), "update", poirot);
     }
 
     private void launchBot(Robot bot, HashMap weaponCapabilities, Object strategyInstance) throws InvocationTargetException, IllegalAccessException {
