@@ -63,8 +63,8 @@ public class Robot {
         return name;
     }
 
-    public void setLabel(Object panel) {
-        this.label = label;
+    public void setLabel(Object label) {
+        this.label = (JLabel) label;
     }
 
     public JLabel getLabel() {

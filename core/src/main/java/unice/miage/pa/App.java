@@ -3,7 +3,8 @@ package unice.miage.pa;
 import unice.miage.pa.elements.Robot;
 import unice.miage.pa.engine.Board;
 import unice.miage.pa.engine.ClassLoader;
-import unice.miage.pa.boardMonitor.BoardMonitor;
+import unice.miage.pa.monitor.Monitor;
+import unice.miage.pa.util.ReflectionUtil;
 
 import javax.swing.*;
 import java.io.File;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
+import static unice.miage.pa.util.ReflectionUtil.invokeMethodByTrait;
 
 /**
  * Main App
@@ -75,14 +78,22 @@ public class App
         Board game = new Board();
         game.addBot(chappy);
         game.addBot(poirot);
-        BoardMonitor boardMonitor = new BoardMonitor(game);
-        boardMonitor.startGame();
+
+        Monitor boardMonitor = new Monitor(game, 20);
 
         try {
-            Object consoleInstance = __construct(plugins.get("Console"));
-            Object graphismInstance = __construct(plugins.get("Graphism"), mainPanel);
-            Object statusLifeInstance = __construct(plugins.get("Life"), mainPanel);
-            Object statusEnergyInstance = __construct(plugins.get("Energy"), mainPanel);
+            Object consoleInstance = ReflectionUtil.__construct(plugins.get("Console"));
+            Object graphismInstance = ReflectionUtil.__construct(plugins.get("Graphism"), mainPanel);
+            Object statusLifeInstance = ReflectionUtil.__construct(plugins.get("Life"), mainPanel);
+            Object statusEnergyInstance = ReflectionUtil.__construct(plugins.get("Energy"), mainPanel);
+
+            boardMonitor.addPlugin("Console", consoleInstance);
+            boardMonitor.addPlugin("Weapons", plugins.get("Weapons"));
+            boardMonitor.addPlugin("Sword", plugins.get("Sword"));
+
+            boardMonitor.addPluginWithDependency("Graphism", graphismInstance, mainPanel);
+            boardMonitor.addPluginWithDependency("Life", graphismInstance, mainPanel);
+            boardMonitor.addPluginWithDependency("Energy", graphismInstance, mainPanel);
 
             invokeMethodByTrait(statusEnergyInstance, "draw", chappy);
             invokeMethodByTrait(statusEnergyInstance, "draw", poirot);
@@ -90,40 +101,22 @@ public class App
             invokeMethodByTrait(statusLifeInstance, "draw", chappy);
             invokeMethodByTrait(statusLifeInstance, "draw", poirot);
 
-            Object chappyLabel = invokeMethodByTrait(graphismInstance, "drawRobot", chappy);
-            Object poirotLabel = invokeMethodByTrait(graphismInstance, "drawRobot", poirot);
-
-            chappy.setLabel(chappyLabel);
-            poirot.setLabel(poirotLabel);
-
-            Object[] weaponsList = plugins.get("Weapons").getEnumConstants();
-
-            // TODO : Find a way to move weapons with bots
-            //Object chappyWeapon = invokeMethodByTrait(graphismInstance, "drawWeapon", chappy, weaponsList[0], true);
-            //Object poirotWeapon = invokeMethodByTrait(graphismInstance, "drawWeapon", poirot, weaponsList[0], false);
-
-
-            System.out.println("Weapons ready to use : " + Arrays.toString(weaponsList));
-
-            chappy.setWeapon(plugins.get("Sword"));
-            poirot.setWeapon(plugins.get("Sword"));
-
             HashMap weaponCapabilities = (HashMap) ClassLoader.annotationValues(plugins.get("Sword"));
 
-            Object moveInstance = __construct(plugins.get("RandomMove"));
+            Object moveInstance = ReflectionUtil.__construct(plugins.get("RandomMove"));
+
+            boardMonitor.startGame();
 
             long endTime = System.currentTimeMillis() + 15000;
             while (System.currentTimeMillis() < endTime) {
-                int nextChappyMove = (Integer) invokeMethodByTrait(moveInstance, "move", null);
-                invokeMethodByTrait(graphismInstance, "move", chappyLabel, nextChappyMove);
+                int nextChappyMove = (Integer) ReflectionUtil.invokeMethodByTrait(moveInstance, "move", null);
+                ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", game.getRobotByName("Chappy").getLabel(), nextChappyMove);
                 chappy.setX(nextChappyMove);
 
                 System.out.println("Weapon capabilities :" + weaponCapabilities);
 
-                int weaponDistance = (Integer) weaponCapabilities.get("distance");
-
                 // Construct strategy instance by invoking his constructor with two bots
-                Object strategyInstance = __constructStrategy(plugins.get("Strategy"), chappy, poirot, weaponCapabilities);
+                Object strategyInstance = ReflectionUtil.__constructStrategy(plugins.get("Strategy"), chappy, poirot, weaponCapabilities);
 
                 // Invoke an attack from chappy to poirot
                 invokeMethodByTrait(strategyInstance, "attack", null);
@@ -142,99 +135,6 @@ public class App
             e.printStackTrace();
         }
 
-    }
-
-
-
-    /**
-     * Invoke a method using a PluginTrait
-     *
-     * @param pluginInstance instance to invoke on
-     * @param type "draw"
-     * @param on "robot"
-     * @param args ... Args array (TODO : Refactor, it's crappy, but working)
-     *
-     * @throws InvocationTargetException Instance target not good, probably a copy paste error
-     * @throws IllegalAccessException Method is protected / private
-     */
-    private static Object invokeMethodByTrait(Object pluginInstance, String type, Object on, Object... args) throws InvocationTargetException, IllegalAccessException {
-        Method[] methods = pluginInstance.getClass().getMethods();
-
-        for(Method mt : methods) {
-            for(Annotation annot : mt.getAnnotations()){
-                Class<? extends Annotation> trait = annot.annotationType();
-
-                for (Method method : trait.getDeclaredMethods()) {
-                    if(method.invoke(annot).equals(type)){
-
-                        if(args.length > 0)
-                            System.out.println("Invoke " + type + " | with : "+ Arrays.toString(args));
-                        else if(on != null)
-                            System.out.println("Invoke " + type + " | on : " + pluginInstance + " | with :" + on);
-                        else
-                            System.out.println("Invoke " + type);
-
-                        if(args.length == 1)
-                            return mt.invoke(pluginInstance, on, args[0]);
-                        else if(args.length == 2)
-                            return mt.invoke(pluginInstance, on, args[0], args[1]);
-                        else if(on == null)
-                            return mt.invoke(pluginInstance);
-                        else
-                            return mt.invoke(pluginInstance, on);
-                    }
-                }
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     *
-     * @param pluginClass pluginClass
-     * @return Object
-     *
-     * @throws NoSuchMethodException Constructor not found
-     * @throws IllegalAccessException Constructor protected / private
-     * @throws InvocationTargetException Wrong target class
-     * @throws InstantiationException Probably a param mismatch
-     */
-    private static Object __construct(Class pluginClass) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        Constructor constructor = pluginClass.getDeclaredConstructor();
-        return constructor.newInstance();
-    }
-
-    /**
-     * Constructor with one object
-     * @param pluginClass pluginClass
-     * @param arg param
-     * @return Object
-     *
-     * @throws NoSuchMethodException Constructor not found
-     * @throws IllegalAccessException Constructor protected / private
-     * @throws InvocationTargetException Wrong target class
-     * @throws InstantiationException Probably a param mismatch
-     */
-    private static Object __construct(Class pluginClass, Object arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        Constructor constructor = pluginClass.getDeclaredConstructor(arg.getClass());
-        return constructor.newInstance(arg);
-    }
-
-    /**
-     * Construct a new strategy instance
-     * @param pluginClass StrategyInstance
-     * @param arg two bots one hashmap of weapon capabilities
-     * @return StrategyObject
-     *
-     * @throws NoSuchMethodException Constructor not found
-     * @throws IllegalAccessException Constructor protected / private
-     * @throws InvocationTargetException Wrong target class
-     * @throws InstantiationException Probably a param mismatch
-     */
-    private static Object __constructStrategy(Class pluginClass, Object... arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        Constructor constructor = pluginClass.getDeclaredConstructor(Object.class, Object.class, HashMap.class);
-        return constructor.newInstance(arg);
     }
 
     /**

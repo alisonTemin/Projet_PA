@@ -2,7 +2,7 @@ package unice.miage.pa.engine;
 
 import unice.miage.pa.elements.Robot;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Class representing a board game
@@ -10,25 +10,25 @@ import java.util.ArrayList;
  */
 public class Board {
 
-    private ArrayList<Robot> robots;
+    private HashMap<String, Robot> robots;
 
     public Board(){
-        this.robots = new ArrayList<Robot>();
+        this.robots = new HashMap<>();
     }
 
-    public boolean addBot(Robot robot){
-        return robots.add(robot);
+    public void addBot(Robot robot){
+        this.robots.put(robot.getName(), robot);
     }
 
-    public boolean removeBot(Robot robot){
-        return robots.remove(robot);
+    public void removeBot(Robot robot){
+        this.robots.remove(robot.getName());
     }
 
-    public ArrayList<Robot> getRobots() {
-        return robots;
+    public Robot getRobotByName(String name){
+        return this.robots.get(name);
     }
 
-    public void setRobots(ArrayList<Robot> robots) {
-        this.robots = robots;
+    public HashMap<String, Robot> getRobots() {
+        return this.robots;
     }
 }
