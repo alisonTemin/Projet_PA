@@ -3,6 +3,7 @@ package unice.miage.pa.monitor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import unice.miage.pa.elements.Robot;
@@ -78,7 +79,7 @@ public class Monitor {
                 this.launchBot(poirot, weaponCapabilities, strategyInstanceJoueur2);
             }
 
-            this.updateBars(chappy, poirot);
+            this.updateBars();
 
             for(String botName : currentBots.keySet()){
                 if(currentBots.get(botName).getHealth() == 0){
@@ -92,18 +93,30 @@ public class Monitor {
     }
 
     /**
-     * Update energy / life bars
-     * @param chappy
-     * @param poirot
+     * Update energy / life bars if loaded
+     *
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
-    private void updateBars(Robot chappy, Robot poirot) throws InvocationTargetException, IllegalAccessException {
-        ReflectionUtil.invokeMethodByTrait(plugins.get("Energy"+chappy.getName()), "update", chappy);
-        ReflectionUtil.invokeMethodByTrait(plugins.get("Energy"+poirot.getName()), "update", poirot);
+    private void updateBars() throws InvocationTargetException, IllegalAccessException {
+        for(String pluginName : this.plugins.keySet()){
+            Pattern MY_PATTERN = Pattern.compile("Energy(.*)|Life(.*)");
+            Matcher m = MY_PATTERN.matcher(pluginName);
+            Robot toUpdate = null;
 
-        ReflectionUtil.invokeMethodByTrait(plugins.get("Life"+chappy.getName()), "update", chappy);
-        ReflectionUtil.invokeMethodByTrait(plugins.get("Life"+poirot.getName()), "update", poirot);
+            while (m.find()) {
+                String botName = m.group(1);
+
+                if(botName == null)
+                    botName = m.group(2);
+
+                toUpdate = this.board.getRobotByName(botName);
+            }
+
+            if(toUpdate != null){
+                ReflectionUtil.invokeMethodByTrait(plugins.get(pluginName), "update", toUpdate);
+            }
+        }
     }
 
     private void launchBot(Robot bot, HashMap weaponCapabilities, Object strategyInstance) throws InvocationTargetException, IllegalAccessException {
