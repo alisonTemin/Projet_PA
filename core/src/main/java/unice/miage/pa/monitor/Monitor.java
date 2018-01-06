@@ -42,7 +42,7 @@ public class Monitor implements ActionListener{
         this.dependencies.put(name, dependency);
     }
 
-    public void startGame() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException {
+    public void startGame() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, InterruptedException {
         boolean dead = false;
 
         // Setting up our bots
@@ -68,14 +68,11 @@ public class Monitor implements ActionListener{
         poirot.setWeapon(plugins.get("Sword"));
 
         HashMap<String, Robot> currentBots = this.board.getRobots();
+        // TODO Implement round system
+        long endTime = System.currentTimeMillis() + 15000;
+        boolean winnerFound = false;
 
-        while (!dead) {
-            currentBots.forEach((botName,botObject) -> System.out.println("Bot: "+botName+" Object:"+botObject));
-
-            // TODO Implement round system
-            long endTime = System.currentTimeMillis() + 15000;
-
-            while (System.currentTimeMillis() < endTime) {
+            while (System.currentTimeMillis() < endTime && !winnerFound) {
                 int nextChappyMove = (Integer) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "move", null);
                 ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", this.board.getRobotByName("Chappy").getLabel(), nextChappyMove);
                 chappy.setX(nextChappyMove);
@@ -86,20 +83,29 @@ public class Monitor implements ActionListener{
                 // Invoke an attack from chappy to poirot
                 ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", null);
 
+                // TODO : invoke an attack from poirot to chappy (or poirot escape ?)
+
                 ReflectionUtil.invokeMethodByTrait(plugins.get("Energy"), "update", chappy);
                 ReflectionUtil.invokeMethodByTrait(plugins.get("Energy"), "update", poirot);
 
                 ReflectionUtil.invokeMethodByTrait(plugins.get("Life"), "update", chappy);
                 ReflectionUtil.invokeMethodByTrait(plugins.get("Life"), "update", poirot);
+
+                for(String botName : currentBots.keySet()){
+                    if(currentBots.get(botName).getHealth() == 0){
+                        System.out.println(botName + " is dead");
+                        winnerFound = true;
+                    }
+                }
+
+                Thread.sleep(120);
             }
 
-            dead = true;
-        }
     }
 
+    public void declareWinner(){
 
-
-
+    }
 
     public  void    actionPerformed(ActionEvent e)
     {

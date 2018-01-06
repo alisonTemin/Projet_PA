@@ -38,9 +38,7 @@ public class Strategy {
             Method getterLife = attacked.getClass().getDeclaredMethod("getHealth");
             int health = (Integer)getterLife.invoke(attacked);
 
-            System.out.println("Attacked life before:" + health);
             setterLife.invoke(attacked, health - consumeLife);
-            System.out.println("Attacked life after:" + getterLife.invoke(attacked));
         }
     }
 }

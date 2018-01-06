@@ -29,12 +29,12 @@ public class ReflectionUtil {
                 for (Method method : trait.getDeclaredMethods()) {
                     if(method.invoke(annot).equals(type)){
 
-                        if(args.length > 0)
+                        /*if(args.length > 0)
                             System.out.println("Invoke " + type + " | with : "+ Arrays.toString(args));
                         else if(on != null)
                             System.out.println("Invoke " + type + " | on : " + pluginInstance + " | with :" + on);
                         else
-                            System.out.println("Invoke " + type);
+                            System.out.println("Invoke " + type);*/
 
                         if(args.length == 1)
                             return mt.invoke(pluginInstance, on, args[0]);
