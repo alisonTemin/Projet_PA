@@ -73,25 +73,9 @@ public class Monitor {
 
         while (System.currentTimeMillis() < endTime && !winnerFound) {
             if (rounds % 2 ==0) {
-                int nextChappyMove = (Integer) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "move", null);
-                ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", this.board.getRobotByName("Chappy").getLabel(), nextChappyMove);
-                chappy.setX(nextChappyMove);
-
-                if(chappy.getEnergy() < (Integer)weaponCapabilities.get("consumeEnergy")){
-                    chappy.incrementEnergy(10);
-                } else {
-                    ReflectionUtil.invokeMethodByTrait(strategyInstanceJoueur1, "attack", null);
-                }
+                this.launchBot(chappy, weaponCapabilities, strategyInstanceJoueur1);
             } else {
-                int nextPoirotMove = (Integer) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "move", null);
-                ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", this.board.getRobotByName("Poirot").getLabel(), nextPoirotMove);
-                chappy.setX(nextPoirotMove);
-
-                if(poirot.getEnergy() < (Integer)weaponCapabilities.get("consumeEnergy")){
-                    poirot.incrementEnergy(10);
-                } else {
-                    ReflectionUtil.invokeMethodByTrait(strategyInstanceJoueur2, "attack", null);
-                }
+                this.launchBot(poirot, weaponCapabilities, strategyInstanceJoueur2);
             }
 
             ReflectionUtil.invokeMethodByTrait(plugins.get("Energy"+chappy.getName()), "update", chappy);
@@ -110,6 +94,19 @@ public class Monitor {
             Thread.sleep(100);
         }
     }
+
+    private void launchBot(Robot bot, HashMap weaponCapabilities, Object strategyInstance) throws InvocationTargetException, IllegalAccessException {
+        int nextMove = (Integer) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "move", null);
+        ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", bot.getLabel(), nextMove);
+        bot.setX(nextMove);
+
+        if(bot.getEnergy() < (Integer)weaponCapabilities.get("consumeEnergy")){
+            bot.incrementEnergy(10);
+        } else {
+            ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", null);
+        }
+    }
+
 
     public void declareWinner(){
 
