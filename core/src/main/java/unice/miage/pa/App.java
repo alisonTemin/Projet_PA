@@ -3,6 +3,7 @@ package unice.miage.pa;
 import unice.miage.pa.elements.Robot;
 import unice.miage.pa.engine.Board;
 import unice.miage.pa.engine.ClassLoader;
+import unice.miage.pa.boardMonitor.BoardMonitor;
 
 import javax.swing.*;
 import java.io.File;
@@ -70,9 +71,12 @@ public class App
         Robot chappy = new Robot("Chappy", 100,100, 25, 25);
         Robot poirot = new Robot("Poirot", 100,100, 200, 25);
 
+
         Board game = new Board();
         game.addBot(chappy);
         game.addBot(poirot);
+        BoardMonitor boardMonitor = new BoardMonitor(game);
+        boardMonitor.startGame();
 
         try {
             Object consoleInstance = __construct(plugins.get("Console"));

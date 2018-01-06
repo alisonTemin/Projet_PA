@@ -23,4 +23,12 @@ public class Board {
     public boolean removeBot(Robot robot){
         return robots.remove(robot);
     }
+
+    public ArrayList<Robot> getRobots() {
+        return robots;
+    }
+
+    public void setRobots(ArrayList<Robot> robots) {
+        this.robots = robots;
+    }
 }
