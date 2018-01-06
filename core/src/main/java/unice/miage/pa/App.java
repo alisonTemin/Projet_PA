@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static unice.miage.pa.util.ReflectionUtil.invokeMethodByTrait;
-
 /**
  * Main App
  *
@@ -59,9 +57,7 @@ public class App
                 e.printStackTrace();
             }
         }
-
-        HashMap strategyAnnotations = (HashMap) ClassLoader.annotationValues(plugins.get("Strategy"));
-
+        
         frame.add(mainPanel);
         frame.setVisible(true);
 
@@ -105,8 +101,6 @@ public class App
             ReflectionUtil.invokeMethodByTrait(statusLifePoirot, "draw", poirot);
 
             boardMonitor.startGame();
-
-
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
