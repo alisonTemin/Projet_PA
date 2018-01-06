@@ -106,6 +106,26 @@ public class ClassLoader extends SecureClassLoader {
         return null;
     }
 
+    public HashMap<String, Class<?>> getPluginsMap(String pluginsPath) {
+        File pluginsRepository = new File(pluginsPath);
+
+        List<File> repository = findEveryPlugin(pluginsRepository, new ArrayList<>(), ".class");
+
+        HashMap<String, Class<?>> plugins = new HashMap<>();
+        for(File plugin : repository){
+            try {
+                Class<?> loadedPlugin = this.loadPluginFromFile(plugin);
+                if(loadedPlugin != null){
+                    System.out.println("Plugin loaded " + loadedPlugin.getSimpleName());
+                    plugins.put(loadedPlugin.getSimpleName(), loadedPlugin);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return plugins;
+    }
+
     public static Object annotationValues(Object annotated) throws InvocationTargetException, IllegalAccessException {
         HashMap<String, Object> annotationsMap = new HashMap<>();
 

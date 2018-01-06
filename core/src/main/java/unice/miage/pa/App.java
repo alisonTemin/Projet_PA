@@ -39,24 +39,7 @@ public class App
         path.add(new File(pluginsPath));
 
         ClassLoader classLoader = new ClassLoader(path);
-        System.out.println("Plugins path : " + pluginsPath);
-
-        File pluginsRepository = new File(pluginsPath);
-
-        List<File> repository = ClassLoader.findEveryPlugin(pluginsRepository, new ArrayList<>(), ".class");
-
-        HashMap<String, Class<?>> plugins = new HashMap<>();
-        for(File plugin : repository){
-            try {
-                Class<?> loadedPlugin = classLoader.loadPluginFromFile(plugin);
-                if(loadedPlugin != null){
-                    System.out.println("Plugin loaded " + loadedPlugin.getSimpleName());
-                    plugins.put(loadedPlugin.getSimpleName(), loadedPlugin);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        HashMap<String, Class<?>> plugins = classLoader.getPluginsMap(pluginsPath);
         
         frame.add(mainPanel);
         frame.setVisible(true);
