@@ -67,19 +67,39 @@ public class Monitor {
         Object strategyInstance = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), chappy, poirot, weaponCapabilities);
 
         // TODO Implement round system
-        long endTime = System.currentTimeMillis() + 15000;
+        long endTime = System.currentTimeMillis() + 36000;
         boolean winnerFound = false;
 
         while (System.currentTimeMillis() < endTime && !winnerFound) {
-            int nextChappyMove = (Integer) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "move", null);
-            ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", this.board.getRobotByName("Chappy").getLabel(), nextChappyMove);
-            chappy.setX(nextChappyMove);
 
-            if(chappy.getEnergy() < (Integer)weaponCapabilities.get("consumeEnergy")){
-                chappy.incrementEnergy(10);
-            } else {
-                ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", null);
+            if (rounds%2 ==0) {
+                System.out.println("Tour de " + chappy.getName());
+                int nextChappyMove = (Integer) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "move", null);
+                ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", this.board.getRobotByName("Chappy").getLabel(), nextChappyMove);
+                chappy.setX(nextChappyMove);
+
+                if(chappy.getEnergy() < (Integer)weaponCapabilities.get("consumeEnergy")){
+                    chappy.incrementEnergy(10);
+                } else {
+                    ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", null);
+                }
             }
+            else
+            {
+                System.out.println("Tour de" + poirot.getName());
+                int nextPoirotMove = (Integer) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "move", null);
+                ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", this.board.getRobotByName("Poirot").getLabel(), nextPoirotMove);
+                chappy.setX(nextPoirotMove);
+
+                if(chappy.getEnergy() < (Integer)weaponCapabilities.get("consumeEnergy")){
+                    chappy.incrementEnergy(10);
+                } else {
+                    ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", null);
+                }
+
+            }
+
+
 
             // TODO : invoke an attack from poirot to chappy (or poirot escape ?)
 
@@ -95,8 +115,8 @@ public class Monitor {
                     winnerFound = true;
                 }
             }
-
-            Thread.sleep(120);
+            rounds--;
+            Thread.sleep(500);
         }
     }
 
