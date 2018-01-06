@@ -34,11 +34,11 @@ public class Strategy {
             int consumeLife = (Integer) weaponCapabilities.get("baseAttack");
             int consumeEnergy = (Integer) weaponCapabilities.get("consumeEnergy");
 
-            Method setterLife = attacked.getClass().getDeclaredMethod("setHealth",int.class);
-            Method getterLife = attacked.getClass().getDeclaredMethod("getHealth");
-            int health = (Integer)getterLife.invoke(attacked);
+            Method setterLife = attacked.getClass().getDeclaredMethod("setHealth", int.class);
+            Method setterEnergy = monitored.getClass().getDeclaredMethod("decrement", int.class);
 
-            setterLife.invoke(attacked, health - consumeLife);
+            setterLife.invoke(attacked, consumeLife);
+            setterEnergy.invoke(monitored, consumeEnergy);
         }
     }
 }

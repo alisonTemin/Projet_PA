@@ -1,7 +1,5 @@
 package unice.miage.pa.monitor;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,9 +9,7 @@ import unice.miage.pa.engine.Board;
 import unice.miage.pa.engine.ClassLoader;
 import unice.miage.pa.util.ReflectionUtil;
 
-import static unice.miage.pa.util.ReflectionUtil.invokeMethodByTrait;
-
-public class Monitor implements ActionListener{
+public class Monitor {
     private Board board;
     private int kTime = 200;
     private int rounds;
@@ -43,8 +39,6 @@ public class Monitor implements ActionListener{
     }
 
     public void startGame() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, InterruptedException {
-        boolean dead = false;
-
         // Setting up our bots
         this.graphismInstance = plugins.get("Graphism");
 
@@ -68,50 +62,45 @@ public class Monitor implements ActionListener{
         poirot.setWeapon(plugins.get("Sword"));
 
         HashMap<String, Robot> currentBots = this.board.getRobots();
+
+        // Construct strategy instance by invoking his constructor with two bots
+        Object strategyInstance = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), chappy, poirot, weaponCapabilities);
+
         // TODO Implement round system
         long endTime = System.currentTimeMillis() + 15000;
         boolean winnerFound = false;
 
-            while (System.currentTimeMillis() < endTime && !winnerFound) {
-                int nextChappyMove = (Integer) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "move", null);
-                ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", this.board.getRobotByName("Chappy").getLabel(), nextChappyMove);
-                chappy.setX(nextChappyMove);
+        while (System.currentTimeMillis() < endTime && !winnerFound) {
+            int nextChappyMove = (Integer) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "move", null);
+            ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", this.board.getRobotByName("Chappy").getLabel(), nextChappyMove);
+            chappy.setX(nextChappyMove);
 
-                // Construct strategy instance by invoking his constructor with two bots
-                Object strategyInstance = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), chappy, poirot, weaponCapabilities);
-
-                // Invoke an attack from chappy to poirot
+            if(chappy.getEnergy() < (Integer)weaponCapabilities.get("consumeEnergy")){
+                chappy.increment(10);
+            } else {
                 ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", null);
-
-                // TODO : invoke an attack from poirot to chappy (or poirot escape ?)
-
-                ReflectionUtil.invokeMethodByTrait(plugins.get("Energy"), "update", chappy);
-                ReflectionUtil.invokeMethodByTrait(plugins.get("Energy"), "update", poirot);
-
-                ReflectionUtil.invokeMethodByTrait(plugins.get("Life"), "update", chappy);
-                ReflectionUtil.invokeMethodByTrait(plugins.get("Life"), "update", poirot);
-
-                for(String botName : currentBots.keySet()){
-                    if(currentBots.get(botName).getHealth() == 0){
-                        System.out.println(botName + " is dead");
-                        winnerFound = true;
-                    }
-                }
-
-                Thread.sleep(120);
             }
 
+            // TODO : invoke an attack from poirot to chappy (or poirot escape ?)
+
+            ReflectionUtil.invokeMethodByTrait(plugins.get("Energy"+chappy.getName()), "update", chappy);
+            ReflectionUtil.invokeMethodByTrait(plugins.get("Energy"+poirot.getName()), "update", poirot);
+
+            ReflectionUtil.invokeMethodByTrait(plugins.get("Life"+chappy.getName()), "update", chappy);
+            ReflectionUtil.invokeMethodByTrait(plugins.get("Life"+poirot.getName()), "update", poirot);
+
+            for(String botName : currentBots.keySet()){
+                if(currentBots.get(botName).getHealth() == 0){
+                    System.out.println(botName + " is dead");
+                    winnerFound = true;
+                }
+            }
+
+            Thread.sleep(120);
+        }
     }
 
     public void declareWinner(){
 
     }
-
-    public  void    actionPerformed(ActionEvent e)
-    {
-
-    }
-
-
-
 }

@@ -37,6 +37,7 @@ public class Energy {
         int energy = (Integer) this.callGetOnRobot("getEnergy", robot);
 
         this.bar.setText(""+energy);
+        this.bar.setForeground(Color.WHITE);
 
         this.panel.repaint();
     }

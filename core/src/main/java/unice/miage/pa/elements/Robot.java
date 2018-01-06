@@ -48,7 +48,7 @@ public class Robot {
      * @param health next health points total
      */
     public void setHealth(int health) {
-        this.health = health;
+        this.health = this.health - health;
     }
 
     public int getX() {
@@ -65,6 +65,14 @@ public class Robot {
 
     public void setLabel(Object label) {
         this.label = (JLabel) label;
+    }
+
+    public void decrement(int energy){
+        this.energy = this.energy - energy;
+    }
+
+    public void increment(int energy){
+        this.energy = this.energy + energy;
     }
 
     public JLabel getLabel() {

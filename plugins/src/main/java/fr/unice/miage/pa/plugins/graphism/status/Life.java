@@ -34,7 +34,7 @@ public class Life {
         this.bar = new JLabel("" + health);
         this.bar.setOpaque(true);
         this.bar.setBounds(new Rectangle(x, y+60, health, 10));
-        this.bar.setBackground(Color.green);
+        this.bar.setBackground(Color.GREEN);
 
         this.panel.add(this.bar);
         this.panel.repaint();
@@ -45,6 +45,7 @@ public class Life {
         int health = (Integer) this.callGetOnRobot("getHealth", robot);
 
         this.bar.setText(""+health);
+        this.bar.setForeground(Color.GRAY);
 
         this.panel.repaint();
     }

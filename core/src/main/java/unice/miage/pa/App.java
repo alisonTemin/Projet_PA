@@ -78,8 +78,10 @@ public class App
         try {
             Object consoleInstance = ReflectionUtil.__construct(plugins.get("Console"));
             Object graphismInstance = ReflectionUtil.__construct(plugins.get("Graphism"), mainPanel);
-            Object statusLifeInstance = ReflectionUtil.__construct(plugins.get("Life"), mainPanel);
-            Object statusEnergyInstance = ReflectionUtil.__construct(plugins.get("Energy"), mainPanel);
+            Object statusLifeChappy = ReflectionUtil.__construct(plugins.get("Life"), mainPanel);
+            Object statusLifePoirot = ReflectionUtil.__construct(plugins.get("Life"), mainPanel);
+            Object statusEnergyPoirot = ReflectionUtil.__construct(plugins.get("Energy"), mainPanel);
+            Object statusEnergyChappy = ReflectionUtil.__construct(plugins.get("Energy"), mainPanel);
             Object moveInstance = ReflectionUtil.__construct(plugins.get("RandomMove"));
 
             boardMonitor.addPlugin("Console", consoleInstance);
@@ -90,14 +92,17 @@ public class App
 
             boardMonitor.addPlugin("Strategy", plugins.get("Strategy"));
             boardMonitor.addPluginWithDependency("Graphism", graphismInstance, mainPanel);
-            boardMonitor.addPluginWithDependency("Life", statusLifeInstance, mainPanel);
-            boardMonitor.addPluginWithDependency("Energy", statusEnergyInstance, mainPanel);
+            boardMonitor.addPluginWithDependency("LifeChappy", statusLifeChappy, mainPanel);
+            boardMonitor.addPluginWithDependency("EnergyChappy", statusEnergyChappy, mainPanel);
 
-            ReflectionUtil.invokeMethodByTrait(statusEnergyInstance, "draw", chappy);
-            ReflectionUtil.invokeMethodByTrait(statusEnergyInstance, "draw", poirot);
+            boardMonitor.addPluginWithDependency("LifePoirot", statusLifePoirot, mainPanel);
+            boardMonitor.addPluginWithDependency("EnergyPoirot", statusEnergyPoirot, mainPanel);
 
-            ReflectionUtil.invokeMethodByTrait(statusLifeInstance, "draw", chappy);
-            ReflectionUtil.invokeMethodByTrait(statusLifeInstance, "draw", poirot);
+            ReflectionUtil.invokeMethodByTrait(statusEnergyChappy, "draw", chappy);
+            ReflectionUtil.invokeMethodByTrait(statusEnergyPoirot, "draw", poirot);
+
+            ReflectionUtil.invokeMethodByTrait(statusLifeChappy, "draw", chappy);
+            ReflectionUtil.invokeMethodByTrait(statusLifePoirot, "draw", poirot);
 
             boardMonitor.startGame();
 
