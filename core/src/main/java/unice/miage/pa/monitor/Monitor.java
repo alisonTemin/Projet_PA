@@ -1,6 +1,7 @@
 package unice.miage.pa.monitor;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -18,6 +19,9 @@ public class Monitor {
 
     private Object graphismInstance;
     private HashMap<String, Object> plugins;
+    private HashMap<String, Robot> players;
+
+    private ArrayList<Object> strategies;
 
     /**
      * Contains every plugin dependencies identified by plugin name
@@ -29,6 +33,8 @@ public class Monitor {
         this.rounds = rounds;
         this.plugins = new HashMap<>();
         this.dependencies = new HashMap<>();
+        this.players = new HashMap<>();
+        this.strategies = new ArrayList<>();
     }
 
     public void addPlugin(String name, Object pluginInstance){
@@ -46,6 +52,8 @@ public class Monitor {
 
         Robot chappy = this.board.getRobotByName("Chappy");
         Robot poirot = this.board.getRobotByName("Poirot");
+
+        this.players = this.board.getRobots();
 
         Object chappyLabel = ReflectionUtil.invokeMethodByTrait(this.graphismInstance, "drawRobot", chappy);
         Object poirotLabel = ReflectionUtil.invokeMethodByTrait(this.graphismInstance, "drawRobot", poirot);
@@ -65,18 +73,26 @@ public class Monitor {
 
         HashMap<String, Robot> currentBots = this.board.getRobots();
 
-        // Construct strategy instance by invoking his constructor with two bots
-        Object strategyInstanceJoueur1 = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), chappy, poirot, weaponCapabilities);
-        Object strategyInstanceJoueur2 = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), poirot, chappy, weaponCapabilities);
+        Object strategy;
+        for(String player : this.players.keySet()){
 
-        // TODO Implement round system
+            if(player.equals("Chappy")){
+                strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), chappy, poirot, weaponCapabilities);
+            } else {
+                strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), poirot, chappy, weaponCapabilities);
+            }
+
+            this.strategies.add(strategy);
+        }
+
+        // Construct strategy instance by invoking his constructor with two bots
         boolean winnerFound = false;
 
         while (!winnerFound) {
             if (rounds % 2 ==0) {
-                this.launchBot(chappy, weaponCapabilities, strategyInstanceJoueur1);
+                this.launchBot(chappy, weaponCapabilities, this.strategies.get(0));
             } else {
-                this.launchBot(poirot, weaponCapabilities, strategyInstanceJoueur2);
+                this.launchBot(poirot, weaponCapabilities, this.strategies.get(1));
             }
 
             this.updateBars();
@@ -110,7 +126,7 @@ public class Monitor {
                 if(botName == null)
                     botName = matcher.group(2);
 
-                Robot toUpdate = this.board.getRobotByName(botName);
+                Robot toUpdate = this.players.get(botName);
                 ReflectionUtil.invokeMethodByTrait(plugins.get(pluginName), "update", toUpdate);
             }
         }
