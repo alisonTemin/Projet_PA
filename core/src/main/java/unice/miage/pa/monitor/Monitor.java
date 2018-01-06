@@ -100,20 +100,17 @@ public class Monitor {
      */
     private void updateBars() throws InvocationTargetException, IllegalAccessException {
         for(String pluginName : this.plugins.keySet()){
-            Pattern MY_PATTERN = Pattern.compile("Energy(.*)|Life(.*)");
-            Matcher m = MY_PATTERN.matcher(pluginName);
-            Robot toUpdate = null;
+            Pattern energyOrLifeBar = Pattern.compile("Energy(.*)|Life(.*)");
+            Matcher matcher = energyOrLifeBar.matcher(pluginName);
 
-            while (m.find()) {
-                String botName = m.group(1);
+            while (matcher.find()) {
+                String botName = matcher.group(1);
 
+                // If not capturing group 1, it's a lifeBar
                 if(botName == null)
-                    botName = m.group(2);
+                    botName = matcher.group(2);
 
-                toUpdate = this.board.getRobotByName(botName);
-            }
-
-            if(toUpdate != null){
+                Robot toUpdate = this.board.getRobotByName(botName);
                 ReflectionUtil.invokeMethodByTrait(plugins.get(pluginName), "update", toUpdate);
             }
         }
