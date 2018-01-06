@@ -76,7 +76,7 @@ public class Monitor {
             chappy.setX(nextChappyMove);
 
             if(chappy.getEnergy() < (Integer)weaponCapabilities.get("consumeEnergy")){
-                chappy.increment(10);
+                chappy.incrementEnergy(10);
             } else {
                 ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", null);
             }

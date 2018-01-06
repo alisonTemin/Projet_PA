@@ -43,14 +43,6 @@ public class Robot {
 
     public int getEnergy() { return energy; }
 
-    /**
-     * Set a bot health points
-     * @param health next health points total
-     */
-    public void setHealth(int health) {
-        this.health = this.health - health;
-    }
-
     public int getX() {
         return x;
     }
@@ -67,11 +59,23 @@ public class Robot {
         this.label = (JLabel) label;
     }
 
-    public void decrement(int energy){
+    /**
+     * Set a bot health points
+     * @param health next health points total
+     */
+    public void decrementHealth(int health) {
+        this.health = this.health - health;
+    }
+
+    public void incrementHealth(int health) {
+        this.health = this.health + health;
+    }
+
+    public void decrementEnergy(int energy){
         this.energy = this.energy - energy;
     }
 
-    public void increment(int energy){
+    public void incrementEnergy(int energy){
         this.energy = this.energy + energy;
     }
 
