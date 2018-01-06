@@ -13,68 +13,15 @@ import java.security.SecureClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.jar.JarFile;
-import java.util.zip.ZipFile;
 
 public class ClassLoader extends SecureClassLoader {
 
-    ArrayList<File> path;
-
-    private String name;
-
     /**
-     * Classloader constructor.
-     * @param path path to file
+     * Load a plugin from a .class file (if annotation complies...)
+     * @param plugin plugin file
+     * @return plugin Class object
      */
-    public ClassLoader(ArrayList<File> path) {
-        this.path = path;
-    }
-
-    public Class<?> loadPlugin(String name) throws ClassNotFoundException {
-        byte[] b = null;
-        b = loadPluginData(name);
-        return super.defineClass(name, b, 0, b.length);
-    }
-
-    public static List<File> findEveryPlugin(File node, List<File> test, String suffix) {
-        // Cause it's crappy.
-        if(node == null || test == null) System.exit(0);
-
-        if(node.isDirectory()) {
-            for(File file : node.listFiles()) {
-                // recursive, beware
-                findEveryPlugin(file, test, suffix);
-            }
-        } else if(node.isFile() && node.getName().endsWith(suffix)) {
-            // Hacky but working
-            test.add(node);
-        }
-
-        return test;
-    }
-
-
-    public boolean validateZip(String pathToFile) {
-        try {
-            ZipFile zipFile = new ZipFile(pathToFile);
-            String zipName = zipFile.getName();
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    public boolean validateJar(String pathtoFile) {
-        try {
-            JarFile jarFile = new JarFile(pathtoFile);
-            String jarName = jarFile.getName();
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    public Class<?> loadPluginFromFile(File plugin) throws Exception {
+    private Class<?> loadPluginFromFile(File plugin) {
         String pluginName = plugin.getAbsolutePath().replace(".class", "");
         pluginName = pluginName.replace("/", ".");
 
@@ -106,6 +53,11 @@ public class ClassLoader extends SecureClassLoader {
         return null;
     }
 
+    /**
+     * Get loaded plugins map
+     * @param pluginsPath path to plugins .class
+     * @return plugins hashMap
+     */
     public HashMap<String, Class<?>> getPluginsMap(String pluginsPath) {
         File pluginsRepository = new File(pluginsPath);
 
@@ -126,6 +78,15 @@ public class ClassLoader extends SecureClassLoader {
         return plugins;
     }
 
+    /**
+     * Grab every annotation value in an Hashmap identified by his name -> value
+     * @param annotated annotated object to inspect
+     *
+     * @return HashMap of annotations (string, annot value)
+     *
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
     public static Object annotationValues(Object annotated) throws InvocationTargetException, IllegalAccessException {
         HashMap<String, Object> annotationsMap = new HashMap<>();
 
@@ -141,22 +102,32 @@ public class ClassLoader extends SecureClassLoader {
         return annotationsMap;
     }
 
-    private byte[] loadPluginData(String name) throws ClassNotFoundException {
-        name = name.replace('.', File.separatorChar);
-        name += ".class";
+    /**
+     * Find recursively every .class file to load
+     * @param node base path
+     * @param test list (writed values will be there)
+     * @param suffix searched suffix
+     * @return List of .class paths
+     */
+    private static List<File> findEveryPlugin(File node, List<File> test, String suffix) {
+        // Cause it's crappy.
+        if(node == null || test == null) System.exit(0);
 
-        for (File p : path){
-            File file = new File(p.getAbsolutePath()+ File.separatorChar +name);
-            if(file.exists()){
-                return recupTabBytes(file);
+        if(node.isDirectory()) {
+            for(File file : node.listFiles()) {
+                // recursive, beware
+                findEveryPlugin(file, test, suffix);
             }
+        } else if(node.isFile() && node.getName().endsWith(suffix)) {
+            // Hacky but working
+            test.add(node);
         }
 
-        throw new ClassNotFoundException("File not found");
+        return test;
     }
 
     /**
-     * Récupération du tableau de bytes pour le fichier demandé
+     * Grab bytes array for specified file
      * @param file file to get as an array of bytes
      *
      * @return bytes array containing our class

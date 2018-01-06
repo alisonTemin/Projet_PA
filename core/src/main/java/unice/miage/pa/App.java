@@ -38,7 +38,7 @@ public class App
         ArrayList<File> path = new ArrayList<File>();
         path.add(new File(pluginsPath));
 
-        ClassLoader classLoader = new ClassLoader(path);
+        ClassLoader classLoader = new ClassLoader();
         HashMap<String, Class<?>> plugins = classLoader.getPluginsMap(pluginsPath);
         
         frame.add(mainPanel);
