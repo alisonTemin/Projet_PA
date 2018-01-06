@@ -9,9 +9,7 @@ import unice.miage.pa.util.ReflectionUtil;
 import javax.swing.*;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Main App
@@ -34,9 +32,6 @@ public class App
         JPanel mainPanel = new JPanel(null);
 
         String pluginsPath = computePluginsPath();
-
-        ArrayList<File> path = new ArrayList<File>();
-        path.add(new File(pluginsPath));
 
         ClassLoader classLoader = new ClassLoader();
         HashMap<String, Class<?>> plugins = classLoader.getPluginsMap(pluginsPath);
