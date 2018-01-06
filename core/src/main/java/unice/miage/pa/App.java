@@ -124,13 +124,9 @@ public class App
                 // Invoke an attack from chappy to poirot
                 invokeMethodByTrait(strategyInstance, "attack", null);
 
-                /* TODO : Check current robot location
-                    If robot X can be attacked with current weapon distance (using weaponCapabilities->distance up)
-                */
                 Thread.sleep(300);
             }
 
-            // TODO : Call strategy related code using Traits
 
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
