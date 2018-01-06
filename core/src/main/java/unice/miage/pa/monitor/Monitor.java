@@ -61,12 +61,7 @@ public class Monitor {
         chappy.setLabel(chappyLabel);
         poirot.setLabel(poirotLabel);
 
-        Class weapons = (Class) plugins.get("Weapons");
-        Object[] weaponsList = weapons.getEnumConstants();
-
         HashMap weaponCapabilities = (HashMap) ClassLoader.annotationValues(plugins.get("Sword"));
-
-        System.out.println("Weapons ready to use : " + Arrays.toString(weaponsList));
 
         chappy.setWeapon(plugins.get("Sword"));
         poirot.setWeapon(plugins.get("Sword"));
@@ -74,6 +69,9 @@ public class Monitor {
         HashMap<String, Robot> currentBots = this.board.getRobots();
 
         Object strategy;
+        StringBuilder playerNames = new StringBuilder("Players : ");
+
+        int count = 1;
         for(String player : this.players.keySet()){
 
             if(player.equals("Chappy")){
@@ -83,11 +81,20 @@ public class Monitor {
             }
 
             this.strategies.add(strategy);
+
+            playerNames.append(player);
+
+            if(count != this.players.size())
+                playerNames.append(",");
+
+            count++;
+
         }
 
         // Construct strategy instance by invoking his constructor with two bots
         boolean winnerFound = false;
 
+        System.out.println("War started | " + playerNames);
         while (!winnerFound) {
             if (rounds % 2 ==0) {
                 this.launchBot(chappy, weaponCapabilities, this.strategies.get(0));
