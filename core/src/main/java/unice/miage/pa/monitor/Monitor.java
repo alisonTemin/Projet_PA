@@ -8,11 +8,14 @@ import java.util.HashMap;
 
 import unice.miage.pa.elements.Robot;
 import unice.miage.pa.engine.Board;
+import unice.miage.pa.engine.ClassLoader;
 import unice.miage.pa.util.ReflectionUtil;
+
+import static unice.miage.pa.util.ReflectionUtil.invokeMethodByTrait;
 
 public class Monitor implements ActionListener{
     private Board board;
-    private int time;
+    private int kTime = 200;
     private int rounds;
 
     private Object graphismInstance;
@@ -39,7 +42,7 @@ public class Monitor implements ActionListener{
         this.dependencies.put(name, dependency);
     }
 
-    public void startGame() throws InvocationTargetException, IllegalAccessException {
+    public void startGame() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException {
         boolean dead = false;
 
         // Setting up our bots
@@ -54,7 +57,10 @@ public class Monitor implements ActionListener{
         chappy.setLabel(chappyLabel);
         poirot.setLabel(poirotLabel);
 
-        Object[] weaponsList = plugins.get("Weapons").getClass().getEnumConstants();
+        Class weapons = (Class) plugins.get("Weapons");
+        Object[] weaponsList = weapons.getEnumConstants();
+
+        HashMap weaponCapabilities = (HashMap) ClassLoader.annotationValues(plugins.get("Sword"));
 
         System.out.println("Weapons ready to use : " + Arrays.toString(weaponsList));
 
@@ -65,6 +71,28 @@ public class Monitor implements ActionListener{
 
         while (!dead) {
             currentBots.forEach((botName,botObject) -> System.out.println("Bot: "+botName+" Object:"+botObject));
+
+            // TODO Implement round system
+            long endTime = System.currentTimeMillis() + 15000;
+
+            while (System.currentTimeMillis() < endTime) {
+                int nextChappyMove = (Integer) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "move", null);
+                ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", this.board.getRobotByName("Chappy").getLabel(), nextChappyMove);
+                chappy.setX(nextChappyMove);
+
+                // Construct strategy instance by invoking his constructor with two bots
+                Object strategyInstance = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), chappy, poirot, weaponCapabilities);
+
+                // Invoke an attack from chappy to poirot
+                ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", null);
+
+                ReflectionUtil.invokeMethodByTrait(plugins.get("Energy"), "update", chappy);
+                ReflectionUtil.invokeMethodByTrait(plugins.get("Energy"), "update", poirot);
+
+                ReflectionUtil.invokeMethodByTrait(plugins.get("Life"), "update", chappy);
+                ReflectionUtil.invokeMethodByTrait(plugins.get("Life"), "update", poirot);
+            }
+
             dead = true;
         }
     }

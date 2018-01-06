@@ -8,13 +8,8 @@ import unice.miage.pa.util.ReflectionUtil;
 
 import javax.swing.*;
 import java.io.File;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -86,49 +81,26 @@ public class App
             Object graphismInstance = ReflectionUtil.__construct(plugins.get("Graphism"), mainPanel);
             Object statusLifeInstance = ReflectionUtil.__construct(plugins.get("Life"), mainPanel);
             Object statusEnergyInstance = ReflectionUtil.__construct(plugins.get("Energy"), mainPanel);
+            Object moveInstance = ReflectionUtil.__construct(plugins.get("RandomMove"));
 
             boardMonitor.addPlugin("Console", consoleInstance);
             boardMonitor.addPlugin("Weapons", plugins.get("Weapons"));
             boardMonitor.addPlugin("Sword", plugins.get("Sword"));
 
+            boardMonitor.addPlugin("RandomMove", moveInstance);
+
+            boardMonitor.addPlugin("Strategy", plugins.get("Strategy"));
             boardMonitor.addPluginWithDependency("Graphism", graphismInstance, mainPanel);
-            boardMonitor.addPluginWithDependency("Life", graphismInstance, mainPanel);
-            boardMonitor.addPluginWithDependency("Energy", graphismInstance, mainPanel);
+            boardMonitor.addPluginWithDependency("Life", statusLifeInstance, mainPanel);
+            boardMonitor.addPluginWithDependency("Energy", statusEnergyInstance, mainPanel);
 
-            invokeMethodByTrait(statusEnergyInstance, "draw", chappy);
-            invokeMethodByTrait(statusEnergyInstance, "draw", poirot);
+            ReflectionUtil.invokeMethodByTrait(statusEnergyInstance, "draw", chappy);
+            ReflectionUtil.invokeMethodByTrait(statusEnergyInstance, "draw", poirot);
 
-            invokeMethodByTrait(statusLifeInstance, "draw", chappy);
-            invokeMethodByTrait(statusLifeInstance, "draw", poirot);
-
-            HashMap weaponCapabilities = (HashMap) ClassLoader.annotationValues(plugins.get("Sword"));
-
-            Object moveInstance = ReflectionUtil.__construct(plugins.get("RandomMove"));
+            ReflectionUtil.invokeMethodByTrait(statusLifeInstance, "draw", chappy);
+            ReflectionUtil.invokeMethodByTrait(statusLifeInstance, "draw", poirot);
 
             boardMonitor.startGame();
-
-            long endTime = System.currentTimeMillis() + 15000;
-            while (System.currentTimeMillis() < endTime) {
-                int nextChappyMove = (Integer) ReflectionUtil.invokeMethodByTrait(moveInstance, "move", null);
-                ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", game.getRobotByName("Chappy").getLabel(), nextChappyMove);
-                chappy.setX(nextChappyMove);
-
-                System.out.println("Weapon capabilities :" + weaponCapabilities);
-
-                // Construct strategy instance by invoking his constructor with two bots
-                Object strategyInstance = ReflectionUtil.__constructStrategy(plugins.get("Strategy"), chappy, poirot, weaponCapabilities);
-
-                // Invoke an attack from chappy to poirot
-                invokeMethodByTrait(strategyInstance, "attack", null);
-
-                invokeMethodByTrait(statusEnergyInstance, "update", chappy);
-                invokeMethodByTrait(statusEnergyInstance, "update", poirot);
-
-                invokeMethodByTrait(statusLifeInstance, "update", chappy);
-                invokeMethodByTrait(statusLifeInstance, "update", poirot);
-
-                Thread.sleep(300);
-            }
 
 
         } catch (NoSuchMethodException e) {
