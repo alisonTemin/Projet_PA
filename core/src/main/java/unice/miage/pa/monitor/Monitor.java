@@ -64,7 +64,8 @@ public class Monitor {
         HashMap<String, Robot> currentBots = this.board.getRobots();
 
         // Construct strategy instance by invoking his constructor with two bots
-        Object strategyInstance = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), chappy, poirot, weaponCapabilities);
+        Object strategyInstanceJoueur1 = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), chappy, poirot, weaponCapabilities);
+        Object strategyInstanceJoueur2 = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), poirot, chappy, weaponCapabilities);
 
         // TODO Implement round system
         long endTime = System.currentTimeMillis() + 36000;
@@ -81,7 +82,7 @@ public class Monitor {
                 if(chappy.getEnergy() < (Integer)weaponCapabilities.get("consumeEnergy")){
                     chappy.incrementEnergy(10);
                 } else {
-                    ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", null);
+                    ReflectionUtil.invokeMethodByTrait(strategyInstanceJoueur1, "attack", null);
                 }
             }
             else
@@ -91,10 +92,10 @@ public class Monitor {
                 ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", this.board.getRobotByName("Poirot").getLabel(), nextPoirotMove);
                 chappy.setX(nextPoirotMove);
 
-                if(chappy.getEnergy() < (Integer)weaponCapabilities.get("consumeEnergy")){
-                    chappy.incrementEnergy(10);
+                if(poirot.getEnergy() < (Integer)weaponCapabilities.get("consumeEnergy")){
+                    poirot.incrementEnergy(10);
                 } else {
-                    ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", null);
+                    ReflectionUtil.invokeMethodByTrait(strategyInstanceJoueur2, "attack", null);
                 }
 
             }
@@ -116,7 +117,7 @@ public class Monitor {
                 }
             }
             rounds--;
-            Thread.sleep(500);
+            Thread.sleep(100);
         }
     }
 
