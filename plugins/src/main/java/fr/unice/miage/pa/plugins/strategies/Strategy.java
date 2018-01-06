@@ -1,32 +1,36 @@
 package fr.unice.miage.pa.plugins.strategies;
 
 import fr.unice.miage.pa.plugins.Plugin;
+import fr.unice.miage.pa.plugins.PluginTrait;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 
 @Plugin(name="Strategy", type="core", required=1)
 public class Strategy {
-    Object monitored;
-    Object attacked;
-    Object attack;
+    private Object monitored;
+    private Object attacked;
+    private HashMap weaponCapabilities;
 
-    public Strategy(Object monitored, Object attacked){
+    public Strategy(Object monitored, Object attacked, HashMap weaponCapabilities){
         this.attacked = attacked;
         this.monitored = monitored;
-        this.attack = attack;
+        this.weaponCapabilities = weaponCapabilities;
     }
 
+    @PluginTrait(type="attack", on="robot")
     public void attack() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         Method getterMonitored = monitored.getClass().getDeclaredMethod("getX");
-        getterMonitored.invoke(monitored);
+        //Call to invoke return value !
+        int monitoredX = (Integer) getterMonitored.invoke(monitored);
+
         Method getterAttacked = attacked.getClass().getDeclaredMethod("getX");
-        getterAttacked.invoke(attacked);
-        Method getterAttack = attack.getClass().getDeclaredMethod("getAnyAttackBasePoints");
-        if(getterMonitored == getterAttacked){
-        getterAttack.invoke(attack);
-        }
+        int attackedX = (Integer) getterAttacked.invoke(attacked);
+
+        System.out.println("Monitored X is " + monitoredX);
+        System.out.println("Attacked X is "+ attackedX);
         // check x attacked & x monitored -> if same -> attack
     }
 

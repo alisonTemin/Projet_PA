@@ -1,13 +1,12 @@
 package unice.miage.pa;
 
-import fr.unice.miage.pa.plugins.attacks.core.Attacks;
 import unice.miage.pa.elements.Robot;
 import unice.miage.pa.engine.Board;
 import unice.miage.pa.engine.ClassLoader;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.FilenameFilter;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -119,9 +118,11 @@ public class App
 
                 int weaponDistance = (Integer) weaponCapabilities.get("distance");
 
-                Object strategy = __construct(plugins.get("Strategy"));
-                strategy.getClass().getDeclaredMethod("attack");
+                // Construct strategy instance by invoking his constructor with two bots
+                Object strategyInstance = __constructStrategy(plugins.get("Strategy"), chappy, poirot, weaponCapabilities);
 
+                // Invoke an attack from chappy to poirot
+                invokeMethodByTrait(strategyInstance, "attack", null);
 
                 /* TODO : Check current robot location
                     If robot X can be attacked with current weapon distance (using weaponCapabilities->distance up)
@@ -136,6 +137,8 @@ public class App
         }
 
     }
+
+
 
     /**
      * Invoke a method using a PluginTrait
@@ -209,6 +212,22 @@ public class App
      */
     private static Object __construct(Class pluginClass, Object arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor constructor = pluginClass.getDeclaredConstructor(arg.getClass());
+        return constructor.newInstance(arg);
+    }
+
+    /**
+     * Construct a new strategy instance
+     * @param pluginClass StrategyInstance
+     * @param arg two bots one hashmap of weapon capabilities
+     * @return StrategyObject
+     *
+     * @throws NoSuchMethodException Constructor not found
+     * @throws IllegalAccessException Constructor protected / private
+     * @throws InvocationTargetException Wrong target class
+     * @throws InstantiationException Probably a param mismatch
+     */
+    private static Object __constructStrategy(Class pluginClass, Object... arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Constructor constructor = pluginClass.getDeclaredConstructor(Object.class, Object.class, HashMap.class);
         return constructor.newInstance(arg);
     }
 
