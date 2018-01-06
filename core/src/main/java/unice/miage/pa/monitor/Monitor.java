@@ -142,6 +142,9 @@ public class Monitor {
         } else {
             ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", null);
         }
+
+        // The energy should increment regularly, according to the docs
+        bot.incrementEnergy(5);
     }
 
 
