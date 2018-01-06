@@ -15,6 +15,7 @@ public class Robot {
      * Health points
      */
     private int health;
+    private int energy;
     private int x;
     private int y;
     private JLabel label;
@@ -24,9 +25,10 @@ public class Robot {
      * Robot constructor
      * @param health : Starting health points
      */
-    public Robot(String name, int health, int x, int y){
+    public Robot(String name, int health, int energy, int x, int y){
         this.name = name;
         this.health = health;
+        this.energy = energy;
         this.x = x;
         this.y = y;
     }
@@ -38,6 +40,8 @@ public class Robot {
     public int getHealth() {
         return health;
     }
+
+    public int getEnergy() { return energy; }
 
     /**
      * Set a bot health points

@@ -7,6 +7,7 @@ import fr.unice.miage.pa.plugins.attacks.weapons.Weapons;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Random;
 
 @Plugin(name="Graphism", type="core", required=1)
 public class Graphism {
@@ -35,16 +37,23 @@ public class Graphism {
         int x = (Integer) this.callGetOnRobot("getX", robot);
         int y = (Integer) this.callGetOnRobot("getY", robot);
 
-        InputStream robotImage = this.getResourceURL(botName.toLowerCase() + ".png");
-        try {
-            JLabel robotLabel = this.makeImageComponent(robotImage, x, y, false);
-            this.panel.add(robotLabel);
-            return robotLabel;
+        JLabel robotLabel = new JLabel("");
+        robotLabel.setOpaque(true);
+        Random rand = new Random();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+        float r = rand.nextFloat();
+        float g = rand.nextFloat();
+        float b = rand.nextFloat();
+
+        Color robotColor = new Color(r, g, b);
+        robotLabel.setBackground(robotColor);
+        robotLabel.setBounds(new Rectangle(x, y+30 , 25, 25));
+
+        this.panel.add(robotLabel);
+
+        this.panel.repaint();
+
+        return robotLabel;
      }
 
     @PluginTrait(type="move", on="robot")

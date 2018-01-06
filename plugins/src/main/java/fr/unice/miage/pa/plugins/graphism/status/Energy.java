@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 @Plugin(name="Energy", type="core", required=1)
 public class Energy {
     private JPanel panel;
+    private JLabel bar;
 
     public Energy(JPanel panel){
         this.panel = panel;
@@ -20,13 +21,24 @@ public class Energy {
     public void drawEnergy(Object robot) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         int x = (Integer) this.callGetOnRobot("getX", robot);
         int y = (Integer) this.callGetOnRobot("getY", robot);
-        int health = (Integer) this.callGetOnRobot("getHealth", robot);
+        int energy = (Integer) this.callGetOnRobot("getEnergy", robot);
 
-        JLabel energie = new JLabel("");
-        energie.setOpaque(true);
-        energie.setBounds(new Rectangle(x, y + 10 , health, 10));
-        energie.setBackground(Color.blue);
-        panel.add(energie);
+        this.bar = new JLabel("" + energy);
+        this.bar.setOpaque(true);
+        this.bar.setBounds(new Rectangle(x, y , energy, 10));
+        this.bar.setBackground(Color.blue);
+
+        this.panel.add(bar);
+        this.panel.repaint();
+    }
+
+    @PluginTrait(type="update", on="robot")
+    public void updateEnergy(Object robot) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        int energy = (Integer) this.callGetOnRobot("getEnergy", robot);
+
+        this.bar.setText(""+energy);
+
+        this.panel.repaint();
     }
 
     private Object callGetOnRobot(String getterName, Object robot) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {

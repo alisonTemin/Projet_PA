@@ -3,12 +3,9 @@ package fr.unice.miage.pa.plugins.strategies;
 import fr.unice.miage.pa.plugins.Plugin;
 import fr.unice.miage.pa.plugins.PluginTrait;
 
-import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 @Plugin(name="Strategy", type="core", required=1)
 public class Strategy {
@@ -30,32 +27,20 @@ public class Strategy {
         Method getterAttacked = attacked.getClass().getDeclaredMethod("getX");
         int attackedX = (Integer) getterAttacked.invoke(attacked);
 
-        System.out.println("Monitored X is " + monitoredX);
-        System.out.println("Attacked X is "+ attackedX);
-
 
         int weaponDistance = (Integer) weaponCapabilities.get("distance");
         // check x attacked & x monitored
         if((monitoredX + weaponDistance > attackedX) || (monitoredX - weaponDistance < attackedX) && ( (Integer)attacked.getClass().getDeclaredMethod("getHealth").invoke(attacked) <= 0)){
             int consumeLife = (Integer) weaponCapabilities.get("baseAttack");
             int consumeEnergy = (Integer) weaponCapabilities.get("consumeEnergy");
-            for(Method m : attacked.getClass().getDeclaredMethods()){
-                System.out.println(m.getName());
-            }
+
             Method setterLife = attacked.getClass().getDeclaredMethod("setHealth",int.class);
             Method getterLife = attacked.getClass().getDeclaredMethod("getHealth");
             int health = (Integer)getterLife.invoke(attacked);
-                System.out.println("Attacked life before:" + health);
 
-                setterLife.invoke(attacked, health - consumeLife);
-                System.out.println("Attacked life after:" + getterLife.invoke(attacked));
-                System.out.println();
-            }
+            System.out.println("Attacked life before:" + health);
+            setterLife.invoke(attacked, health - consumeLife);
+            System.out.println("Attacked life after:" + getterLife.invoke(attacked));
         }
-
-
-    public String printAnything(){
-
-        return "Print anything";
     }
 }

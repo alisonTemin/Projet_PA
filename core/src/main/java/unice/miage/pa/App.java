@@ -67,8 +67,8 @@ public class App
         frame.setVisible(true);
 
         // Create two stupids bots
-        Robot chappy = new Robot("Chappy", 100, 25, 25);
-        Robot poirot = new Robot("Poirot", 100, 200, 25);
+        Robot chappy = new Robot("Chappy", 100,100, 25, 25);
+        Robot poirot = new Robot("Poirot", 100,100, 200, 25);
 
         Board game = new Board();
         game.addBot(chappy);
@@ -124,6 +124,12 @@ public class App
                 // Invoke an attack from chappy to poirot
                 invokeMethodByTrait(strategyInstance, "attack", null);
 
+                invokeMethodByTrait(statusEnergyInstance, "update", chappy);
+                invokeMethodByTrait(statusEnergyInstance, "update", poirot);
+
+                invokeMethodByTrait(statusLifeInstance, "update", chappy);
+                invokeMethodByTrait(statusLifeInstance, "update", poirot);
+
                 Thread.sleep(300);
             }
 
@@ -160,7 +166,7 @@ public class App
                         if(args.length > 0)
                             System.out.println("Invoke " + type + " | with : "+ Arrays.toString(args));
                         else if(on != null)
-                            System.out.println("Invoke " + type + " | on : " + on);
+                            System.out.println("Invoke " + type + " | on : " + pluginInstance + " | with :" + on);
                         else
                             System.out.println("Invoke " + type);
 

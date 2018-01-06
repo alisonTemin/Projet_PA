@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 @Plugin(name="Life", type="core", required=1)
 public class Life {
     private JPanel panel;
+    private JLabel bar;
 
     public Life(JPanel panel){
         this.panel = panel;
@@ -30,13 +31,22 @@ public class Life {
         int y = (Integer) this.callGetOnRobot("getY", robot);
         int health = (Integer) this.callGetOnRobot("getHealth", robot);
 
+        this.bar = new JLabel("" + health);
+        this.bar.setOpaque(true);
+        this.bar.setBounds(new Rectangle(x, y+60, health, 10));
+        this.bar.setBackground(Color.green);
 
-        JLabel vie = new JLabel("");
-        vie.setOpaque(true);
-        vie.setBounds(new Rectangle(x, y  , health, 10));
-        vie.setBackground(Color.green);
-        panel.add(vie);
+        this.panel.add(this.bar);
+        this.panel.repaint();
+    }
 
+    @PluginTrait(type="update", on="robot")
+    public void updateLife(Object robot) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        int health = (Integer) this.callGetOnRobot("getHealth", robot);
+
+        this.bar.setText(""+health);
+
+        this.panel.repaint();
     }
 
 
