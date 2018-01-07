@@ -62,6 +62,7 @@ public class ReflectionUtil {
      * @throws InstantiationException Probably a param mismatch
      */
     public static Object __construct(Class pluginClass) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        @SuppressWarnings("unchecked") // Just to shut down ij warn
         Constructor constructor = pluginClass.getDeclaredConstructor();
         return constructor.newInstance();
     }
@@ -78,7 +79,9 @@ public class ReflectionUtil {
      * @throws InstantiationException Probably a param mismatch
      */
     public static Object __construct(Class pluginClass, Object arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        @SuppressWarnings("unchecked")
         Constructor constructor = pluginClass.getDeclaredConstructor(arg.getClass());
+
         return constructor.newInstance(arg);
     }
 
@@ -94,7 +97,9 @@ public class ReflectionUtil {
      * @throws InstantiationException Probably a param mismatch
      */
     public static Object __constructStrategy(Class pluginClass, Object... arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        @SuppressWarnings("unchecked")
         Constructor constructor = pluginClass.getDeclaredConstructor(Object.class, Object.class, HashMap.class);
+        //noinspection JavaReflectionInvocation IJ static analysis cry
         return constructor.newInstance(arg);
     }
 }

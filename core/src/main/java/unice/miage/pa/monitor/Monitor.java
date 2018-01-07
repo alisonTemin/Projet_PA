@@ -236,7 +236,7 @@ public class Monitor {
      * @throws IllegalAccessException
      */
     private void launchBot(Robot bot, HashMap weaponCapabilities, Object strategyInstance) throws InvocationTargetException, IllegalAccessException {
-        int nextMove = (Integer) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "move", null);
+        int nextMove = (int) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "move", null);
         ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", bot.getLabel(), nextMove);
         bot.setX(nextMove);
 
