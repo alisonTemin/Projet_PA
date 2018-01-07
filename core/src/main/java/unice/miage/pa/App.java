@@ -58,7 +58,15 @@ public class App
             boardMonitor.addPluginWithDependency("Life", plugins.get("Life"), mainPanel);
             boardMonitor.addPluginWithDependency("Energy", plugins.get("Energy"), mainPanel);
 
-            boardMonitor.startGame(8);
+            int countBotAsParam = Integer.valueOf(args[0]);
+
+            // Workaround defaulting to pair value
+            if(countBotAsParam % 2 != 0)
+                countBotAsParam = countBotAsParam - 1;
+
+            // TODO : Increment frame size as bot count
+
+            boardMonitor.startGame(countBotAsParam);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
