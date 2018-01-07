@@ -67,8 +67,9 @@ public class App
             // TODO : Increment frame size as bot count
 
             boardMonitor.startGame(countBotAsParam);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Can't find plugins");
+            System.exit(1);
         }
 
     }
