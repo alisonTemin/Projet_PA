@@ -193,6 +193,12 @@ public class Monitor {
             rounds--;
             Thread.sleep(300);
         }
+
+        if(winnersFound == this.players.size()/2){
+            System.out.println("Game has ended, will stop in a sec");
+            Thread.sleep(1000);
+            System.exit(0);
+        }
     }
 
     /**
