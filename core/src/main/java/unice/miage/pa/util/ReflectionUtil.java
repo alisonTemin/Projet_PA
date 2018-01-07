@@ -62,7 +62,7 @@ public class ReflectionUtil {
      * @throws InstantiationException Probably a param mismatch
      */
     public static Object __construct(Class pluginClass) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        @SuppressWarnings("unchecked") // Just to shut down ij warn
+        @SuppressWarnings("unchecked") // Just to shut down ij warn, i know it's risky, it's a reflectionUtil \o/
         Constructor constructor = pluginClass.getDeclaredConstructor();
         return constructor.newInstance();
     }
