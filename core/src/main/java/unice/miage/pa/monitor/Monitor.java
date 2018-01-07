@@ -1,8 +1,7 @@
 package unice.miage.pa.monitor;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,14 +10,17 @@ import unice.miage.pa.engine.Board;
 import unice.miage.pa.engine.ClassLoader;
 import unice.miage.pa.util.ReflectionUtil;
 
+import javax.swing.*;
+
 public class Monitor {
+    private JPanel panel;
     private Board board;
     private int kTime = 200;
     private int rounds;
 
     private Object graphismInstance;
     private HashMap<String, Object> plugins;
-    private HashMap<String, Robot> players;
+    private ArrayList<Robot> players;
 
     private ArrayList<Object> strategies;
 
@@ -32,13 +34,14 @@ public class Monitor {
      * @param board Game board
      * @param rounds rounds
      */
-    public Monitor(Board board, int rounds) {
+    public Monitor(Board board, int rounds, JPanel panel) {
         this.board = board;
         this.rounds = rounds;
         this.plugins = new HashMap<>();
         this.dependencies = new HashMap<>();
-        this.players = new HashMap<>();
+        this.players = new ArrayList<>();
         this.strategies = new ArrayList<>();
+        this.panel = panel;
     }
 
     /**
@@ -61,6 +64,59 @@ public class Monitor {
         this.dependencies.put(name, dependency);
     }
 
+    public void generateFakePlayers(int count) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException {
+        HashMap weaponCapabilities = (HashMap) ClassLoader.annotationValues(plugins.get("Sword"));
+
+        Random rnd = new Random();
+        String firstname = "Hercules";
+        String lastname = "Poirot";
+
+        int x = 10;
+        int y = 10;
+
+        for(int i = 0; i < count; i++){
+            String result = Character.toString(firstname.charAt(0)); // First char
+            if (lastname.length() > 5)
+                result += lastname.substring(0, 5);
+            else
+                result += lastname;
+
+            result += Integer.toString(rnd.nextInt(99));
+
+            if(i > 0 && i % 2 != 0){
+                x = x + 200;
+            }
+
+            if(i % 2 == 0 && i != 0){
+                x = 10;
+                y = y + 100;
+            }
+
+            // Create two stupids bots
+            Robot chappy = new Robot(result, 100,100, x, y);
+
+            this.board.addBot(chappy);
+        }
+
+        int botCount = 0;
+        ArrayList<Robot> bots = this.board.getRobots();
+
+        for(Robot bot : bots){
+            Object strategy = null;
+            if(botCount % 2 == 0 && botCount < bots.size()){
+                strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, bots.get(botCount+1), weaponCapabilities);
+            } else if(botCount % 2 != 0 && botCount < bots.size()){
+                strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, bots.get(botCount-1), weaponCapabilities);
+            }
+
+            if(strategy != null){
+                bot.setStrategy(strategy);
+                this.strategies.add(strategy);
+            }
+            botCount++;
+        }
+    }
+
     /**
      * Starting the game
      *
@@ -72,50 +128,33 @@ public class Monitor {
      */
     public void startGame() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, InterruptedException {
         this.graphismInstance = plugins.get("Graphism");
-
-        Robot chappy = this.board.getRobotByName("Chappy");
-        Robot poirot = this.board.getRobotByName("Poirot");
+        this.generateFakePlayers(6);
 
         this.players = this.board.getRobots();
 
         // Drawing our bots
         // TODO : If loaded plugin Graphism..
-        Object chappyLabel = ReflectionUtil.invokeMethodByTrait(this.graphismInstance, "drawRobot", chappy);
-        Object poirotLabel = ReflectionUtil.invokeMethodByTrait(this.graphismInstance, "drawRobot", poirot);
+        for(Robot robot : this.players){
+            // Draw bot
+            Object botLabel = ReflectionUtil.invokeMethodByTrait(this.graphismInstance, "drawRobot", robot);
+            robot.setLabel(botLabel);
 
-        chappy.setLabel(chappyLabel);
-        poirot.setLabel(poirotLabel);
+            // Draw bars
+            Object statusLifeBot = ReflectionUtil.__construct((Class)plugins.get("Life"), this.panel);
+            ReflectionUtil.invokeMethodByTrait(statusLifeBot, "draw", robot);
+            Object energyLifeBot = ReflectionUtil.__construct((Class)plugins.get("Energy"), this.panel);
+            plugins.put("Life"+robot.getName(), statusLifeBot);
+            plugins.put("Energy"+robot.getName(), statusLifeBot);
+            ReflectionUtil.invokeMethodByTrait(energyLifeBot, "draw", robot);
+            robot.setWeapon(plugins.get("Sword"));
+        }
 
-        // Construct energy bars
-        // TODO : Same as upper todo
-        ReflectionUtil.invokeMethodByTrait(plugins.get("EnergyChappy"), "draw", chappy);
-        ReflectionUtil.invokeMethodByTrait(plugins.get("EnergyPoirot"), "draw", poirot);
-
-        ReflectionUtil.invokeMethodByTrait(plugins.get("LifeChappy"), "draw", chappy);
-        ReflectionUtil.invokeMethodByTrait(plugins.get("LifePoirot"), "draw", poirot);
-
-        HashMap weaponCapabilities = (HashMap) ClassLoader.annotationValues(plugins.get("Sword"));
-
-        chappy.setWeapon(plugins.get("Sword"));
-        poirot.setWeapon(plugins.get("Sword"));
-
-        HashMap<String, Robot> currentBots = this.board.getRobots();
-
-        Object strategy;
         StringBuilder playerNames = new StringBuilder("Players : ");
 
         int count = 1;
-        for(String player : this.players.keySet()){
+        for(Robot player : this.players){
 
-            if(player.equals("Chappy")){
-                strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), chappy, poirot, weaponCapabilities);
-            } else {
-                strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), poirot, chappy, weaponCapabilities);
-            }
-
-            this.strategies.add(strategy);
-
-            playerNames.append(player);
+            playerNames.append(player.getName());
 
             if(count != this.players.size())
                 playerNames.append(",");
@@ -124,27 +163,25 @@ public class Monitor {
 
         }
 
-        // Construct strategy instance by invoking his constructor with two bots
-        boolean winnerFound = false;
+        int winnersFound = 0;
 
         System.out.println("War started | " + playerNames);
-        while (!winnerFound) {
-            if (rounds % 2 ==0) {
-                this.launchBot(chappy, weaponCapabilities, this.strategies.get(0));
-            } else {
-                this.launchBot(poirot, weaponCapabilities, this.strategies.get(1));
-            }
 
-            this.updateBars();
+        while (winnersFound != this.players.size()/2) {
+            HashMap weaponCapabilities = (HashMap) ClassLoader.annotationValues(plugins.get("Sword"));
 
-            for(String botName : currentBots.keySet()){
-                if(currentBots.get(botName).getHealth() == 0){
-                    System.out.println(botName + " is dead");
-                    winnerFound = true;
+            for(Robot bot : this.players) {
+                if(bot.getHealth() != 0){
+                    this.launchBot(bot, weaponCapabilities, bot.getStrategy());
+                } else {
+                    System.out.println(bot.getName() + " is dead");
+                    winnersFound++;
                 }
+                this.updateBars();
             }
+
             rounds--;
-            Thread.sleep(100);
+            Thread.sleep(300);
         }
     }
 
@@ -166,7 +203,7 @@ public class Monitor {
                 if(botName == null)
                     botName = matcher.group(2);
 
-                Robot toUpdate = this.players.get(botName);
+                Robot toUpdate = this.board.getRobotByName(botName);
                 ReflectionUtil.invokeMethodByTrait(plugins.get(pluginName), "update", toUpdate);
             }
         }

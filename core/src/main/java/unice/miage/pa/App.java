@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Main App
@@ -39,23 +40,13 @@ public class App
         frame.add(mainPanel);
         frame.setVisible(true);
 
-        // Create two stupids bots
-        Robot chappy = new Robot("Chappy", 100,100, 25, 25);
-        Robot poirot = new Robot("Poirot", 100,100, 200, 25);
-
         Board game = new Board();
-        game.addBot(chappy);
-        game.addBot(poirot);
 
-        Monitor boardMonitor = new Monitor(game, 20);
+        Monitor boardMonitor = new Monitor(game, 20, mainPanel);
 
         try {
             Object consoleInstance = ReflectionUtil.__construct(plugins.get("Console"));
             Object graphismInstance = ReflectionUtil.__construct(plugins.get("Graphism"), mainPanel);
-            Object statusLifeChappy = ReflectionUtil.__construct(plugins.get("Life"), mainPanel);
-            Object statusLifePoirot = ReflectionUtil.__construct(plugins.get("Life"), mainPanel);
-            Object statusEnergyPoirot = ReflectionUtil.__construct(plugins.get("Energy"), mainPanel);
-            Object statusEnergyChappy = ReflectionUtil.__construct(plugins.get("Energy"), mainPanel);
             Object moveInstance = ReflectionUtil.__construct(plugins.get("RandomMove"));
 
             boardMonitor.addPlugin("Console", consoleInstance);
@@ -66,11 +57,8 @@ public class App
 
             boardMonitor.addPlugin("Strategy", plugins.get("Strategy"));
             boardMonitor.addPluginWithDependency("Graphism", graphismInstance, mainPanel);
-            boardMonitor.addPluginWithDependency("LifeChappy", statusLifeChappy, mainPanel);
-            boardMonitor.addPluginWithDependency("EnergyChappy", statusEnergyChappy, mainPanel);
-
-            boardMonitor.addPluginWithDependency("LifePoirot", statusLifePoirot, mainPanel);
-            boardMonitor.addPluginWithDependency("EnergyPoirot", statusEnergyPoirot, mainPanel);
+            boardMonitor.addPluginWithDependency("Life", plugins.get("Life"), mainPanel);
+            boardMonitor.addPluginWithDependency("Energy", plugins.get("Energy"), mainPanel);
 
             boardMonitor.startGame();
         } catch (NoSuchMethodException e) {

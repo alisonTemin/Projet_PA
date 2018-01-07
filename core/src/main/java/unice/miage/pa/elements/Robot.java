@@ -20,6 +20,7 @@ public class Robot {
     private int y;
     private JLabel label;
     private Object weapon;
+    private Object strategy;
 
     /**
      * Robot constructor
@@ -89,5 +90,13 @@ public class Robot {
 
     public void setX(int x) {
         this.x = x;
+    }
+
+    public void setStrategy(Object strategy) {
+        this.strategy = strategy;
+    }
+
+    public Object getStrategy() {
+        return strategy;
     }
 }

@@ -2,6 +2,7 @@ package unice.miage.pa.engine;
 
 import unice.miage.pa.elements.Robot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -10,25 +11,39 @@ import java.util.HashMap;
  */
 public class Board {
 
-    private HashMap<String, Robot> robots;
+    private ArrayList<Robot> robots;
 
     public Board(){
-        this.robots = new HashMap<>();
+        this.robots = new ArrayList<>();
     }
 
     public void addBot(Robot robot){
-        this.robots.put(robot.getName(), robot);
+        this.robots.add(robot);
     }
 
     public void removeBot(Robot robot){
-        this.robots.remove(robot.getName());
+        this.robots.remove(robot);
     }
 
     public Robot getRobotByName(String name){
-        return this.robots.get(name);
+        for(Robot r : this.robots){
+            if(r.getName().equals(name))
+                return r;
+        }
+
+        return null;
     }
 
-    public HashMap<String, Robot> getRobots() {
+    public Robot getRobot(Robot robot){
+        for(Robot r : this.robots){
+            if(r.equals(robot))
+                return r;
+        }
+
+        return null;
+    }
+
+    public ArrayList<Robot> getRobots() {
         return this.robots;
     }
 }
