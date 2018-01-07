@@ -14,6 +14,7 @@ public class Console extends JFrame {
         add("Center", new JScrollPane(aTextArea));
         setVisible(true);
         setLocation(400, 0);
+        setTitle("Console");
 
         FilteredStream filteredStream = new FilteredStream(new ByteArrayOutputStream(), aTextArea, "a.log");
         PrintStream aPrintStream = new PrintStream(filteredStream);

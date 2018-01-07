@@ -23,6 +23,7 @@ public class App
         JFrame frame = new JFrame();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setTitle("RobotsWar");
 
 
         // panel who contains our bots
@@ -57,7 +58,7 @@ public class App
             boardMonitor.addPluginWithDependency("Life", plugins.get("Life"), mainPanel);
             boardMonitor.addPluginWithDependency("Energy", plugins.get("Energy"), mainPanel);
 
-            int countBotAsParam = 10;
+            int countBotAsParam = 6;
 
             if(args.length > 0) countBotAsParam = Integer.valueOf(args[0]);
 
