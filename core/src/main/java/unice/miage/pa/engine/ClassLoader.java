@@ -40,7 +40,7 @@ public class ClassLoader extends SecureClassLoader {
         if(file.exists()){
             byte[] pluginBytecode = recupTabBytes(file);
             try {
-                Class<?> clazz = this.defineClass(pluginName, pluginBytecode, 0, pluginBytecode.length);
+                Class<?> clazz = this.defineClass(pluginName, pluginBytecode, 0, Objects.requireNonNull(pluginBytecode).length);
                 HashMap values = (HashMap) annotationValues(clazz);
                 if(values.containsKey("required"))
                     return clazz;

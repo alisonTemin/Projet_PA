@@ -13,19 +13,19 @@ import unice.miage.pa.util.ReflectionUtil;
 import javax.swing.*;
 
 public class Monitor {
-    private JPanel panel;
-    private Board board;
+    private final JPanel panel;
+    private final Board board;
 
     private Object graphismInstance;
-    private HashMap<String, Object> plugins;
+    private final HashMap<String, Object> plugins;
     private ArrayList<Robot> players;
 
-    private ArrayList<Object> strategies;
+    private final ArrayList<Object> strategies;
 
     /**
      * Contains every plugin dependencies identified by plugin name
      */
-    private HashMap<String, Object> dependencies;
+    private final HashMap<String, Object> dependencies;
 
     /**
      * Monitor constructor

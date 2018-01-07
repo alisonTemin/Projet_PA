@@ -9,9 +9,9 @@ import java.util.HashMap;
 
 @Plugin(name="Strategy", type="core", required=1)
 public class Strategy {
-    private Object monitored;
-    private Object attacked;
-    private HashMap weaponCapabilities;
+    private final Object monitored;
+    private final Object attacked;
+    private final HashMap weaponCapabilities;
 
     public Strategy(Object monitored, Object attacked, HashMap weaponCapabilities){
         this.attacked = attacked;

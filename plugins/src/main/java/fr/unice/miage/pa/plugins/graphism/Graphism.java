@@ -13,7 +13,7 @@ import java.util.Random;
 @Plugin(name="Graphism", type="core", required=1)
 public class Graphism {
 
-    private JPanel panel;
+    private final JPanel panel;
 
     public Graphism(JPanel panel){
         this.panel = panel;
@@ -50,7 +50,7 @@ public class Graphism {
      }
 
     @PluginTrait(type="move", on="robot")
-    public void moveRobot(JLabel label, int x) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public void moveRobot(JLabel label, int x) {
         label.setLocation(x,label.getY());
     }
 

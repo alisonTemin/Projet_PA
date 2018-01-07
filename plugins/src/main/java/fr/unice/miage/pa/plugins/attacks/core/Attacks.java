@@ -1,7 +1,6 @@
 package fr.unice.miage.pa.plugins.attacks.core;
 
 import fr.unice.miage.pa.plugins.attacks.weapons.*;
-import fr.unice.miage.pa.plugins.attacks.weapons.Weapons;
 import fr.unice.miage.pa.plugins.Plugin;
 import java.util.HashMap;
 import java.util.Random;

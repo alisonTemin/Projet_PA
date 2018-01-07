@@ -3,7 +3,6 @@ package unice.miage.pa.engine;
 import unice.miage.pa.elements.Robot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Class representing a board game

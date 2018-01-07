@@ -10,7 +10,7 @@ public class Robot {
     /**
      * Robot name
      */
-    private String name;
+    private final String name;
     /**
      * Health points
      */

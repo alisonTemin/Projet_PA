@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 
 @Plugin(name="Energy", type="core", required=1)
 public class Energy {
-    private JPanel panel;
+    private final JPanel panel;
     private JLabel bar;
 
     public Energy(JPanel panel){

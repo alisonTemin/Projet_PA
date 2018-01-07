@@ -5,7 +5,7 @@ import fr.unice.miage.pa.plugins.PluginTrait;
 
 import java.util.Random;
 
-@Plugin(name="random", type="movement", required=0)
+@Plugin(name="random", type="movement")
 public class RandomMove {
 
     @PluginTrait(type="move", on="robot")
