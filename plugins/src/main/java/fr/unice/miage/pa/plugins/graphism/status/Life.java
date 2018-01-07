@@ -30,8 +30,9 @@ public class Life {
         int x = (Integer) this.callGetOnRobot("getX", robot);
         int y = (Integer) this.callGetOnRobot("getY", robot);
         int health = (Integer) this.callGetOnRobot("getHealth", robot);
+        String name = (String) this.callGetOnRobot("getName", robot);
 
-        this.bar = new JLabel("" + health);
+        this.bar = new JLabel(name + " : " + health);
         this.bar.setOpaque(true);
         this.bar.setBounds(new Rectangle(x, y+60, health, 10));
         this.bar.setBackground(Color.GREEN);
@@ -43,8 +44,9 @@ public class Life {
     @PluginTrait(type="update", on="robot")
     public void updateLife(Object robot) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         int health = (Integer) this.callGetOnRobot("getHealth", robot);
+        String name = (String) this.callGetOnRobot("getName", robot);
 
-        this.bar.setText(""+health);
+        this.bar.setText(name + " : "+health);
         this.bar.setForeground(Color.GRAY);
 
         this.panel.repaint();

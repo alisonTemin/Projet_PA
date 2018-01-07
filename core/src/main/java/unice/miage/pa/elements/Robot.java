@@ -21,6 +21,7 @@ public class Robot {
     private JLabel label;
     private Object weapon;
     private Object strategy;
+    private Robot opponent;
 
     /**
      * Robot constructor
@@ -98,5 +99,13 @@ public class Robot {
 
     public Object getStrategy() {
         return strategy;
+    }
+
+    public void setOpponent(Robot opponent) {
+        this.opponent = opponent;
+    }
+
+    public Robot getOpponent() {
+        return opponent;
     }
 }

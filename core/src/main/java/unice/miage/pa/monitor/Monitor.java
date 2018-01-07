@@ -81,7 +81,7 @@ public class Monitor {
             else
                 result += lastname;
 
-            result += Integer.toString(rnd.nextInt(99));
+            result += Integer.toString(rnd.nextInt(900));
 
             if(i > 0 && i % 2 != 0){
                 x = x + 200;
@@ -103,14 +103,18 @@ public class Monitor {
 
         for(Robot bot : bots){
             Object strategy = null;
+            Robot opponent = null;
             if(botCount % 2 == 0 && botCount < bots.size()){
-                strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, bots.get(botCount+1), weaponCapabilities);
+                opponent = bots.get(botCount+1);
+                strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, opponent, weaponCapabilities);
             } else if(botCount % 2 != 0 && botCount < bots.size()){
-                strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, bots.get(botCount-1), weaponCapabilities);
+                opponent = bots.get(botCount-1);
+                strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, opponent, weaponCapabilities);
             }
 
-            if(strategy != null){
+            if(strategy != null && opponent != null){
                 bot.setStrategy(strategy);
+                bot.setOpponent(opponent);
                 this.strategies.add(strategy);
             }
             botCount++;
@@ -165,19 +169,25 @@ public class Monitor {
 
         int winnersFound = 0;
 
+        HashMap<String, Robot> winners = new HashMap<>();
+
         System.out.println("War started | " + playerNames);
 
         while (winnersFound != this.players.size()/2) {
             HashMap weaponCapabilities = (HashMap) ClassLoader.annotationValues(plugins.get("Sword"));
 
             for(Robot bot : this.players) {
-                if(bot.getHealth() != 0){
+                if(bot.getHealth() != 0 && bot.getOpponent().getHealth() != 0){
                     this.launchBot(bot, weaponCapabilities, bot.getStrategy());
+                    this.updateBars();
                 } else {
-                    System.out.println(bot.getName() + " is dead");
-                    winnersFound++;
+                    if(!winners.containsKey(bot.getName())){
+                        System.out.println(bot.getName() + " is dead | Killed by : " + bot.getOpponent().getName());
+                        winners.put(bot.getName(), bot);
+                    }
+
+                    winnersFound = winners.size();
                 }
-                this.updateBars();
             }
 
             rounds--;
