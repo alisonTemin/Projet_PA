@@ -145,10 +145,10 @@ public class Monitor {
 
             // Draw bars
             Object statusLifeBot = ReflectionUtil.__construct((Class)plugins.get("Life"), this.panel);
-            ReflectionUtil.invokeMethodByTrait(statusLifeBot, "draw", robot);
             Object energyLifeBot = ReflectionUtil.__construct((Class)plugins.get("Energy"), this.panel);
             plugins.put("Life"+robot.getName(), statusLifeBot);
-            plugins.put("Energy"+robot.getName(), statusLifeBot);
+            plugins.put("Energy"+robot.getName(), energyLifeBot);
+            ReflectionUtil.invokeMethodByTrait(statusLifeBot, "draw", robot);
             ReflectionUtil.invokeMethodByTrait(energyLifeBot, "draw", robot);
             robot.setWeapon(plugins.get("Sword"));
         }
