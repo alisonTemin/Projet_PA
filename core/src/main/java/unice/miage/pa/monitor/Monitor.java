@@ -92,6 +92,7 @@ public class Monitor {
             Robot chappy = new Robot(result, 100,100, x, y);
 
             this.board.addBot(chappy);
+
         }
 
         int botCount = 0;
@@ -126,7 +127,7 @@ public class Monitor {
      * @throws InstantiationException
      * @throws InterruptedException
      */
-    public void startGame(int playersCount) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, InterruptedException {
+    public void startGame(int playersCount, JFrame mainFrame) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, InterruptedException {
         this.graphismInstance = plugins.get("Graphism");
         this.generateFakePlayers(playersCount);
 
@@ -139,6 +140,9 @@ public class Monitor {
             this.setupBot(robot);
         }
 
+        mainFrame.setSize( 400,this.players.size() * 60);
+
+
         HashMap<String, Robot> winners = new HashMap<>();
 
         this.startWar(playerNames, winners);
@@ -149,6 +153,7 @@ public class Monitor {
         System.out.println("War started | " + playerNames);
         while (winnersFound != this.players.size()/2) {
             HashMap weaponCapabilities = (HashMap) ClassLoader.annotationValues(plugins.get("Sword"));
+
 
             for(Robot bot : this.players) {
                 if(bot.getHealth() != 0 && bot.getOpponent().getHealth() != 0){

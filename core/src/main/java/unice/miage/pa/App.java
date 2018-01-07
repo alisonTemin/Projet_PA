@@ -23,7 +23,7 @@ public class App
         JFrame frame = new JFrame();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(400, 450);
+
 
         // panel who contains our bots
         JPanel mainPanel = new JPanel(null);
@@ -57,7 +57,7 @@ public class App
             boardMonitor.addPluginWithDependency("Life", plugins.get("Life"), mainPanel);
             boardMonitor.addPluginWithDependency("Energy", plugins.get("Energy"), mainPanel);
 
-            int countBotAsParam = 6;
+            int countBotAsParam = 10;
 
             if(args.length > 0) countBotAsParam = Integer.valueOf(args[0]);
 
@@ -65,9 +65,10 @@ public class App
             if(countBotAsParam % 2 != 0)
                 countBotAsParam = countBotAsParam - 1;
 
+
             // TODO : Increment frame size as bot count
 
-            boardMonitor.startGame(countBotAsParam);
+            boardMonitor.startGame(countBotAsParam, frame);
         } catch (Exception e) {
             System.out.println("Can't find plugins");
             System.exit(1);
