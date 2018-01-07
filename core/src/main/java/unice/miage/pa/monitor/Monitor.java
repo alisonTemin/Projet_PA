@@ -2,7 +2,6 @@ package unice.miage.pa.monitor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,6 +27,11 @@ public class Monitor {
      */
     private HashMap<String, Object> dependencies;
 
+    /**
+     * Monitor constructor
+     * @param board Game board
+     * @param rounds rounds
+     */
     public Monitor(Board board, int rounds) {
         this.board = board;
         this.rounds = rounds;
@@ -37,17 +41,36 @@ public class Monitor {
         this.strategies = new ArrayList<>();
     }
 
+    /**
+     * Add a plugin to monitor
+     * @param name plugin name
+     * @param pluginInstance instance
+     */
     public void addPlugin(String name, Object pluginInstance){
         this.plugins.put(name, pluginInstance);
     }
 
+    /**
+     * Add a plugin to monitor
+     * @param name plugin name
+     * @param pluginInstance plugin instance
+     * @param dependency dependency
+     */
     public void addPluginWithDependency(String name, Object pluginInstance, Object dependency){
         this.plugins.put(name, pluginInstance);
         this.dependencies.put(name, dependency);
     }
 
+    /**
+     * Starting the game
+     *
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     * @throws NoSuchMethodException
+     * @throws InstantiationException
+     * @throws InterruptedException
+     */
     public void startGame() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, InterruptedException {
-        // Setting up our bots
         this.graphismInstance = plugins.get("Graphism");
 
         Robot chappy = this.board.getRobotByName("Chappy");
@@ -55,11 +78,21 @@ public class Monitor {
 
         this.players = this.board.getRobots();
 
+        // Drawing our bots
+        // TODO : If loaded plugin Graphism..
         Object chappyLabel = ReflectionUtil.invokeMethodByTrait(this.graphismInstance, "drawRobot", chappy);
         Object poirotLabel = ReflectionUtil.invokeMethodByTrait(this.graphismInstance, "drawRobot", poirot);
 
         chappy.setLabel(chappyLabel);
         poirot.setLabel(poirotLabel);
+
+        // Construct energy bars
+        // TODO : Same as upper todo
+        ReflectionUtil.invokeMethodByTrait(plugins.get("EnergyChappy"), "draw", chappy);
+        ReflectionUtil.invokeMethodByTrait(plugins.get("EnergyPoirot"), "draw", poirot);
+
+        ReflectionUtil.invokeMethodByTrait(plugins.get("LifeChappy"), "draw", chappy);
+        ReflectionUtil.invokeMethodByTrait(plugins.get("LifePoirot"), "draw", poirot);
 
         HashMap weaponCapabilities = (HashMap) ClassLoader.annotationValues(plugins.get("Sword"));
 

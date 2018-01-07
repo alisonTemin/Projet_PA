@@ -72,12 +72,6 @@ public class App
             boardMonitor.addPluginWithDependency("LifePoirot", statusLifePoirot, mainPanel);
             boardMonitor.addPluginWithDependency("EnergyPoirot", statusEnergyPoirot, mainPanel);
 
-            ReflectionUtil.invokeMethodByTrait(statusEnergyChappy, "draw", chappy);
-            ReflectionUtil.invokeMethodByTrait(statusEnergyPoirot, "draw", poirot);
-
-            ReflectionUtil.invokeMethodByTrait(statusLifeChappy, "draw", chappy);
-            ReflectionUtil.invokeMethodByTrait(statusLifePoirot, "draw", poirot);
-
             boardMonitor.startGame();
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
