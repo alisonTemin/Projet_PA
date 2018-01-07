@@ -23,7 +23,7 @@ public class App
         JFrame frame = new JFrame();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setTitle("RobotsWar");
+        frame.setTitle("RobotWar");
 
 
         // panel who contains our bots
