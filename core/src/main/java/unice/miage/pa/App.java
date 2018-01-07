@@ -27,7 +27,7 @@ public class App
         JFrame frame = new JFrame();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(600, 400);
+        frame.setSize(400, 450);
 
         // panel who contains our bots
         JPanel mainPanel = new JPanel(null);
@@ -60,7 +60,7 @@ public class App
             boardMonitor.addPluginWithDependency("Life", plugins.get("Life"), mainPanel);
             boardMonitor.addPluginWithDependency("Energy", plugins.get("Energy"), mainPanel);
 
-            boardMonitor.startGame();
+            boardMonitor.startGame(8);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }

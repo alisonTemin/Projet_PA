@@ -30,9 +30,8 @@ public class Life {
         int x = (Integer) this.callGetOnRobot("getX", robot);
         int y = (Integer) this.callGetOnRobot("getY", robot);
         int health = (Integer) this.callGetOnRobot("getHealth", robot);
-        String name = (String) this.callGetOnRobot("getName", robot);
 
-        this.bar = new JLabel(name + " : " + health);
+        this.bar = new JLabel(String.valueOf(health));
         this.bar.setOpaque(true);
         this.bar.setBounds(new Rectangle(x, y+60, health, 10));
         this.bar.setBackground(Color.GREEN);
@@ -46,7 +45,7 @@ public class Life {
         int health = (Integer) this.callGetOnRobot("getHealth", robot);
         String name = (String) this.callGetOnRobot("getName", robot);
 
-        this.bar.setText(name + " : "+health);
+        this.bar.setText(String.valueOf(health));
         this.bar.setForeground(Color.GRAY);
 
         this.panel.repaint();

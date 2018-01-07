@@ -130,9 +130,9 @@ public class Monitor {
      * @throws InstantiationException
      * @throws InterruptedException
      */
-    public void startGame() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, InterruptedException {
+    public void startGame(int playersCount) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException, InterruptedException {
         this.graphismInstance = plugins.get("Graphism");
-        this.generateFakePlayers(6);
+        this.generateFakePlayers(playersCount);
 
         this.players = this.board.getRobots();
 

@@ -21,22 +21,9 @@ public class Board {
         this.robots.add(robot);
     }
 
-    public void removeBot(Robot robot){
-        this.robots.remove(robot);
-    }
-
     public Robot getRobotByName(String name){
         for(Robot r : this.robots){
             if(r.getName().equals(name))
-                return r;
-        }
-
-        return null;
-    }
-
-    public Robot getRobot(Robot robot){
-        for(Robot r : this.robots){
-            if(r.equals(robot))
                 return r;
         }
 

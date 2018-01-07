@@ -22,12 +22,18 @@ public class Energy {
         int x = (Integer) this.callGetOnRobot("getX", robot);
         int y = (Integer) this.callGetOnRobot("getY", robot);
         int energy = (Integer) this.callGetOnRobot("getEnergy", robot);
+        String name = (String) this.callGetOnRobot("getName", robot);
 
-        this.bar = new JLabel("" + energy);
+        JLabel nameLabel = new JLabel(name);
+        nameLabel.setBounds(new Rectangle(x, y+15, energy, 10));
+        nameLabel.setOpaque(true);
+
+        this.bar = new JLabel(String.valueOf(energy));
         this.bar.setOpaque(true);
         this.bar.setBounds(new Rectangle(x, y , energy, 10));
         this.bar.setBackground(Color.blue);
 
+        this.panel.add(nameLabel);
         this.panel.add(bar);
         this.panel.repaint();
     }
@@ -36,7 +42,7 @@ public class Energy {
     public void updateEnergy(Object robot) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         int energy = (Integer) this.callGetOnRobot("getEnergy", robot);
 
-        this.bar.setText(""+energy);
+        this.bar.setText(String.valueOf(energy));
         this.bar.setForeground(Color.WHITE);
 
         this.panel.repaint();
