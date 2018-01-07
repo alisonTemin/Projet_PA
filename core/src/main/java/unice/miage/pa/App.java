@@ -42,8 +42,8 @@ public class App
 
         Board game = new Board();
 
-        Monitor boardMonitor = new Monitor(game, 20, mainPanel);
-
+        Monitor boardMonitor = new Monitor(game, mainPanel);
+        
         try {
             Object consoleInstance = ReflectionUtil.__construct(plugins.get("Console"));
             Object graphismInstance = ReflectionUtil.__construct(plugins.get("Graphism"), mainPanel);

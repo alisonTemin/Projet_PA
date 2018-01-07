@@ -15,8 +15,6 @@ import javax.swing.*;
 public class Monitor {
     private JPanel panel;
     private Board board;
-    private int kTime = 200;
-    private int rounds;
 
     private Object graphismInstance;
     private HashMap<String, Object> plugins;
@@ -32,11 +30,9 @@ public class Monitor {
     /**
      * Monitor constructor
      * @param board Game board
-     * @param rounds rounds
      */
-    public Monitor(Board board, int rounds, JPanel panel) {
+    public Monitor(Board board, JPanel panel) {
         this.board = board;
-        this.rounds = rounds;
         this.plugins = new HashMap<>();
         this.dependencies = new HashMap<>();
         this.players = new ArrayList<>();
@@ -138,41 +134,19 @@ public class Monitor {
 
         // Drawing our bots
         // TODO : If loaded plugin Graphism..
+        String playerNames = "Players : " + this.players.size();
         for(Robot robot : this.players){
-            // Draw bot
-            Object botLabel = ReflectionUtil.invokeMethodByTrait(this.graphismInstance, "drawRobot", robot);
-            robot.setLabel(botLabel);
-
-            // Draw bars
-            Object statusLifeBot = ReflectionUtil.__construct((Class)plugins.get("Life"), this.panel);
-            Object energyLifeBot = ReflectionUtil.__construct((Class)plugins.get("Energy"), this.panel);
-            plugins.put("Life"+robot.getName(), statusLifeBot);
-            plugins.put("Energy"+robot.getName(), energyLifeBot);
-            ReflectionUtil.invokeMethodByTrait(statusLifeBot, "draw", robot);
-            ReflectionUtil.invokeMethodByTrait(energyLifeBot, "draw", robot);
-            robot.setWeapon(plugins.get("Sword"));
+            this.setupBot(robot);
         }
-
-        StringBuilder playerNames = new StringBuilder("Players : ");
-
-        int count = 1;
-        for(Robot player : this.players){
-
-            playerNames.append(player.getName());
-
-            if(count != this.players.size())
-                playerNames.append(",");
-
-            count++;
-
-        }
-
-        int winnersFound = 0;
 
         HashMap<String, Robot> winners = new HashMap<>();
 
-        System.out.println("War started | " + playerNames);
+        this.startWar(playerNames, winners);
+    }
 
+    private void startWar(String playerNames, HashMap<String, Robot> winners) throws InvocationTargetException, IllegalAccessException, InterruptedException {
+        int winnersFound = 0;
+        System.out.println("War started | " + playerNames);
         while (winnersFound != this.players.size()/2) {
             HashMap weaponCapabilities = (HashMap) ClassLoader.annotationValues(plugins.get("Sword"));
 
@@ -190,7 +164,6 @@ public class Monitor {
                 }
             }
 
-            rounds--;
             Thread.sleep(300);
         }
 
@@ -199,6 +172,33 @@ public class Monitor {
             Thread.sleep(1000);
             System.exit(0);
         }
+    }
+
+    /**
+     * Setup graphism aspects of a bot
+     *
+     * @param robot Robot to setup
+     *
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     * @throws NoSuchMethodException
+     * @throws InstantiationException
+     */
+    private void setupBot(Robot robot) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException {
+        // Draw bot
+        Object botLabel = ReflectionUtil.invokeMethodByTrait(this.graphismInstance, "drawRobot", robot);
+        robot.setLabel(botLabel);
+
+        // Draw bars
+        Object statusLifeBot = ReflectionUtil.__construct((Class)plugins.get("Life"), this.panel);
+        Object energyLifeBot = ReflectionUtil.__construct((Class)plugins.get("Energy"), this.panel);
+        ReflectionUtil.invokeMethodByTrait(statusLifeBot, "draw", robot);
+        ReflectionUtil.invokeMethodByTrait(energyLifeBot, "draw", robot);
+
+        plugins.put("Life"+robot.getName(), statusLifeBot);
+        plugins.put("Energy"+robot.getName(), energyLifeBot);
+
+        robot.setWeapon(plugins.get("Sword"));
     }
 
     /**
@@ -225,6 +225,16 @@ public class Monitor {
         }
     }
 
+    /**
+     * Launch a bot
+     *
+     * @param bot bot to launch
+     * @param weaponCapabilities Weapon cap hashmap
+     * @param strategyInstance Strategy object
+     *
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
     private void launchBot(Robot bot, HashMap weaponCapabilities, Object strategyInstance) throws InvocationTargetException, IllegalAccessException {
         int nextMove = (Integer) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "move", null);
         ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", bot.getLabel(), nextMove);
@@ -238,10 +248,5 @@ public class Monitor {
 
         // The energy should increment regularly, according to the docs
         bot.incrementEnergy(5);
-    }
-
-
-    public void declareWinner(){
-
     }
 }
