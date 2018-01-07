@@ -181,7 +181,7 @@ public class Monitor {
                     this.launchBot(bot, weaponCapabilities, bot.getStrategy());
                     this.updateBars();
                 } else {
-                    if(!winners.containsKey(bot.getName())){
+                    if(!winners.containsKey(bot.getName()) && bot.getHealth() != 0){
                         System.out.println(bot.getName() + " is dead | Killed by : " + bot.getOpponent().getName());
                         winners.put(bot.getName(), bot);
                     }
