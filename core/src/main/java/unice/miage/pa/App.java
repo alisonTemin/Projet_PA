@@ -1,6 +1,5 @@
 package unice.miage.pa;
 
-import unice.miage.pa.elements.Robot;
 import unice.miage.pa.engine.Board;
 import unice.miage.pa.engine.ClassLoader;
 import unice.miage.pa.monitor.Monitor;
@@ -10,13 +9,11 @@ import javax.swing.*;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-import java.util.Random;
 
 /**
  * Main App
  *
  */
-
 public class App 
 {
     /**
@@ -43,7 +40,8 @@ public class App
         Board game = new Board();
 
         Monitor boardMonitor = new Monitor(game, mainPanel);
-        
+
+        // TODO : Refactor below
         try {
             Object consoleInstance = ReflectionUtil.__construct(plugins.get("Console"));
             Object graphismInstance = ReflectionUtil.__construct(plugins.get("Graphism"), mainPanel);

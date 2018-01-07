@@ -13,6 +13,7 @@ import java.security.SecureClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class ClassLoader extends SecureClassLoader {
 
@@ -110,16 +111,14 @@ public class ClassLoader extends SecureClassLoader {
      * @return List of .class paths
      */
     private static List<File> findEveryPlugin(File node, List<File> test, String suffix) {
-        // Cause it's crappy.
-        if(node == null || test == null) System.exit(0);
+        assert node != null;
 
         if(node.isDirectory()) {
-            for(File file : node.listFiles()) {
-                // recursive, beware
+            for(File file : Objects.requireNonNull(node.listFiles())) {
+                // recursively call me using the same list instance, to append in list
                 findEveryPlugin(file, test, suffix);
             }
         } else if(node.isFile() && node.getName().endsWith(suffix)) {
-            // Hacky but working
             test.add(node);
         }
 
