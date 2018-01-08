@@ -50,8 +50,8 @@ public class Graphism {
      }
 
     @PluginTrait(type="move", on="robot")
-    public void moveRobot(JLabel label, int x) {
-        label.setLocation(x,label.getY());
+    public void moveRobot(JLabel label, int x,int y) {
+        label.setLocation(x,y+1);
     }
 
     private Object callGetOnRobot(String getterName, Object robot) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {

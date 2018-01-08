@@ -242,8 +242,16 @@ public class Monitor {
      */
     private void launchBot(Robot bot, HashMap weaponCapabilities, Object strategyInstance) throws InvocationTargetException, IllegalAccessException {
         int nextMove = (int) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "move", null);
-        ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", bot.getLabel(), nextMove);
+
+        int nextMoveY = (int) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "moveY", null);
+
+        ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", bot.getLabel(), nextMove,nextMoveY);
         bot.setX(nextMove);
+        bot.setY(nextMoveY+1);
+
+        System.out.println(bot.getY());
+
+
 
         if(bot.getEnergy() < (Integer)weaponCapabilities.get("consumeEnergy")){
             bot.incrementEnergy(10);

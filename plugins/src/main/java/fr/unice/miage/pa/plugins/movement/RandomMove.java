@@ -13,4 +13,9 @@ public class RandomMove {
         Random generator = new Random();
         return generator.nextInt(300) + 1;
     }
+    @PluginTrait(type="moveY", on="robot")
+    public int nextPlaceY(){
+        Random generator = new Random();
+        return generator.nextInt(20) +1 ;
+    }
 }

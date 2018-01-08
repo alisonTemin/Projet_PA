@@ -19,18 +19,44 @@ public class Strategy {
         this.weaponCapabilities = weaponCapabilities;
     }
 
+//    @PluginTrait(type="attack", on="robot")
+//    public void attack() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+//        Method getterMonitored = monitored.getClass().getDeclaredMethod("getX");
+//        //Call to invoke return value !
+//        int monitoredX = (Integer) getterMonitored.invoke(monitored);
+//        Method getterAttacked = attacked.getClass().getDeclaredMethod("getX");
+//        int attackedX = (Integer) getterAttacked.invoke(attacked);
+//
+//
+//        int weaponDistance = (Integer) weaponCapabilities.get("distance");
+//        // check x attacked & x monitored
+//        if((monitoredX + weaponDistance > attackedX) || (monitoredX - weaponDistance < attackedX) && ( (Integer)attacked.getClass().getDeclaredMethod("getHealth").invoke(attacked) <= 0)){
+//            int consumeLife = (Integer) weaponCapabilities.get("baseAttack");
+//            int consumeEnergy = (Integer) weaponCapabilities.get("consumeEnergy");
+//
+//            Method setterLife = attacked.getClass().getDeclaredMethod("decrementHealth", int.class);
+//            Method setterEnergy = monitored.getClass().getDeclaredMethod("decrementEnergy", int.class);
+//
+//            setterLife.invoke(attacked, consumeLife);
+//            setterEnergy.invoke(monitored, consumeEnergy);
+//        }
+//    }
+
     @PluginTrait(type="attack", on="robot")
-    public void attack() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        Method getterMonitored = monitored.getClass().getDeclaredMethod("getX");
+    public void attackShooter() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+
+        Method getterMonitoredX = monitored.getClass().getDeclaredMethod("getX");
+        int monitoredX = (Integer) getterMonitoredX.invoke(monitored);
+        Method getterAttackedX = attacked.getClass().getDeclaredMethod("getX");
+        int attackedX = (Integer) getterAttackedX.invoke(attacked);
+
+        Method getterMonitoredY = monitored.getClass().getDeclaredMethod("getY");
         //Call to invoke return value !
-        int monitoredX = (Integer) getterMonitored.invoke(monitored);
-        Method getterAttacked = attacked.getClass().getDeclaredMethod("getX");
-        int attackedX = (Integer) getterAttacked.invoke(attacked);
+        int monitoredY = (Integer) getterMonitoredY.invoke(monitored);
+        Method getterAttackedY = attacked.getClass().getDeclaredMethod("getY");
+        int attackedY = (Integer) getterAttackedY.invoke(attacked);
 
-
-        int weaponDistance = (Integer) weaponCapabilities.get("distance");
-        // check x attacked & x monitored
-        if((monitoredX + weaponDistance > attackedX) || (monitoredX - weaponDistance < attackedX) && ( (Integer)attacked.getClass().getDeclaredMethod("getHealth").invoke(attacked) <= 0)){
+        if(( (Integer)attacked.getClass().getDeclaredMethod("getHealth").invoke(attacked) <= 0) && (monitoredY + 10 > attackedY)|| (monitoredY - 10 < attackedY)) {
             int consumeLife = (Integer) weaponCapabilities.get("baseAttack");
             int consumeEnergy = (Integer) weaponCapabilities.get("consumeEnergy");
 
