@@ -28,13 +28,6 @@ public class ReflectionUtil {
                 for (Method method : trait.getDeclaredMethods()) {
                     if(method.invoke(annot).equals(type)){
 
-                        /*if(args.length > 0)
-                            System.out.println("Invoke " + type + " | with : "+ Arrays.toString(args));
-                        else if(on != null)
-                            System.out.println("Invoke " + type + " | on : " + pluginInstance + " | with :" + on);
-                        else
-                            System.out.println("Invoke " + type);*/
-
                         if(args.length == 1)
                             return mt.invoke(pluginInstance, on, args[0]);
                         else if(args.length == 2)
@@ -98,7 +91,7 @@ public class ReflectionUtil {
      */
     public static Object __constructStrategy(Class pluginClass, Object... arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         @SuppressWarnings("unchecked")
-        Constructor constructor = pluginClass.getDeclaredConstructor(Object.class, Object.class, HashMap.class);
+        Constructor constructor = pluginClass.getDeclaredConstructor(Object.class, Object.class, HashMap.class, HashMap.class);
         //noinspection JavaReflectionInvocation IJ static analysis cry
         return constructor.newInstance(arg);
     }

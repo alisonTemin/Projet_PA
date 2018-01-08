@@ -71,8 +71,7 @@ public class App
 
             boardMonitor.startGame(countBotAsParam, frame);
         } catch (Exception e) {
-            System.out.println("Can't find plugins");
-            System.exit(1);
+            e.printStackTrace();
         }
 
     }

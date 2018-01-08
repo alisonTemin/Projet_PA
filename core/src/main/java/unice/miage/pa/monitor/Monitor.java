@@ -103,10 +103,10 @@ public class Monitor {
             Robot opponent = null;
             if(botCount % 2 == 0 && botCount < bots.size()){
                 opponent = bots.get(botCount+1);
-                strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, opponent, weaponCapabilities);
+                strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, opponent, weaponCapabilities, this.plugins);
             } else if(botCount % 2 != 0 && botCount < bots.size()){
                 opponent = bots.get(botCount-1);
-                strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, opponent, weaponCapabilities);
+                strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, opponent, weaponCapabilities, this.plugins);
             }
 
             if(strategy != null && opponent != null){
@@ -175,7 +175,7 @@ public class Monitor {
         if(winnersFound == this.players.size()/2){
             System.out.println("Game has ended, will stop in a sec");
             Thread.sleep(1000);
-            System.exit(0);
+            //System.exit(0);
         }
     }
 
@@ -241,17 +241,6 @@ public class Monitor {
      * @throws IllegalAccessException
      */
     private void launchBot(Robot bot, HashMap weaponCapabilities, Object strategyInstance) throws InvocationTargetException, IllegalAccessException {
-        int nextMove = (int) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "move", null);
-
-        int nextMoveY = (int) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "moveY", null);
-
-        ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", bot.getLabel(), nextMove,nextMoveY);
-        bot.setX(nextMove);
-        bot.setY(nextMoveY+1);
-
-        System.out.println(bot.getY());
-
-
 
         if(bot.getEnergy() < (Integer)weaponCapabilities.get("consumeEnergy")){
             bot.incrementEnergy(10);
