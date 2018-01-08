@@ -8,16 +8,16 @@ import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-@Plugin(name="Energy", type="core", required=1)
+@Plugin(name = "BarPanel", type="core", required = 1)
 public class Energy {
-    private final JPanel panel;
+    private final JFrame jFrame;
     private JLabel bar;
 
-    public Energy(JPanel panel){
-        this.panel = panel;
+
+    public Energy(JFrame jFrame){
+        this.jFrame = jFrame;
     }
 
-    @PluginTrait(type="draw", on="robot")
     public void drawEnergy(Object robot) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         int x = (Integer) this.callGetOnRobot("getX", robot);
         int y = (Integer) this.callGetOnRobot("getY", robot);
@@ -33,9 +33,9 @@ public class Energy {
         this.bar.setBounds(new Rectangle(x, y , energy, 10));
         this.bar.setBackground(Color.blue);
 
-        this.panel.add(nameLabel);
-        this.panel.add(bar);
-        this.panel.repaint();
+        this.jFrame.add(nameLabel);
+        this.jFrame.add(bar);
+        this.jFrame.repaint();
     }
 
     @PluginTrait(type="update", on="robot")
@@ -45,7 +45,7 @@ public class Energy {
         this.bar.setText(String.valueOf(energy));
         this.bar.setForeground(Color.WHITE);
 
-        this.panel.repaint();
+        this.jFrame.repaint();
     }
 
     private Object callGetOnRobot(String getterName, Object robot) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {

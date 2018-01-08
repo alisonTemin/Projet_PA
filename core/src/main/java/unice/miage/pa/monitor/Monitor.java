@@ -200,13 +200,14 @@ public class Monitor {
         robot.setLabel(botLabel);
 
         // Draw bars
-        Object statusLifeBot = ReflectionUtil.__construct((Class)plugins.get("Life"), this.panel);
-        Object energyLifeBot = ReflectionUtil.__construct((Class)plugins.get("Energy"), this.panel);
+        JFrame jFrame = new JFrame();
+        Object statusLifeBot = ReflectionUtil.__construct((Class)plugins.get("BarPanel"), jFrame);
+        Object energyLifeBot = ReflectionUtil.__construct((Class)plugins.get("BarPanel"), jFrame);
         ReflectionUtil.invokeMethodByTrait(statusLifeBot, "draw", robot);
         ReflectionUtil.invokeMethodByTrait(energyLifeBot, "draw", robot);
 
-        plugins.put("Life"+robot.getName(), statusLifeBot);
-        plugins.put("Energy"+robot.getName(), energyLifeBot);
+        plugins.put("BarPanel"+robot.getName(), statusLifeBot);
+        plugins.put("BarPanel"+robot.getName(), energyLifeBot);
 
         robot.setWeapon(plugins.get("Sword"));
     }
@@ -219,7 +220,7 @@ public class Monitor {
      */
     private void updateBars() throws InvocationTargetException, IllegalAccessException {
         for(String pluginName : this.plugins.keySet()){
-            Pattern energyOrLifeBar = Pattern.compile("Energy(.*)|Life(.*)");
+            Pattern energyOrLifeBar = Pattern.compile("BarPanel(.*)|BarPanel(.*)");
             Matcher matcher = energyOrLifeBar.matcher(pluginName);
 
             while (matcher.find()) {

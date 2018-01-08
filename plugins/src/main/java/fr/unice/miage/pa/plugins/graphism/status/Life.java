@@ -8,16 +8,15 @@ import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-/**
- * Created by Corentin on 04/01/2018.
- */
-@Plugin(name="Life", type="core", required=1)
+
+@Plugin(name = "BarPanel", type="core", required = 1)
 public class Life {
-    private final JPanel panel;
+    private  JFrame jFrame;
     private JLabel bar;
 
+
     public Life(JPanel panel){
-        this.panel = panel;
+        this.jFrame = jFrame;
     }
 
     private Object callGetOnRobot(String getterName, Object robot) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
@@ -36,8 +35,8 @@ public class Life {
         this.bar.setBounds(new Rectangle(x, y+60, health, 10));
         this.bar.setBackground(Color.GREEN);
 
-        this.panel.add(this.bar);
-        this.panel.repaint();
+        this.jFrame.add(this.bar);
+        this.jFrame.repaint();
     }
 
     @PluginTrait(type="update", on="robot")
@@ -48,7 +47,7 @@ public class Life {
         this.bar.setText(String.valueOf(health));
         this.bar.setForeground(Color.GRAY);
 
-        this.panel.repaint();
+        this.jFrame.repaint();
     }
 
 
