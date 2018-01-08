@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 
-@Plugin(name = "BarPanel", type="core", required = 1)
+@Plugin(name = "Life", type="core", required = 1)
 public class Life {
     private  JFrame jFrame;
     private JLabel bar;
