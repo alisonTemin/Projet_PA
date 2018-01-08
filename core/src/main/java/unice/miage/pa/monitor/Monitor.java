@@ -79,20 +79,25 @@ public class Monitor {
 
             result += Integer.toString(rnd.nextInt(900));
 
+            // First is at left
+            Robot fakePlayer = null;
             if(i > 0 && i % 2 != 0){
+                // He is at right
                 x = x + 200;
+                fakePlayer = new Robot(result, 100,100, x, y, 1);
+
             }
 
             if(i % 2 == 0 && i != 0){
+                // He is at left
                 x = 10;
                 y = y + 100;
             }
 
-            // Create two stupids bots
-            Robot chappy = new Robot(result, 100,100, x, y);
+            if(fakePlayer == null)
+                fakePlayer = new Robot(result, 100,100, x, y, 0);
 
-            this.board.addBot(chappy);
-
+            this.board.addBot(fakePlayer);
         }
 
         int botCount = 0;

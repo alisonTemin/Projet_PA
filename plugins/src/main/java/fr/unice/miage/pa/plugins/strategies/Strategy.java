@@ -34,8 +34,12 @@ public class Strategy {
         int nextMoveX = (Integer) move.invoke(plugins.get("RandomMove"));
         int nextMoveY = (Integer) moveY.invoke(plugins.get("RandomMove"));
 
-        this.methodOnBot("setX", monitored, int.class).invoke(monitored, nextMoveY);
-        this.methodOnBot("setY", monitored, int.class).invoke(monitored, nextMoveX);
+        int monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
+        int monitoredY = (Integer) this.getterOnBot("getY", monitored).invoke(monitored);
+        int attackedX = (Integer) this.getterOnBot("getX", attacked).invoke(attacked);
+        int attackedY = (Integer) this.getterOnBot("getY", attacked).invoke(attacked);
+
+        int direction = (Integer) this.getterOnBot("getDirection", monitored).invoke(monitored);
 
         Method moveInGraphics = (Method) PluginUtil.getMethodUsingTrait(plugins.get("Graphism"), "move");
 
@@ -43,23 +47,40 @@ public class Strategy {
             System.out.println("Graphism plugin not loaded");
             throw new Exception("Graphism not loaded");
         }
-        int monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
-        int monitoredY = (Integer) this.getterOnBot("getY", monitored).invoke(monitored);
-        int attackedX = (Integer) this.getterOnBot("getX", attacked).invoke(attacked);
-        int attackedY = (Integer) this.getterOnBot("getY", attacked).invoke(attacked);
 
-        moveInGraphics.invoke(plugins.get("Graphism"), label, monitoredX + nextMoveX, monitoredY + nextMoveY);
+        this.methodOnBot("setY", monitored, int.class).invoke(monitored, monitoredY + nextMoveY);
+        monitoredY = (Integer) this.getterOnBot("getY", monitored).invoke(monitored);
+        
+        if(direction == 0){
+            int nextX = monitoredX + nextMoveX;
+            if(monitoredX > attackedX){
+                nextX = monitoredX - nextMoveX;
+            }
+            this.methodOnBot("setX", monitored, int.class).invoke(monitored, nextX);
+            monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
+        }
 
-        if(( (Integer)this.getterOnBot("getHealth", attacked).invoke(attacked) <= 0) && (monitoredY + 10 > attackedY)|| (monitoredY - 10 < attackedY)) {
+        if(direction == 1){
+            int nextX = monitoredX - nextMoveX;
+            if(monitoredX < attackedX){
+                nextX = monitoredX + nextMoveX;
+            }
+            this.methodOnBot("setX", monitored, int.class).invoke(monitored, nextX);
+            monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
+        }
+        moveInGraphics.invoke(plugins.get("Graphism"), label, monitoredX, monitoredY);
+
+        if(( (Integer)this.getterOnBot("getHealth", attacked).invoke(attacked) <= 0) && ((monitoredY + 10 > attackedY) || (monitoredY - 10 < attackedY))) {
             int consumeLife = (Integer) weaponCapabilities.get("baseAttack");
-            int consumeEnergy = (Integer) weaponCapabilities.get("consumeEnergy");
 
-            Method setterLife = this.methodOnBot("decrementHealth", monitored, int.class);
-            Method setterEnergy = this.methodOnBot("decrementEnergy", monitored, int.class);
+            Method setterLife = this.methodOnBot("decrementHealth", attacked, int.class);
 
             setterLife.invoke(attacked, consumeLife);
-            setterEnergy.invoke(monitored, consumeEnergy);
         }
+
+        int consumeEnergy = (Integer) weaponCapabilities.get("consumeEnergy");
+        Method setterEnergy = this.methodOnBot("decrementEnergy", monitored, int.class);
+        setterEnergy.invoke(monitored, consumeEnergy);
     }
 
     private Method getterOnBot(String getterName, Object bot) throws NoSuchMethodException {

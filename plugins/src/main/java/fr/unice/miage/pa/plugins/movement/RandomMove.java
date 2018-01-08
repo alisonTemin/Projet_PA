@@ -11,11 +11,11 @@ public class RandomMove {
     @PluginTrait(type="move", on="robot")
     public int nextPlace(){
         Random generator = new Random();
-        return generator.nextInt(300) + 1;
+        return generator.nextInt(30) + 1;
     }
     @PluginTrait(type="moveY", on="robot")
     public int nextPlaceY(){
         Random generator = new Random();
-        return generator.nextInt(20) +1 ;
+        return generator.nextInt(10) +1 ;
     }
 }
