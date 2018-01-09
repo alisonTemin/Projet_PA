@@ -264,6 +264,7 @@ public class Monitor {
                 if((Boolean)ReflectionUtil.invokeMethodByTrait(strategyInstance, "couldAttack", attacked)){
                     ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", attacked);
                 }
+                ReflectionUtil.invokeMethodByTrait(strategyInstance, "consume", null);
             }
         }
 

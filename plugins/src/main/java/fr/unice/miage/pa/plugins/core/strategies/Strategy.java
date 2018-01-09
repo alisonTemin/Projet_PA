@@ -91,10 +91,6 @@ public class Strategy {
                 // He is my opponent if my X is upper of attacked
                 if(closestX > attackedX)
                     closest = attacked;
-
-                // TODO : Use traits for below
-                int consumeEnergy = (Integer) weaponCapabilities.get("consumeEnergy");
-                this.methodOnBot("decrementEnergy", monitored, int.class).invoke(monitored, consumeEnergy);
             }
         }
 
@@ -134,6 +130,12 @@ public class Strategy {
             return true;
 
         return false;
+    }
+
+    @PluginTrait(type="consume", on="monitored")
+    public void consume() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        int consumeEnergy = (Integer) weaponCapabilities.get("consumeEnergy");
+        this.methodOnBot("decrementEnergy", monitored, int.class).invoke(monitored, consumeEnergy);
     }
 
     /**
