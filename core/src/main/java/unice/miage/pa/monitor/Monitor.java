@@ -259,10 +259,12 @@ public class Monitor {
         } else if(bot.getHealth() > 0) {
             ReflectionUtil.invokeMethodByTrait(strategyInstance, "movements", null);
             Object attacked = ReflectionUtil.invokeMethodByTrait(strategyInstance, "decide", null);
-            if(attacked != null)
-                ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", attacked);
-            //else
-                //System.out.println(bot.getName() + " can't attack :/");
+            if(attacked != null){
+                ReflectionUtil.invokeMethodByTrait(strategyInstance, "moveTo", attacked);
+                if((Boolean)ReflectionUtil.invokeMethodByTrait(strategyInstance, "couldAttack", attacked)){
+                    ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", attacked);
+                }
+            }
         }
 
         // The energy should increment regularly, according to the docs

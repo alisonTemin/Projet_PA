@@ -29,6 +29,18 @@ public class Strategy {
         this.name = "Base";
     }
 
+    @PluginTrait(type="movements", on="strategy")
+    @PluginOverridable(name="movements", on="strategy")
+    public void movements() throws InvocationTargetException, IllegalAccessException {
+        Method move = (Method) PluginUtil.getMethodUsingTrait(plugins.get("RandomMove"), "move");
+        Method moveY = (Method) PluginUtil.getMethodUsingTrait(plugins.get("RandomMove"), "moveY");
+
+        this.nextMoveX = (Integer) move.invoke(plugins.get("RandomMove"));
+        this.nextMoveY = (Integer) moveY.invoke(plugins.get("RandomMove"));
+
+
+    }
+
     @PluginTrait(type="decide", on="robot")
     @PluginOverridable(name="decide", on="strategy")
     public Object decide() throws Exception {
@@ -36,14 +48,11 @@ public class Strategy {
         int monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
 
         for(Object attacked : this.opponents){
-            if (moveBasics(name, monitoredX, attacked)) continue;
+            if (checks(name, monitoredX, attacked)) continue;
 
             if((Integer) this.getterOnBot("getHealth", attacked).invoke(attacked) > 0) {
-                this.moveTo(attacked);
-
                 int consumeEnergy = (Integer) weaponCapabilities.get("consumeEnergy");
-                Method setterEnergy = this.methodOnBot("decrementEnergy", monitored, int.class);
-                setterEnergy.invoke(monitored, consumeEnergy);
+                this.methodOnBot("decrementEnergy", monitored, int.class).invoke(monitored, consumeEnergy);
 
                 return attacked;
             }
@@ -53,7 +62,8 @@ public class Strategy {
         return null;
     }
 
-    private boolean moveBasics(String name, int monitoredX, Object attacked) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    @PluginTrait(type="checks", on="strategy")
+    private boolean checks(String name, int monitoredX, Object attacked) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         int maybeAttackedX = (Integer) this.getterOnBot("getX", attacked).invoke(attacked);
         String maybeAttackedName = (String) this.getterOnBot("getName", attacked).invoke(attacked);
         if(maybeAttackedName.equals(name))
@@ -64,13 +74,12 @@ public class Strategy {
         return false;
     }
 
-    @PluginTrait(type="movements", on="strategy")
-    public void movements() throws InvocationTargetException, IllegalAccessException {
-        Method move = (Method) PluginUtil.getMethodUsingTrait(plugins.get("RandomMove"), "move");
-        Method moveY = (Method) PluginUtil.getMethodUsingTrait(plugins.get("RandomMove"), "moveY");
+    @PluginTrait(type="couldAttack", on="opponent")
+    public boolean couldAttack(Object attacked) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        int monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
 
-        this.nextMoveX = (Integer) move.invoke(plugins.get("RandomMove"));
-        this.nextMoveY = (Integer) moveY.invoke(plugins.get("RandomMove"));
+        return checks(name, monitoredX, attacked);
+
     }
 
     @PluginTrait(type="moveTo", on="strategy")
