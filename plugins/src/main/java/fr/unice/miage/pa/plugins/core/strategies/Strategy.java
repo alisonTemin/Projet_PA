@@ -71,19 +71,18 @@ public class Strategy {
         String name = (String) this.getterOnBot("getName", this.monitored).invoke(monitored);
         int monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
 
-        Object closest = null;
-
         Double random = (Math.random() * this.opponents.size());
-
-        //if(this.opponents.get(random.intValue()))
+        Object closest = this.opponents.get(random.intValue());
 
         for(Object attacked : this.opponents){
             if(closest == null)
                 closest = attacked;
 
+            int closestLife = (Integer) this.getterOnBot("getHealth", attacked).invoke(attacked);
+
             if (checks(name, monitoredX, attacked)) continue;
 
-            if((Integer) this.getterOnBot("getHealth", attacked).invoke(attacked) > 0) {
+            if(closestLife > 0) {
                 int attackedX = (Integer)this.getterOnBot("getX", attacked).invoke(attacked);
                 int closestX = (Integer)this.getterOnBot("getX", closest).invoke(closest);
 
@@ -114,12 +113,23 @@ public class Strategy {
     @PluginTrait(type="checks", on="strategy")
     private boolean checks(String name, int monitoredX, Object attacked) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         int maybeAttackedX = (Integer) this.getterOnBot("getX", attacked).invoke(attacked);
+        int maybeAttackedLife = (Integer) this.getterOnBot("getHealth", attacked).invoke(attacked);
+
+        int monitoredEnergy = (Integer) this.getterOnBot("getEnergy", attacked).invoke(attacked);
+
         String maybeAttackedName = (String) this.getterOnBot("getName", attacked).invoke(attacked);
         if(maybeAttackedName.equals(name))
             return true;
 
+        if(maybeAttackedLife == 0)
+            return false;
+
+        if(monitoredEnergy > (Integer) weaponCapabilities.get("consumeEnergy"))
+            return true;
+
         if(maybeAttackedX > (monitoredX + (Integer) weaponCapabilities.get("distance")))
             return true;
+
         return false;
     }
 
