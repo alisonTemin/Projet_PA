@@ -1,8 +1,8 @@
-package fr.unice.miage.pa.plugins.attacks.core;
+package fr.unice.miage.pa.plugins.core.attacks.core;
 
-import fr.unice.miage.pa.plugins.attacks.weapons.*;
+import fr.unice.miage.pa.plugins.core.attacks.weapons.*;
 
-import fr.unice.miage.pa.plugins.annotations.Plugin;
+import fr.unice.miage.pa.plugins.core.annotations.Plugin;
 
 import java.util.HashMap;
 import java.util.Random;

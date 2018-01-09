@@ -1,4 +1,4 @@
-package fr.unice.miage.pa.plugins.attacks.weapons;
+package fr.unice.miage.pa.plugins.core.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,10 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface Weapon {
-    int distance();
-    int consumeEnergy();
-    int baseAttack();
-    int criticalAttack();
+@Target(ElementType.METHOD)
+public @interface PluginTrait {
+    String type();
+    String on();
 }

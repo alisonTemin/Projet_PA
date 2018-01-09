@@ -1,4 +1,4 @@
-package fr.unice.miage.pa.plugins.utils;
+package fr.unice.miage.pa.plugins.core.utils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;

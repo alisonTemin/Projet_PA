@@ -1,7 +1,7 @@
-package fr.unice.miage.pa.plugins.attacks.weapons;
+package fr.unice.miage.pa.plugins.core.attacks.weapons;
 
-import fr.unice.miage.pa.plugins.attacks.core.Attack;
-import fr.unice.miage.pa.plugins.attacks.core.IAttack;
+import fr.unice.miage.pa.plugins.core.attacks.core.Attack;
+import fr.unice.miage.pa.plugins.core.attacks.core.IAttack;
 
 @Weapon(distance = 100, consumeEnergy = 50, criticalAttack = 300, baseAttack = 100)
 public class MachineGun implements IAttack {

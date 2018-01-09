@@ -1,4 +1,4 @@
-package fr.unice.miage.pa.plugins.graphism;
+package fr.unice.miage.pa.plugins.core.graphism;
 
 import javax.swing.*;
 import java.io.FileWriter;

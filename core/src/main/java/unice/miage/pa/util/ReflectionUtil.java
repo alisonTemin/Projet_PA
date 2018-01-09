@@ -6,6 +6,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Vector;
 
 public class ReflectionUtil {
     /**
@@ -21,6 +23,8 @@ public class ReflectionUtil {
      */
     public static Object invokeMethodByTrait(Object pluginInstance, String type, Object on, Object... args) throws InvocationTargetException, IllegalAccessException {
         Method[] methods = pluginInstance.getClass().getMethods();
+
+        // TODO : If loaded plugins contains custom strategy override invoke
 
         for(Method mt : methods) {
             for(Annotation annot : mt.getAnnotations()){
