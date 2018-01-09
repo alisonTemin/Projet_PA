@@ -68,6 +68,7 @@ public class Strategy {
     @PluginOverridable(name="decide", on="strategy")
     public Object decide() throws Exception {
         Double random = (Math.random() * this.opponents.size());
+
         // Grab someone
         Object closest = this.opponents.get(random.intValue());
 
@@ -82,7 +83,7 @@ public class Strategy {
                 int closestX = (Integer)this.getterOnBot("getX", closest).invoke(closest);
 
                 // He is my opponent if my X is upper of attacked
-                if(closestX > attackedX)
+                if(closestX > attackedX + 20)
                     closest = attacked;
             }
         }
@@ -181,16 +182,15 @@ public class Strategy {
         int monitoredEnergy = (Integer) this.getterOnBot("getEnergy", attacked).invoke(attacked);
 
         String maybeAttackedName = (String) this.getterOnBot("getName", attacked).invoke(attacked);
-        if(maybeAttackedName.equals(name))
+        if (maybeAttackedName.equals(name))
             return false;
 
-        if(maybeAttackedLife == 0)
+        if (maybeAttackedLife == 0)
             return false;
 
-        if(monitoredEnergy > (Integer) weaponCapabilities.get("consumeEnergy"))
-            return true;
+        return  monitoredEnergy > (Integer) weaponCapabilities.get("consumeEnergy") ||
+                maybeAttackedX > (monitoredX + (Integer) weaponCapabilities.get("distance"));
 
-        return maybeAttackedX > (monitoredX + (Integer) weaponCapabilities.get("distance"));
     }
 
     /**

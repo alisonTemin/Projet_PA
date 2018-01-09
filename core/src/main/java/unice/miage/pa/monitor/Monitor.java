@@ -292,7 +292,7 @@ public class Monitor {
                 this.off.put(bot.getName(), bot);
             }
 
-            if(bot.getHealth() != 0)
+            if(bot.getHealth() != 0 && !this.off.containsKey(bot.getName()))
                 winner = bot;
 
             if(this.off.size() == this.players.size() - 1){
