@@ -283,7 +283,7 @@ public class Monitor {
     }
 
     private boolean checkGameEnd() {
-        int playersLeft = 0;
+        boolean winnerFound = false;
         Robot winner = null;
 
         for(Robot bot : this.players){
@@ -291,13 +291,17 @@ public class Monitor {
                 this.panel.remove(bot.getLabel());
                 this.off.put(bot.getName(), bot);
             }
-            winner = bot;
 
             if(bot.getHealth() != 0)
-                playersLeft++;
+                winner = bot;
+
+            if(this.off.size() == this.players.size() - 1){
+                winnerFound = true;
+                break;
+            }
         }
 
-        if(playersLeft == 1){
+        if(winnerFound){
             System.out.println(winner.getName() + " wins");
             return true;
         }
