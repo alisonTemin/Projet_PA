@@ -118,7 +118,7 @@ public class Strategy {
 
         String maybeAttackedName = (String) this.getterOnBot("getName", attacked).invoke(attacked);
         if(maybeAttackedName.equals(name))
-            return true;
+            return false;
 
         if(maybeAttackedLife == 0)
             return false;
