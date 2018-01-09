@@ -19,7 +19,7 @@ public class App
      * When launching from java -jar, we need to be at project path (where plugins dir is located, if not, the Autoload can't work)
      * @param args args
      */
-    public static void main( String[] args ) {
+    public static void main( String[] args ) throws Exception {
         JFrame frame = new JFrame();
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -78,6 +78,8 @@ public class App
             boardMonitor.startGame(countBotAsParam, frame);
         } catch (Exception e) {
             e.printStackTrace();
+
+            throw new Exception("Fatal error");
         }
 
     }
