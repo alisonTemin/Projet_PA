@@ -80,9 +80,6 @@ public class Strategy {
             // Grab health of maybe closest guy
             int closestLife = (Integer) this.getterOnBot("getHealth", attacked).invoke(attacked);
 
-            // if checks
-            if (checks(name, monitoredX, attacked)) continue;
-
             // if he is alive
             if(closestLife > 0) {
                 int attackedX = (Integer)this.getterOnBot("getX", attacked).invoke(attacked);
