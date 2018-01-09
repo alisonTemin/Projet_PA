@@ -37,6 +37,8 @@ public class ReflectionUtil {
                             return mt.invoke(pluginInstance, on, args[0]);
                         else if(args.length == 2)
                             return mt.invoke(pluginInstance, on, args[0], args[1]);
+                        else if(args.length == 3)
+                            return mt.invoke(pluginInstance, on, args[0], args[1], args[2]);
                         else if(on == null)
                             return mt.invoke(pluginInstance);
                         else

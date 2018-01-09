@@ -166,11 +166,10 @@ public class Monitor {
 
         mainFrame.setSize( 400,this.players.size() * 60);
 
-        HashMap<String, Robot> winners = new HashMap<>();
-        this.startWar(playerNames.toString(), winners);
+        this.startWar(playerNames.toString());
     }
 
-    private void startWar(String playerNames, HashMap<String, Robot> winners) throws InvocationTargetException, IllegalAccessException, InterruptedException {
+    private void startWar(String playerNames) throws InvocationTargetException, IllegalAccessException, InterruptedException {
         System.out.println("War started \n" + playerNames);
 
         while (this.propagation) {
@@ -258,7 +257,12 @@ public class Monitor {
         if(bot.getEnergy() < (Integer)weaponCapabilities.get("consumeEnergy")){
             bot.incrementEnergy(10);
         } else if(bot.getHealth() > 0) {
-            ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", null);
+            ReflectionUtil.invokeMethodByTrait(strategyInstance, "movements", null);
+            Object attacked = ReflectionUtil.invokeMethodByTrait(strategyInstance, "decide", null);
+            if(attacked != null)
+                ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", attacked);
+            //else
+                //System.out.println(bot.getName() + " can't attack :/");
         }
 
         // The energy should increment regularly, according to the docs
