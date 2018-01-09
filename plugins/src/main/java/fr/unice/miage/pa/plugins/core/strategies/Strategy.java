@@ -72,26 +72,29 @@ public class Strategy {
         int monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
 
         Double random = (Math.random() * this.opponents.size());
+        // Grab someone
         Object closest = this.opponents.get(random.intValue());
 
         for(Object attacked : this.opponents){
-            if(closest == null)
-                closest = attacked;
 
+            // Grab health of maybe closest guy
             int closestLife = (Integer) this.getterOnBot("getHealth", attacked).invoke(attacked);
 
+            // if checks
             if (checks(name, monitoredX, attacked)) continue;
 
+            // if he is alive
             if(closestLife > 0) {
                 int attackedX = (Integer)this.getterOnBot("getX", attacked).invoke(attacked);
                 int closestX = (Integer)this.getterOnBot("getX", closest).invoke(closest);
 
+                // He is my opponent if my X is upper of attacked
                 if(closestX > attackedX)
                     closest = attacked;
 
+                // TODO : Use traits for below
                 int consumeEnergy = (Integer) weaponCapabilities.get("consumeEnergy");
                 this.methodOnBot("decrementEnergy", monitored, int.class).invoke(monitored, consumeEnergy);
-
             }
         }
 
