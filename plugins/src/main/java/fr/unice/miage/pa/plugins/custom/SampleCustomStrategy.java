@@ -2,6 +2,7 @@ package fr.unice.miage.pa.plugins.custom;
 
 import fr.unice.miage.pa.plugins.core.annotations.Plugin;
 import fr.unice.miage.pa.plugins.core.annotations.PluginTrait;
+import fr.unice.miage.pa.plugins.core.utils.PluginUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -29,12 +30,12 @@ public class SampleCustomStrategy {
     public void movements() throws InvocationTargetException, IllegalAccessException {
         // Implement random strategy by setting this.nextMove values
         // core plugin RandomMove could be used
-
-        /* example :
+        Method move = (Method) PluginUtil.getMethodUsingTrait(plugins.get("RandomMove"), "move");
+        Method moveY = (Method) PluginUtil.getMethodUsingTrait(plugins.get("RandomMove"), "moveY");
         Object randomMove = plugins.get("RandomMove");
-        this.nextMoveX = (Method) PluginUtil.getMethodUsingTrait(randomMove, "move").invoke(randomMove);
-        this.nextMoveY = (Method) PluginUtil.getMethodUsingTrait(randomMove, "moveY").invoke(randomMove);
-        */
+
+        this.nextMoveX = (Integer) (move != null ? move.invoke(randomMove) : null);
+        this.nextMoveY = (Integer) (moveY != null ? moveY.invoke(randomMove) : null);
     }
 
     @PluginTrait(type="decide", on="robot")
