@@ -1,4 +1,4 @@
-package fr.unice.miage.pa.plugins.attacks.core;
+package fr.unice.miage.pa.plugins.core.attacks.core;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

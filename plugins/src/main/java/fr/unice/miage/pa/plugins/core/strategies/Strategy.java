@@ -1,9 +1,9 @@
-package fr.unice.miage.pa.plugins.strategies;
+package fr.unice.miage.pa.plugins.core.strategies;
 
-import fr.unice.miage.pa.plugins.annotations.Plugin;
-import fr.unice.miage.pa.plugins.annotations.PluginTrait;
-import fr.unice.miage.pa.plugins.annotations.PluginOverride;
-import fr.unice.miage.pa.plugins.utils.PluginUtil;
+import fr.unice.miage.pa.plugins.core.annotations.Plugin;
+import fr.unice.miage.pa.plugins.core.annotations.PluginOverridable;
+import fr.unice.miage.pa.plugins.core.annotations.PluginTrait;
+import fr.unice.miage.pa.plugins.core.utils.PluginUtil;
 
 import javax.swing.*;
 import java.lang.reflect.InvocationTargetException;
@@ -26,6 +26,7 @@ public class Strategy {
     }
 
     @PluginTrait(type="attack", on="robot")
+    @PluginOverridable(name="attack", on="strategy")
     public void attack() throws Exception {
         String name = (String) this.getterOnBot("getName", this.monitored).invoke(monitored);
         int monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
@@ -50,7 +51,7 @@ public class Strategy {
         setterEnergy.invoke(monitored, consumeEnergy);
     }
 
-    @PluginOverride(name="moveTo")
+    @PluginOverridable(name="moveTo", on="strategy")
     private void moveTo(Object attacked) throws Exception {
         int opponentX = (Integer) this.getterOnBot("getX", attacked).invoke(attacked);
         int opponentY = (Integer) this.getterOnBot("getY", attacked).invoke(attacked);
@@ -115,7 +116,6 @@ public class Strategy {
         moveInGraphics.invoke(plugins.get("Graphism"), label, monitoredX, monitoredY);
     }
 
-    @PluginOverride(name="moveTo")
     private void attack(Object attacked) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         int consumeLife = (Integer) weaponCapabilities.get("baseAttack");
 

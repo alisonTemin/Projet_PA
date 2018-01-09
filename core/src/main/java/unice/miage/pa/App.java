@@ -47,6 +47,12 @@ public class App
             Object graphismInstance = ReflectionUtil.__construct(plugins.get("Graphism"), mainPanel);
             Object moveInstance = ReflectionUtil.__construct(plugins.get("RandomMove"));
 
+            for(String customStrategy : plugins.keySet()){
+                if(customStrategy.startsWith("Custom")){
+                    boardMonitor.addPlugin(customStrategy, plugins.get(customStrategy));
+                }
+            }
+
             boardMonitor.addPlugin("Console", consoleInstance);
             boardMonitor.addPlugin("Weapons", plugins.get("Weapons"));
             boardMonitor.addPlugin("Sword", plugins.get("Sword"));

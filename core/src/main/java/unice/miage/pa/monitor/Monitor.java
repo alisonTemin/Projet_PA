@@ -111,9 +111,24 @@ public class Monitor {
         for(Robot bot : bots){
             Object strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, bots, weaponCapabilities, this.plugins);
 
+            if(this.customs().size() != 0){
+                System.out.println("Custom strategy loaded for " + bot.getName());
+                strategy = ReflectionUtil.__constructStrategy((Class) this.customs().values().toArray()[0], bot, bots, weaponCapabilities, this.plugins);
+            }
+
             bot.setStrategy(strategy);
             this.strategies.add(strategy);
         }
+    }
+
+    private HashMap<String, Class> customs(){
+        HashMap<String, Class> customs = new HashMap<>();
+        for(String customName : this.plugins.keySet()){
+            if(customName.startsWith("Custom")){
+                customs.put(customName, (Class)plugins.get(customName));
+            }
+        }
+        return customs;
     }
 
     /**

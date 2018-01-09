@@ -1,7 +1,7 @@
-package fr.unice.miage.pa.plugins.movement;
+package fr.unice.miage.pa.plugins.core.movement;
 
-import fr.unice.miage.pa.plugins.annotations.Plugin;
-import fr.unice.miage.pa.plugins.annotations.PluginTrait;
+import fr.unice.miage.pa.plugins.core.annotations.Plugin;
+import fr.unice.miage.pa.plugins.core.annotations.PluginTrait;
 
 import java.util.Random;
 
