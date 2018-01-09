@@ -184,7 +184,7 @@ public class Monitor {
                 this.launchBot(bot, weaponCapabilities, bot.getStrategy());
             }
 
-            Thread.sleep(500);
+            Thread.sleep(100);
         }
     }
 

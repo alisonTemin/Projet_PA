@@ -49,10 +49,10 @@ public class SampleCustomStrategy {
     }
 
     /**
-     * Call a getter on bot
+     * Generic get on bot
      * @param getterName
      * @param bot
-     * @return
+     * @return getter method
      * @throws NoSuchMethodException
      */
     private Method getterOnBot(String getterName, Object bot) throws NoSuchMethodException {
@@ -60,14 +60,14 @@ public class SampleCustomStrategy {
     }
 
     /**
-     * Call a method on bot
-     * @param setterName
-     * @param bot
-     * @param clazz
-     * @return
+     * Get a method on bot
+     * @param methodName method name
+     * @param bot bot object
+     * @param clazz int.class for example
+     * @return method
      * @throws NoSuchMethodException
      */
-    private Method methodOnBot(String setterName, Object bot, Class clazz) throws NoSuchMethodException {
-        return bot.getClass().getDeclaredMethod(setterName, clazz);
+    private Method methodOnBot(String methodName, Object bot, Class clazz) throws NoSuchMethodException {
+        return bot.getClass().getDeclaredMethod(methodName, clazz);
     }
 }
