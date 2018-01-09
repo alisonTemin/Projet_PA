@@ -153,8 +153,9 @@ public class Monitor {
         barFrame.setLocation(400, 330);
         barFrame.setTitle("Life / Energy");
 
-        // Drawing our bots
-        // TODO : If loaded plugin Graphism..
+        // Setup our fake bots
+        // TODO : Ask user for what kind of strategy to use on bot X
+
         StringBuilder playerNames = new StringBuilder("Players : " + this.players.size() + "\n");
         for(Robot robot : this.players){
             this.setupBot(robot, barFrame);
