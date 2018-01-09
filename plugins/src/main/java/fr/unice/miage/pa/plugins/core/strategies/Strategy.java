@@ -75,12 +75,12 @@ public class Strategy {
         for(Object attacked : this.opponents){
 
             // Grab health of maybe closest guy
-            int closestLife = (Integer) this.getterOnBot("getHealth", attacked).invoke(attacked);
+            int closestLife = (Integer) PluginUtil.getterOnBot("getHealth", attacked).invoke(attacked);
 
             // if he is alive
             if(closestLife > 0) {
-                int attackedX = (Integer)this.getterOnBot("getX", attacked).invoke(attacked);
-                int closestX = (Integer)this.getterOnBot("getX", closest).invoke(closest);
+                int attackedX = (Integer)PluginUtil.getterOnBot("getX", attacked).invoke(attacked);
+                int closestX = (Integer)PluginUtil.getterOnBot("getX", closest).invoke(closest);
 
                 // He is my opponent if my X is upper of attacked
                 if(closestX > attackedX + 20)
@@ -106,7 +106,7 @@ public class Strategy {
     @PluginTrait(type="consume", on="monitored")
     public void consume() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         int consumeEnergy = (Integer) weaponCapabilities.get("consumeEnergy");
-        this.methodOnBot("decrementEnergy", monitored, int.class).invoke(monitored, consumeEnergy);
+        PluginUtil.methodOnBot("decrementEnergy", monitored, int.class).invoke(monitored, consumeEnergy);
     }
 
     /**
@@ -119,7 +119,7 @@ public class Strategy {
      */
     @PluginTrait(type="couldAttack", on="opponent")
     public boolean couldAttack(Object attacked) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        int monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
+        int monitoredX = (Integer) PluginUtil.getterOnBot("getX", monitored).invoke(monitored);
 
         return checks(name, monitoredX, attacked);
     }
@@ -132,11 +132,11 @@ public class Strategy {
      */
     @PluginTrait(type="moveTo", on="strategy")
     public int moveTo(Object attacked) throws Exception {
-        int opponentX = (Integer) this.getterOnBot("getX", attacked).invoke(attacked);
-        int opponentY = (Integer) this.getterOnBot("getY", attacked).invoke(attacked);
+        int opponentX = (Integer) PluginUtil.getterOnBot("getX", attacked).invoke(attacked);
+        int opponentY = (Integer) PluginUtil.getterOnBot("getY", attacked).invoke(attacked);
 
-        int monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
-        int monitoredY = (Integer) this.getterOnBot("getY", monitored).invoke(monitored);
+        int monitoredX = (Integer) PluginUtil.getterOnBot("getX", monitored).invoke(monitored);
+        int monitoredY = (Integer) PluginUtil.getterOnBot("getY", monitored).invoke(monitored);
 
         // Avoid stacking in upper right
         if(monitoredX < 20 || monitoredY < 20){
@@ -155,8 +155,8 @@ public class Strategy {
         if(monitoredY < opponentY){
             nextY = monitoredY + nextMoveY;
         }
-        this.methodOnBot("setX", monitored, int.class).invoke(monitored, monitoredX);
-        this.methodOnBot("setY", monitored, int.class).invoke(monitored, nextY);
+        PluginUtil.methodOnBot("setX", monitored, int.class).invoke(monitored, monitoredX);
+        PluginUtil.methodOnBot("setY", monitored, int.class).invoke(monitored, nextY);
 
         this.processNextMove(opponentX);
 
@@ -176,12 +176,12 @@ public class Strategy {
      */
     @PluginTrait(type="checks", on="strategy")
     private boolean checks(String name, int monitoredX, Object attacked) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        int maybeAttackedX = (Integer) this.getterOnBot("getX", attacked).invoke(attacked);
-        int maybeAttackedLife = (Integer) this.getterOnBot("getHealth", attacked).invoke(attacked);
+        int maybeAttackedX = (Integer) PluginUtil.getterOnBot("getX", attacked).invoke(attacked);
+        int maybeAttackedLife = (Integer) PluginUtil.getterOnBot("getHealth", attacked).invoke(attacked);
 
-        int monitoredEnergy = (Integer) this.getterOnBot("getEnergy", attacked).invoke(attacked);
+        int monitoredEnergy = (Integer) PluginUtil.getterOnBot("getEnergy", attacked).invoke(attacked);
 
-        String maybeAttackedName = (String) this.getterOnBot("getName", attacked).invoke(attacked);
+        String maybeAttackedName = (String) PluginUtil.getterOnBot("getName", attacked).invoke(attacked);
         if (maybeAttackedName.equals(name))
             return false;
 
@@ -200,10 +200,10 @@ public class Strategy {
      */
     @PluginTrait(type="nextMove", on="strategy")
     private void processNextMove(int opponentX) throws Exception {
-        JLabel label = (JLabel) this.getterOnBot("getLabel", monitored).invoke(monitored);
-        int direction = (Integer) this.getterOnBot("getDirection", monitored).invoke(monitored);
-        int monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
-        int monitoredY = (Integer) this.getterOnBot("getY", monitored).invoke(monitored);
+        JLabel label = (JLabel) PluginUtil.getterOnBot("getLabel", monitored).invoke(monitored);
+        int direction = (Integer) PluginUtil.getterOnBot("getDirection", monitored).invoke(monitored);
+        int monitoredX = (Integer) PluginUtil.getterOnBot("getX", monitored).invoke(monitored);
+        int monitoredY = (Integer) PluginUtil.getterOnBot("getY", monitored).invoke(monitored);
 
         Method moveInGraphics = (Method) PluginUtil.getMethodUsingTrait(plugins.get("Graphism"), "move");
 
@@ -216,8 +216,8 @@ public class Strategy {
             if(monitoredX > opponentX){
                 nextX = monitoredX - nextMoveX;
             }
-            this.methodOnBot("setX", monitored, int.class).invoke(monitored, nextX);
-            monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
+            PluginUtil.methodOnBot("setX", monitored, int.class).invoke(monitored, nextX);
+            monitoredX = (Integer) PluginUtil.getterOnBot("getX", monitored).invoke(monitored);
         }
 
         if(direction == 1){
@@ -225,8 +225,8 @@ public class Strategy {
             if(monitoredX < opponentX){
                 nextX = monitoredX + nextMoveX;
             }
-            this.methodOnBot("setX", monitored, int.class).invoke(monitored, nextX);
-            monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
+            PluginUtil.methodOnBot("setX", monitored, int.class).invoke(monitored, nextX);
+            monitoredX = (Integer) PluginUtil.getterOnBot("getX", monitored).invoke(monitored);
         }
         moveInGraphics.invoke(plugins.get("Graphism"), label, monitoredX, monitoredY);
     }
@@ -242,31 +242,8 @@ public class Strategy {
     public void attack(Object attacked) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         int consumeLife = (Integer) weaponCapabilities.get("baseAttack");
 
-        Method setterLife = this.methodOnBot("decrementHealth", attacked, int.class);
+        Method setterLife = PluginUtil.methodOnBot("decrementHealth", attacked, int.class);
 
         setterLife.invoke(attacked, consumeLife);
-    }
-
-    /**
-     * Generic get on bot
-     * @param getterName
-     * @param bot
-     * @return getter method
-     * @throws NoSuchMethodException
-     */
-    private Method getterOnBot(String getterName, Object bot) throws NoSuchMethodException {
-        return bot.getClass().getDeclaredMethod(getterName);
-    }
-
-    /**
-     * Get a method on bot
-     * @param methodName method name
-     * @param bot bot object
-     * @param clazz int.class for example
-     * @return method
-     * @throws NoSuchMethodException
-     */
-    private Method methodOnBot(String methodName, Object bot, Class clazz) throws NoSuchMethodException {
-        return bot.getClass().getDeclaredMethod(methodName, clazz);
     }
 }

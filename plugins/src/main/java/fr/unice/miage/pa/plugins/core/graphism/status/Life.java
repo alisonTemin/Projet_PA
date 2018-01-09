@@ -2,6 +2,7 @@ package fr.unice.miage.pa.plugins.core.graphism.status;
 
 import fr.unice.miage.pa.plugins.core.annotations.Plugin;
 import fr.unice.miage.pa.plugins.core.annotations.PluginTrait;
+import fr.unice.miage.pa.plugins.core.utils.PluginUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,10 +20,6 @@ public class Life {
         this.panel = panel;
     }
 
-    private Object callGetOnRobot(String getterName, Object robot) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method getter = robot.getClass().getDeclaredMethod(getterName);
-        return getter.invoke(robot);
-    }
 
     @PluginTrait(type="draw", on="robot")
     public void drawLife(Object robot) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
@@ -57,5 +54,7 @@ public class Life {
         this.panel.repaint();
     }
 
-
+    private Object callGetOnRobot(String getterName, Object robot) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        return PluginUtil.getterOnBot(getterName, robot).invoke(robot);
+    }
 }
