@@ -272,7 +272,7 @@ public class Monitor {
                     ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", attacked);
                 }
                 // @Tool : Comment to speedify bots
-                Thread.sleep(20);
+                Thread.sleep(30);
                 ReflectionUtil.invokeMethodByTrait(strategyInstance, "consume", null);
             }
         }
