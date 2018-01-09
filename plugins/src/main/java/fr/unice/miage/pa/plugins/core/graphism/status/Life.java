@@ -44,8 +44,15 @@ public class Life {
         int health = (Integer) this.callGetOnRobot("getHealth", robot);
         String name = (String) this.callGetOnRobot("getName", robot);
 
+        this.bar.setForeground(Color.black);
         this.bar.setText(name + " : " + String.valueOf(health));
-        this.bar.setForeground(Color.GRAY);
+
+        if(health == 0) {
+            this.bar.setForeground(Color.white);
+            this.bar.setBackground(Color.red);
+            this.bar.setText(name + " (Dead)");
+        }
+
 
         this.panel.repaint();
     }

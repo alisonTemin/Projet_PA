@@ -40,7 +40,11 @@ public class Energy {
 
     @PluginTrait(type="update", on="robot")
     public void updateEnergy(Object robot) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        int health = (Integer) this.callGetOnRobot("getHealth", robot);
         int energy = (Integer) this.callGetOnRobot("getEnergy", robot);
+
+        if(health == 0)
+            this.bar.setVisible(false);
 
         this.bar.setText(String.valueOf(energy));
         this.bar.setForeground(Color.WHITE);

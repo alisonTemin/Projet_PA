@@ -166,7 +166,7 @@ public class Monitor {
     }
 
     private void startWar(String playerNames, HashMap<String, Robot> winners) throws InvocationTargetException, IllegalAccessException, InterruptedException {
-        System.out.println("War started | " + playerNames);
+        System.out.println("War started \n" + playerNames);
 
         while (this.propagation) {
             if(this.checkGameEnd()){

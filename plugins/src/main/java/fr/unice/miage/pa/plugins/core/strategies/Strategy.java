@@ -43,6 +43,7 @@ public class Strategy {
             if((Integer) this.getterOnBot("getHealth", attacked).invoke(attacked) > 0) {
                 this.moveTo(attacked);
                 this.attack(attacked);
+                break;
             }
         }
 
@@ -77,12 +78,13 @@ public class Strategy {
             throw new Exception("Graphism not loaded");
         }
         int nextY = monitoredY + nextMoveY;
-        if(monitoredX < 0){
-            monitoredX = 100;
+
+        // Avoid stacking in upper right
+        if(monitoredX < 20 || monitoredY < 20){
+            monitoredX = 50;
+            monitoredY = 50;
         }
-        if(monitoredY < 0){
-            monitoredY = 200;
-        }
+
         // Borders
         if(monitoredY > opponentY){
             // He is down of attacked
