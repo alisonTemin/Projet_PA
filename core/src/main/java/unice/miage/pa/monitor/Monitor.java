@@ -135,6 +135,7 @@ public class Monitor {
         barFrame.setVisible(true);
         barFrame.setLayout(new GridLayout(3, 2));
         barFrame.setLocation(400, 300);
+        barFrame.setTitle("Life / Energy");
 
         // Drawing our bots
         // TODO : If loaded plugin Graphism..
@@ -247,18 +248,21 @@ public class Monitor {
 
     private boolean checkGameEnd() throws InterruptedException {
         int playersLeft = 0;
+        Robot winner = null;
 
         for(Robot bot : this.players){
             if(bot.getHealth() == 0 && !this.off.containsKey(bot.getName())){
                 this.panel.remove(bot.getLabel());
                 this.off.put(bot.getName(), bot);
             }
+            winner = bot;
 
             if(bot.getHealth() != 0)
                 playersLeft++;
         }
 
         if(playersLeft == 1){
+            System.out.println(winner.getName() + " wins");
             return true;
         }
 
