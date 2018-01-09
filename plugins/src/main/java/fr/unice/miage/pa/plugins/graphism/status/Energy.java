@@ -8,10 +8,11 @@ import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-@Plugin(name="Energy", type="core", required=1)
+@Plugin(name = "Energy", type="core", required = 1)
 public class Energy {
-    private final JPanel panel;
     private JLabel bar;
+    private JPanel panel;
+
 
     public Energy(JPanel panel){
         this.panel = panel;
@@ -33,8 +34,7 @@ public class Energy {
         this.bar.setBounds(new Rectangle(x, y , energy, 10));
         this.bar.setBackground(Color.blue);
 
-        this.panel.add(nameLabel);
-        this.panel.add(bar);
+        this.panel.add(this.bar);
         this.panel.repaint();
     }
 

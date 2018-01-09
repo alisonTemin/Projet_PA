@@ -1,5 +1,6 @@
 package unice.miage.pa.monitor;
 
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -15,12 +16,15 @@ import javax.swing.*;
 public class Monitor {
     private final JPanel panel;
     private final Board board;
+    private final JFrame frame;
 
     private Object graphismInstance;
     private final HashMap<String, Object> plugins;
     private ArrayList<Robot> players;
 
     private final ArrayList<Object> strategies;
+    private final HashMap<String, Robot> off;
+    private boolean propagation;
 
     /**
      * Contains every plugin dependencies identified by plugin name
@@ -31,15 +35,17 @@ public class Monitor {
      * Monitor constructor
      * @param board Game board
      */
-    public Monitor(Board board, JPanel panel) {
+    public Monitor(Board board, JPanel panel, JFrame frame) {
         this.board = board;
+        this.frame = frame;
         this.plugins = new HashMap<>();
         this.dependencies = new HashMap<>();
         this.players = new ArrayList<>();
         this.strategies = new ArrayList<>();
+        this.off = new HashMap<>();
         this.panel = panel;
+        this.propagation = true;
     }
-
     /**
      * Add a plugin to monitor
      * @param name plugin name
@@ -79,42 +85,34 @@ public class Monitor {
 
             result += Integer.toString(rnd.nextInt(900));
 
+            // First is at left
+            Robot fakePlayer = null;
             if(i > 0 && i % 2 != 0){
+                // He is at right
                 x = x + 200;
+                fakePlayer = new Robot(result, 100,100, x, y, 1);
+
             }
 
             if(i % 2 == 0 && i != 0){
+                // He is at left
                 x = 10;
                 y = y + 100;
             }
 
-            // Create two stupids bots
-            Robot chappy = new Robot(result, 100,100, x, y);
+            if(fakePlayer == null)
+                fakePlayer = new Robot(result, 100,100, x, y, 0);
 
-            this.board.addBot(chappy);
-
+            this.board.addBot(fakePlayer);
         }
 
-        int botCount = 0;
         ArrayList<Robot> bots = this.board.getRobots();
 
         for(Robot bot : bots){
-            Object strategy = null;
-            Robot opponent = null;
-            if(botCount % 2 == 0 && botCount < bots.size()){
-                opponent = bots.get(botCount+1);
-                strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, opponent, weaponCapabilities);
-            } else if(botCount % 2 != 0 && botCount < bots.size()){
-                opponent = bots.get(botCount-1);
-                strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, opponent, weaponCapabilities);
-            }
+            Object strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, bots, weaponCapabilities, this.plugins);
 
-            if(strategy != null && opponent != null){
-                bot.setStrategy(strategy);
-                bot.setOpponent(opponent);
-                this.strategies.add(strategy);
-            }
-            botCount++;
+            bot.setStrategy(strategy);
+            this.strategies.add(strategy);
         }
     }
 
@@ -132,50 +130,42 @@ public class Monitor {
         this.generateFakePlayers(playersCount);
 
         this.players = this.board.getRobots();
+        JFrame barFrame= new JFrame();
+        barFrame.setSize(new Dimension(400, 300));
+        barFrame.setVisible(true);
+        barFrame.setLayout(new GridLayout(3, 2));
+        barFrame.setLocation(400, 300);
+        barFrame.setTitle("Life / Energy");
 
         // Drawing our bots
         // TODO : If loaded plugin Graphism..
         String playerNames = "Players : " + this.players.size();
         for(Robot robot : this.players){
-            this.setupBot(robot);
+            this.setupBot(robot, barFrame);
         }
 
         mainFrame.setSize( 400,this.players.size() * 60);
 
-
         HashMap<String, Robot> winners = new HashMap<>();
-
         this.startWar(playerNames, winners);
     }
 
     private void startWar(String playerNames, HashMap<String, Robot> winners) throws InvocationTargetException, IllegalAccessException, InterruptedException {
-        int winnersFound = 0;
         System.out.println("War started | " + playerNames);
-        while (winnersFound != this.players.size()/2) {
-            HashMap weaponCapabilities = (HashMap) ClassLoader.annotationValues(plugins.get("Sword"));
 
-
-            for(Robot bot : this.players) {
-                if(bot.getHealth() != 0 && bot.getOpponent().getHealth() != 0){
-                    this.launchBot(bot, weaponCapabilities, bot.getStrategy());
-                    this.updateBars();
-                } else {
-                    if(!winners.containsKey(bot.getName()) && bot.getHealth() != 0){
-                        System.out.println(bot.getName() + " is dead | Killed by : " + bot.getOpponent().getName());
-                        winners.put(bot.getName(), bot);
-                    }
-
-                    winnersFound = winners.size();
-                }
+        while (this.propagation) {
+            if(this.checkGameEnd()){
+                System.out.println("Game has ended");
+                this.propagation = false;
             }
 
-            Thread.sleep(300);
-        }
+            HashMap weaponCapabilities = (HashMap) ClassLoader.annotationValues(plugins.get("Sword"));
 
-        if(winnersFound == this.players.size()/2){
-            System.out.println("Game has ended, will stop in a sec");
-            Thread.sleep(1000);
-            System.exit(0);
+            for(Robot bot : this.players) {
+                this.launchBot(bot, weaponCapabilities, bot.getStrategy());
+            }
+
+            Thread.sleep(500);
         }
     }
 
@@ -189,17 +179,20 @@ public class Monitor {
      * @throws NoSuchMethodException
      * @throws InstantiationException
      */
-    private void setupBot(Robot robot) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException {
+    private void setupBot(Robot robot, JFrame barFrame) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException {
         // Draw bot
         Object botLabel = ReflectionUtil.invokeMethodByTrait(this.graphismInstance, "drawRobot", robot);
         robot.setLabel(botLabel);
 
+        JPanel barPanel = new JPanel();
+        barPanel.setVisible(true);
+
         // Draw bars
-        Object statusLifeBot = ReflectionUtil.__construct((Class)plugins.get("Life"), this.panel);
-        Object energyLifeBot = ReflectionUtil.__construct((Class)plugins.get("Energy"), this.panel);
+        Object statusLifeBot = ReflectionUtil.__construct((Class)plugins.get("Life"), barPanel);
+        Object energyLifeBot = ReflectionUtil.__construct((Class)plugins.get("Energy"), barPanel);
         ReflectionUtil.invokeMethodByTrait(statusLifeBot, "draw", robot);
         ReflectionUtil.invokeMethodByTrait(energyLifeBot, "draw", robot);
-
+        barFrame.add(barPanel);
         plugins.put("Life"+robot.getName(), statusLifeBot);
         plugins.put("Energy"+robot.getName(), energyLifeBot);
 
@@ -214,7 +207,7 @@ public class Monitor {
      */
     private void updateBars() throws InvocationTargetException, IllegalAccessException {
         for(String pluginName : this.plugins.keySet()){
-            Pattern energyOrLifeBar = Pattern.compile("Energy(.*)|Life(.*)");
+            Pattern energyOrLifeBar = Pattern.compile("Life(.*)|Energy(.*)");
             Matcher matcher = energyOrLifeBar.matcher(pluginName);
 
             while (matcher.find()) {
@@ -226,6 +219,7 @@ public class Monitor {
 
                 Robot toUpdate = this.board.getRobotByName(botName);
                 ReflectionUtil.invokeMethodByTrait(plugins.get(pluginName), "update", toUpdate);
+                this.frame.repaint();
             }
         }
     }
@@ -241,17 +235,37 @@ public class Monitor {
      * @throws IllegalAccessException
      */
     private void launchBot(Robot bot, HashMap weaponCapabilities, Object strategyInstance) throws InvocationTargetException, IllegalAccessException {
-        int nextMove = (int) ReflectionUtil.invokeMethodByTrait(plugins.get("RandomMove"), "move", null);
-        ReflectionUtil.invokeMethodByTrait(graphismInstance, "move", bot.getLabel(), nextMove);
-        bot.setX(nextMove);
-
         if(bot.getEnergy() < (Integer)weaponCapabilities.get("consumeEnergy")){
             bot.incrementEnergy(10);
-        } else {
+        } else if(bot.getHealth() > 0) {
             ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", null);
         }
 
         // The energy should increment regularly, according to the docs
         bot.incrementEnergy(5);
+        this.updateBars();
+    }
+
+    private boolean checkGameEnd() throws InterruptedException {
+        int playersLeft = 0;
+        Robot winner = null;
+
+        for(Robot bot : this.players){
+            if(bot.getHealth() == 0 && !this.off.containsKey(bot.getName())){
+                this.panel.remove(bot.getLabel());
+                this.off.put(bot.getName(), bot);
+            }
+            winner = bot;
+
+            if(bot.getHealth() != 0)
+                playersLeft++;
+        }
+
+        if(playersLeft == 1){
+            System.out.println(winner.getName() + " wins");
+            return true;
+        }
+
+        return false;
     }
 }

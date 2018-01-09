@@ -22,17 +22,20 @@ public class Robot {
     private Object weapon;
     private Object strategy;
     private Robot opponent;
+    // 0 : left, 1 : right
+    private int direction;
 
     /**
      * Robot constructor
      * @param health : Starting health points
      */
-    public Robot(String name, int health, int energy, int x, int y){
+    public Robot(String name, int health, int energy, int x, int y, int direction){
         this.name = name;
         this.health = health;
         this.energy = energy;
         this.x = x;
         this.y = y;
+        this.direction = direction;
     }
 
     /**
@@ -85,6 +88,10 @@ public class Robot {
         return this.label;
     }
 
+    public int getDirection(){
+        return this.direction;
+    }
+
     public void setWeapon(Object weapon) {
         this.weapon = weapon;
     }
@@ -93,6 +100,9 @@ public class Robot {
         this.x = x;
     }
 
+    public void setY(int y) {
+        this.y = y;
+    }
     public void setStrategy(Object strategy) {
         this.strategy = strategy;
     }

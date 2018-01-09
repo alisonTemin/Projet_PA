@@ -39,7 +39,7 @@ public class App
 
         Board game = new Board();
 
-        Monitor boardMonitor = new Monitor(game, mainPanel);
+        Monitor boardMonitor = new Monitor(game, mainPanel, frame);
 
         // TODO : Refactor below
         try {
@@ -71,8 +71,7 @@ public class App
 
             boardMonitor.startGame(countBotAsParam, frame);
         } catch (Exception e) {
-            System.out.println("Can't find plugins");
-            System.exit(1);
+            e.printStackTrace();
         }
 
     }

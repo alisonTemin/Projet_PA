@@ -8,13 +8,12 @@ import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-/**
- * Created by Corentin on 04/01/2018.
- */
-@Plugin(name="Life", type="core", required=1)
+
+@Plugin(name = "Life", type="core", required = 1)
 public class Life {
-    private final JPanel panel;
     private JLabel bar;
+    private JPanel panel;
+
 
     public Life(JPanel panel){
         this.panel = panel;
@@ -45,7 +44,7 @@ public class Life {
         int health = (Integer) this.callGetOnRobot("getHealth", robot);
         String name = (String) this.callGetOnRobot("getName", robot);
 
-        this.bar.setText(String.valueOf(health));
+        this.bar.setText(name + " : " + String.valueOf(health));
         this.bar.setForeground(Color.GRAY);
 
         this.panel.repaint();
