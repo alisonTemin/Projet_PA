@@ -163,7 +163,7 @@ public class Monitor {
             if(robot.getCustom() != null)
                 baseOrCustom = robot.getCustom();
 
-            playerNames.append("\n Setup ")
+            playerNames.append("\n - Setup ")
                     .append(robot.getName())
                     .append(" with strategy : ")
                     .append(ReflectionUtil.invokeMethodByTrait(baseOrCustom, "strategyName", null));
@@ -179,7 +179,7 @@ public class Monitor {
 
         while (this.propagation) {
             if(this.checkGameEnd()){
-                System.out.println("Game has ended");
+                System.out.println("\nGame has ended");
                 this.propagation = false;
             }
 
@@ -301,8 +301,8 @@ public class Monitor {
             }
         }
 
-        if(winnerFound){
-            System.out.println(winner.getName() + " wins");
+        if(winner != null && winnerFound){
+            System.out.println("\n" + winner.getName() + " wins");
             return true;
         }
 
