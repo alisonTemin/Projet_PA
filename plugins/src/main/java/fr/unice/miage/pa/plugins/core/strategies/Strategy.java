@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 @Plugin(name="Strategy", type="core", required=1)
 public class Strategy {
+    private final String name;
     private final Object monitored;
     private final ArrayList opponents;
     private final HashMap weaponCapabilities;
@@ -23,6 +24,7 @@ public class Strategy {
         this.monitored = monitored;
         this.weaponCapabilities = weaponCapabilities;
         this.plugins = plugins;
+        this.name = "Base";
     }
 
     @PluginTrait(type="attack", on="robot")
@@ -116,6 +118,11 @@ public class Strategy {
             monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
         }
         moveInGraphics.invoke(plugins.get("Graphism"), label, monitoredX, monitoredY);
+    }
+
+    @PluginTrait(type="strategyName", on="strategy")
+    public String getName(){
+        return this.name;
     }
 
     private void attack(Object attacked) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {

@@ -154,15 +154,20 @@ public class Monitor {
 
         // Drawing our bots
         // TODO : If loaded plugin Graphism..
-        String playerNames = "Players : " + this.players.size();
+        StringBuilder playerNames = new StringBuilder("Players : " + this.players.size() + "\n");
         for(Robot robot : this.players){
+            playerNames.append("\n Setup ")
+                       .append(robot.getName())
+                       .append(" with strategy : ")
+                       .append(ReflectionUtil.invokeMethodByTrait(robot.getStrategy(), "strategyName", null));
+
             this.setupBot(robot, barFrame);
         }
 
         mainFrame.setSize( 400,this.players.size() * 60);
 
         HashMap<String, Robot> winners = new HashMap<>();
-        this.startWar(playerNames, winners);
+        this.startWar(playerNames.toString(), winners);
     }
 
     private void startWar(String playerNames, HashMap<String, Robot> winners) throws InvocationTargetException, IllegalAccessException, InterruptedException {
