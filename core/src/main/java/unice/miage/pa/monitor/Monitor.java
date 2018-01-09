@@ -287,7 +287,7 @@ public class Monitor {
         Robot winner = null;
 
         for(Robot bot : this.players){
-            if(bot.getHealth() == 0 && !this.off.containsKey(bot.getName())){
+            if(bot.getHealth() <= 0 && !this.off.containsKey(bot.getName())){
                 this.panel.remove(bot.getLabel());
                 this.off.put(bot.getName(), bot);
             }
@@ -296,14 +296,9 @@ public class Monitor {
                 winner = bot;
 
             if(this.off.size() == this.players.size() - 1){
-                winnerFound = true;
-                break;
+                System.out.println("\n" + winner.getName() + " wins");
+                return true;
             }
-        }
-
-        if(winner != null && winnerFound){
-            System.out.println("\n" + winner.getName() + " wins");
-            return true;
         }
 
         return false;
