@@ -10,7 +10,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 /**
  * Generic strategy
@@ -93,37 +92,14 @@ public class Strategy {
     }
 
     /**
-     * Basic checking
+     * Get strategy name
      *
-     * @param name
-     * @param monitoredX
-     * @param attacked
-     * @return
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws NoSuchMethodException
+     * Todo : refactor : avoid code repeat in sample strategy ?
+     * @return Base
      */
-    @PluginTrait(type="checks", on="strategy")
-    private boolean checks(String name, int monitoredX, Object attacked) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        int maybeAttackedX = (Integer) this.getterOnBot("getX", attacked).invoke(attacked);
-        int maybeAttackedLife = (Integer) this.getterOnBot("getHealth", attacked).invoke(attacked);
-
-        int monitoredEnergy = (Integer) this.getterOnBot("getEnergy", attacked).invoke(attacked);
-
-        String maybeAttackedName = (String) this.getterOnBot("getName", attacked).invoke(attacked);
-        if(maybeAttackedName.equals(name))
-            return false;
-
-        if(maybeAttackedLife == 0)
-            return false;
-
-        if(monitoredEnergy > (Integer) weaponCapabilities.get("consumeEnergy"))
-            return true;
-
-        if(maybeAttackedX > (monitoredX + (Integer) weaponCapabilities.get("distance")))
-            return true;
-
-        return false;
+    @PluginTrait(type="strategyName", on="strategy")
+    public String getName(){
+        return this.name;
     }
 
     @PluginTrait(type="consume", on="monitored")
@@ -187,12 +163,43 @@ public class Strategy {
     }
 
     /**
+     * Basic checking
+     *
+     * @param name
+     * @param monitoredX
+     * @param attacked
+     * @return
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     * @throws NoSuchMethodException
+     */
+    @PluginTrait(type="checks", on="strategy")
+    private boolean checks(String name, int monitoredX, Object attacked) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+        int maybeAttackedX = (Integer) this.getterOnBot("getX", attacked).invoke(attacked);
+        int maybeAttackedLife = (Integer) this.getterOnBot("getHealth", attacked).invoke(attacked);
+
+        int monitoredEnergy = (Integer) this.getterOnBot("getEnergy", attacked).invoke(attacked);
+
+        String maybeAttackedName = (String) this.getterOnBot("getName", attacked).invoke(attacked);
+        if(maybeAttackedName.equals(name))
+            return false;
+
+        if(maybeAttackedLife == 0)
+            return false;
+
+        if(monitoredEnergy > (Integer) weaponCapabilities.get("consumeEnergy"))
+            return true;
+
+        return maybeAttackedX > (monitoredX + (Integer) weaponCapabilities.get("distance"));
+    }
+
+    /**
      * Process the next.. move
      * @param opponentX
      * @throws Exception
      */
     @PluginTrait(type="nextMove", on="strategy")
-    public void processNextMove(int opponentX) throws Exception {
+    private void processNextMove(int opponentX) throws Exception {
         JLabel label = (JLabel) this.getterOnBot("getLabel", monitored).invoke(monitored);
         int direction = (Integer) this.getterOnBot("getDirection", monitored).invoke(monitored);
         int monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
@@ -222,15 +229,6 @@ public class Strategy {
             monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
         }
         moveInGraphics.invoke(plugins.get("Graphism"), label, monitoredX, monitoredY);
-    }
-
-    /**
-     * Get strategy name
-     * @return Base
-     */
-    @PluginTrait(type="strategyName", on="strategy")
-    public String getName(){
-        return this.name;
     }
 
     /**

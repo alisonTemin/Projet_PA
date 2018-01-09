@@ -188,9 +188,6 @@ public class Monitor {
             for(Robot bot : this.players) {
                 this.launchBot(bot, weaponCapabilities, bot.getStrategy(), bot.getCustom());
             }
-
-            // @Tool : Comment to speedify bots
-            Thread.sleep(100);
         }
     }
 
@@ -259,7 +256,7 @@ public class Monitor {
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
-    private void launchBot(Robot bot, HashMap weaponCapabilities, Object strategyInstance, Object custom) throws InvocationTargetException, IllegalAccessException {
+    private void launchBot(Robot bot, HashMap weaponCapabilities, Object strategyInstance, Object custom) throws InvocationTargetException, IllegalAccessException, InterruptedException {
         Object baseOrCustom = strategyInstance;
         if(custom != null){
             baseOrCustom = custom;
@@ -274,6 +271,8 @@ public class Monitor {
                 if((Boolean)ReflectionUtil.invokeMethodByTrait(strategyInstance, "couldAttack", attacked)){
                     ReflectionUtil.invokeMethodByTrait(strategyInstance, "attack", attacked);
                 }
+                // @Tool : Comment to speedify bots
+                Thread.sleep(20);
                 ReflectionUtil.invokeMethodByTrait(strategyInstance, "consume", null);
             }
         }
