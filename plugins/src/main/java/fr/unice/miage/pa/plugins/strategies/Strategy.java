@@ -1,7 +1,8 @@
 package fr.unice.miage.pa.plugins.strategies;
 
-import fr.unice.miage.pa.plugins.Plugin;
-import fr.unice.miage.pa.plugins.PluginTrait;
+import fr.unice.miage.pa.plugins.annotations.Plugin;
+import fr.unice.miage.pa.plugins.annotations.PluginTrait;
+import fr.unice.miage.pa.plugins.annotations.PluginOverride;
 import fr.unice.miage.pa.plugins.utils.PluginUtil;
 
 import javax.swing.*;
@@ -49,6 +50,7 @@ public class Strategy {
         setterEnergy.invoke(monitored, consumeEnergy);
     }
 
+    @PluginOverride(name="moveTo")
     private void moveTo(Object attacked) throws Exception {
         int opponentX = (Integer) this.getterOnBot("getX", attacked).invoke(attacked);
         int opponentY = (Integer) this.getterOnBot("getY", attacked).invoke(attacked);
@@ -113,6 +115,7 @@ public class Strategy {
         moveInGraphics.invoke(plugins.get("Graphism"), label, monitoredX, monitoredY);
     }
 
+    @PluginOverride(name="moveTo")
     private void attack(Object attacked) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         int consumeLife = (Integer) weaponCapabilities.get("baseAttack");
 

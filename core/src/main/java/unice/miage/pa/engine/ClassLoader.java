@@ -33,7 +33,7 @@ public class ClassLoader extends SecureClassLoader {
         pluginName = pluginName.substring(fr, pluginName.length());
 
         // Blacklist annotations loading
-        if(pluginName.equals("fr.unice.miage.pa.plugins.Plugin") || pluginName.equals("fr.unice.miage.pa.plugins.attacks.weapons.Weapon"))
+        if(pluginName.equals("fr.unice.miage.pa.plugins.annotations.Plugin") || pluginName.equals("fr.unice.miage.pa.plugins.attacks.weapons.Weapon"))
             return null;
 
         File file = new File(plugin.getAbsolutePath());

@@ -1,6 +1,6 @@
 package fr.unice.miage.pa.plugins.graphism;
 
-import fr.unice.miage.pa.plugins.Plugin;
+import fr.unice.miage.pa.plugins.annotations.Plugin;
 
 import javax.swing.*;
 import java.io.*;

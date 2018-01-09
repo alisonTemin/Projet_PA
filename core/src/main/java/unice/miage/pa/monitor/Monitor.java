@@ -246,7 +246,7 @@ public class Monitor {
         this.updateBars();
     }
 
-    private boolean checkGameEnd() throws InterruptedException {
+    private boolean checkGameEnd() {
         int playersLeft = 0;
         Robot winner = null;
 

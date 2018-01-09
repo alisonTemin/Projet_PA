@@ -1,7 +1,7 @@
 package fr.unice.miage.pa.plugins.graphism;
 
-import fr.unice.miage.pa.plugins.Plugin;
-import fr.unice.miage.pa.plugins.PluginTrait;
+import fr.unice.miage.pa.plugins.annotations.Plugin;
+import fr.unice.miage.pa.plugins.annotations.PluginTrait;
 
 import javax.swing.*;
 

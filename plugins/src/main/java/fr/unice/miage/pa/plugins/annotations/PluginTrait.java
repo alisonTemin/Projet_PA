@@ -1,4 +1,4 @@
-package fr.unice.miage.pa.plugins;
+package fr.unice.miage.pa.plugins.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
