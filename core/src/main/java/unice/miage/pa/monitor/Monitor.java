@@ -113,7 +113,8 @@ public class Monitor {
 
             if(this.customs().size() != 0){
                 System.out.println("Custom strategy loaded for " + bot.getName());
-                strategy = ReflectionUtil.__constructStrategy((Class) this.customs().values().toArray()[0], bot, bots, weaponCapabilities, this.plugins);
+                Object custom = ReflectionUtil.__constructStrategy((Class) this.customs().values().toArray()[0], bot, bots, weaponCapabilities, this.plugins);
+                bot.setCustom(custom);
             }
 
             bot.setStrategy(strategy);
@@ -156,12 +157,16 @@ public class Monitor {
         // TODO : If loaded plugin Graphism..
         StringBuilder playerNames = new StringBuilder("Players : " + this.players.size() + "\n");
         for(Robot robot : this.players){
-            playerNames.append("\n Setup ")
-                       .append(robot.getName())
-                       .append(" with strategy : ")
-                       .append(ReflectionUtil.invokeMethodByTrait(robot.getStrategy(), "strategyName", null));
-
             this.setupBot(robot, barFrame);
+            Object baseOrCustom = robot.getStrategy();
+
+            if(robot.getCustom() != null)
+                baseOrCustom = robot.getCustom();
+
+            playerNames.append("\n Setup ")
+                    .append(robot.getName())
+                    .append(" with strategy : ")
+                    .append(ReflectionUtil.invokeMethodByTrait(baseOrCustom, "strategyName", null));
         }
 
         mainFrame.setSize( 400,this.players.size() * 60);
@@ -181,7 +186,7 @@ public class Monitor {
             HashMap weaponCapabilities = (HashMap) ClassLoader.annotationValues(plugins.get("Sword"));
 
             for(Robot bot : this.players) {
-                this.launchBot(bot, weaponCapabilities, bot.getStrategy());
+                this.launchBot(bot, weaponCapabilities, bot.getStrategy(), bot.getCustom());
             }
 
             Thread.sleep(100);
@@ -253,12 +258,16 @@ public class Monitor {
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
-    private void launchBot(Robot bot, HashMap weaponCapabilities, Object strategyInstance) throws InvocationTargetException, IllegalAccessException {
+    private void launchBot(Robot bot, HashMap weaponCapabilities, Object strategyInstance, Object custom) throws InvocationTargetException, IllegalAccessException {
+        Object baseOrCustom = strategyInstance;
+        if(custom != null){
+            baseOrCustom = custom;
+        }
         if(bot.getEnergy() < (Integer)weaponCapabilities.get("consumeEnergy")){
             bot.incrementEnergy(10);
         } else if(bot.getHealth() > 0) {
-            ReflectionUtil.invokeMethodByTrait(strategyInstance, "movements", null);
-            Object attacked = ReflectionUtil.invokeMethodByTrait(strategyInstance, "decide", null);
+            ReflectionUtil.invokeMethodByTrait(baseOrCustom, "movements", null);
+            Object attacked = ReflectionUtil.invokeMethodByTrait(baseOrCustom, "decide", null);
             if(attacked != null){
                 ReflectionUtil.invokeMethodByTrait(strategyInstance, "moveTo", attacked);
                 if((Boolean)ReflectionUtil.invokeMethodByTrait(strategyInstance, "couldAttack", attacked)){

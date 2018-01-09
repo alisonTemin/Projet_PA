@@ -68,9 +68,6 @@ public class Strategy {
     @PluginTrait(type="decide", on="robot")
     @PluginOverridable(name="decide", on="strategy")
     public Object decide() throws Exception {
-        String name = (String) this.getterOnBot("getName", this.monitored).invoke(monitored);
-        int monitoredX = (Integer) this.getterOnBot("getX", monitored).invoke(monitored);
-
         Double random = (Math.random() * this.opponents.size());
         // Grab someone
         Object closest = this.opponents.get(random.intValue());

@@ -24,6 +24,7 @@ public class Robot {
     private Robot opponent;
     // 0 : left, 1 : right
     private int direction;
+    private Object custom;
 
     /**
      * Robot constructor
@@ -117,5 +118,13 @@ public class Robot {
 
     public Robot getOpponent() {
         return opponent;
+    }
+
+    public Object getCustom() {
+        return custom;
+    }
+
+    public void setCustom(Object custom) {
+        this.custom = custom;
     }
 }

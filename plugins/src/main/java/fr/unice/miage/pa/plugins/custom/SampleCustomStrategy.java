@@ -1,7 +1,6 @@
 package fr.unice.miage.pa.plugins.custom;
 
 import fr.unice.miage.pa.plugins.core.annotations.Plugin;
-import fr.unice.miage.pa.plugins.core.annotations.PluginOverridable;
 import fr.unice.miage.pa.plugins.core.annotations.PluginTrait;
 
 import java.lang.reflect.InvocationTargetException;
@@ -24,7 +23,7 @@ public class SampleCustomStrategy {
         this.monitored = monitored;
         this.weaponCapabilities = weaponCapabilities;
         this.plugins = plugins;
-        this.name = "Base";
+        this.name = "SampleCustomStrategy";
     }
     @PluginTrait(type="movements", on="strategy")
     public void movements() throws InvocationTargetException, IllegalAccessException {
@@ -46,6 +45,15 @@ public class SampleCustomStrategy {
 
         // 404 Bot not found atm
         return null;
+    }
+
+    /**
+     * Get strategy name
+     * @return Base
+     */
+    @PluginTrait(type="strategyName", on="strategy")
+    public String getName(){
+        return this.name;
     }
 
     /**
