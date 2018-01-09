@@ -295,7 +295,6 @@ public class Monitor {
                 winner = bot;
 
             if(this.off.size() == this.players.size() - 1){
-                assert winner != null;
                 System.out.println("\n" + winner.getName() + " wins");
                 return true;
             }
