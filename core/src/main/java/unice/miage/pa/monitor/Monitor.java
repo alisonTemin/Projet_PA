@@ -147,10 +147,10 @@ public class Monitor {
 
         this.players = this.board.getRobots();
         JFrame barFrame= new JFrame();
-        barFrame.setSize(new Dimension(400, 300));
+        barFrame.setSize(new Dimension(600, 350));
         barFrame.setVisible(true);
         barFrame.setLayout(new GridLayout(3, 2));
-        barFrame.setLocation(400, 300);
+        barFrame.setLocation(400, 330);
         barFrame.setTitle("Life / Energy");
 
         // Drawing our bots
@@ -189,6 +189,7 @@ public class Monitor {
                 this.launchBot(bot, weaponCapabilities, bot.getStrategy(), bot.getCustom());
             }
 
+            // @Tool : Comment to speedify bots
             Thread.sleep(100);
         }
     }
