@@ -11,12 +11,12 @@ import java.lang.reflect.Method;
 
 @Plugin(name = "Life", type="core", required = 1)
 public class Life {
-    private  JFrame jFrame;
     private JLabel bar;
+    private JPanel panel;
 
 
     public Life(JPanel panel){
-        this.jFrame = jFrame;
+        this.panel = panel;
     }
 
     private Object callGetOnRobot(String getterName, Object robot) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
@@ -35,8 +35,8 @@ public class Life {
         this.bar.setBounds(new Rectangle(x, y+60, health, 10));
         this.bar.setBackground(Color.GREEN);
 
-        this.jFrame.add(this.bar);
-        this.jFrame.repaint();
+        this.panel.add(this.bar);
+        this.panel.repaint();
     }
 
     @PluginTrait(type="update", on="robot")
@@ -44,10 +44,10 @@ public class Life {
         int health = (Integer) this.callGetOnRobot("getHealth", robot);
         String name = (String) this.callGetOnRobot("getName", robot);
 
-        this.bar.setText(String.valueOf(health));
+        this.bar.setText(name + " : " + String.valueOf(health));
         this.bar.setForeground(Color.GRAY);
 
-        this.jFrame.repaint();
+        this.panel.repaint();
     }
 
 

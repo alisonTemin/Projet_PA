@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ReflectionUtil {
@@ -91,7 +92,7 @@ public class ReflectionUtil {
      */
     public static Object __constructStrategy(Class pluginClass, Object... arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         @SuppressWarnings("unchecked")
-        Constructor constructor = pluginClass.getDeclaredConstructor(Object.class, Object.class, HashMap.class, HashMap.class);
+        Constructor constructor = pluginClass.getDeclaredConstructor(Object.class, ArrayList.class, HashMap.class, HashMap.class);
         //noinspection JavaReflectionInvocation IJ static analysis cry
         return constructor.newInstance(arg);
     }

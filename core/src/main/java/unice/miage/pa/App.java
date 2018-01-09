@@ -39,7 +39,7 @@ public class App
 
         Board game = new Board();
 
-        Monitor boardMonitor = new Monitor(game, mainPanel);
+        Monitor boardMonitor = new Monitor(game, mainPanel, frame);
 
         // TODO : Refactor below
         try {
