@@ -108,6 +108,7 @@ public class Monitor {
 
         ArrayList<Robot> bots = this.board.getRobots();
 
+        int i = 0;
         for(Robot bot : bots){
             Object moveInstance = null;
             if(this.moves().size() != 0){
@@ -118,7 +119,7 @@ public class Monitor {
                 moveInstance = plugins.get("RandomMove");
 
             Object strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, bots, weaponCapabilities, this.plugins, moveInstance);
-            if(this.customs().size() != 0){
+            if(this.customs().size() != 0 && i % 2 == 0){
                 System.out.println("Custom strategy loaded for " + bot.getName());
                 Object custom = ReflectionUtil.__constructStrategy((Class) this.customs().values().toArray()[0], bot, bots, weaponCapabilities, this.plugins, moveInstance);
                 bot.setCustom(custom);
@@ -126,6 +127,7 @@ public class Monitor {
 
             bot.setStrategy(strategy);
             this.strategies.add(strategy);
+            i++;
         }
     }
 
