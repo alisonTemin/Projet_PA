@@ -49,7 +49,6 @@ public class Strategy {
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      *
-     * TODO : Add movement strategy to movements call to allow multiple configs
      */
     @PluginTrait(type="movements", on="strategy")
     @PluginOverridable(name="movements", on="strategy")

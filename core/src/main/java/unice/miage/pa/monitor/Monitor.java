@@ -173,7 +173,6 @@ public class Monitor {
         barFrame.setTitle("Life / Energy");
 
         // Setup our fake bots
-        // TODO : Ask user for what kind of strategy to use on bot X
 
         StringBuilder playerNames = new StringBuilder("Players : " + this.players.size() + "\n");
         for(Robot robot : this.players){

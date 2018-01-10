@@ -41,7 +41,6 @@ public class App
 
         Monitor boardMonitor = new Monitor(game, mainPanel, frame);
 
-        // TODO : Refactor below
         try {
             Object consoleInstance = ReflectionUtil.__construct(plugins.get("Console"));
             Object graphismInstance = ReflectionUtil.__construct(plugins.get("Graphism"), mainPanel);

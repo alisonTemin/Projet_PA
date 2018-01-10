@@ -16,15 +16,13 @@ public class ReflectionUtil {
      * @param pluginInstance instance to invoke on
      * @param type "draw"
      * @param on "robot"
-     * @param args ... Args array (TODO : Refactor, it's crappy, but working)
+     * @param args ... Args array
      *
      * @throws InvocationTargetException Instance target not good, probably a copy paste error
      * @throws IllegalAccessException Method is protected / private
      */
     public static Object invokeMethodByTrait(Object pluginInstance, String type, Object on, Object... args) throws InvocationTargetException, IllegalAccessException {
         Method[] methods = pluginInstance.getClass().getMethods();
-
-        // TODO : If loaded plugins contains custom strategy override invoke
 
         for(Method mt : methods) {
             for(Annotation annot : mt.getAnnotations()){
