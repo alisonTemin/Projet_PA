@@ -323,6 +323,11 @@ public class Monitor {
                     return true;
                 }
             }
+
+            if(this.off.size() == this.players.size()){
+                System.out.println("Everybody is dead");
+                return true;
+            }
         }
 
         return false;
