@@ -120,9 +120,13 @@ public class Monitor {
 
             Object strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, bots, weaponCapabilities, this.plugins, moveInstance);
             if(this.customs().size() != 0 && i % 2 == 0){
-                System.out.println("Custom strategy loaded for " + bot.getName());
-                Object custom = ReflectionUtil.__constructStrategy((Class) this.customs().values().toArray()[0], bot, bots, weaponCapabilities, this.plugins, moveInstance);
-                bot.setCustom(custom);
+                try {
+                    Object custom = ReflectionUtil.__constructStrategy((Class) this.customs().values().toArray()[0], bot, bots, weaponCapabilities, this.plugins, moveInstance);
+                    System.out.println("Custom strategy loaded for " + bot.getName());
+                    bot.setCustom(custom);
+                } catch (Exception e){
+                    System.out.println("Trying to load invalid strategy, will not be applied");
+                }
             }
 
             bot.setStrategy(strategy);
