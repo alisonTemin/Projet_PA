@@ -23,6 +23,7 @@ public class Strategy {
     private final ArrayList opponents;
     private final HashMap weaponCapabilities;
     private final HashMap<String, Class<?>> plugins;
+    private final Object movement;
     private Integer nextMoveY;
     private Integer nextMoveX;
 
@@ -33,11 +34,12 @@ public class Strategy {
      * @param weaponCapabilities Weapon
      * @param plugins Plugins
      */
-    public Strategy(Object monitored, ArrayList opponents, HashMap weaponCapabilities, HashMap<String, Class<?>> plugins){
+    public Strategy(Object monitored, ArrayList opponents, HashMap weaponCapabilities, HashMap<String, Class<?>> plugins, Object moveInstance){
         this.opponents = opponents;
         this.monitored = monitored;
         this.weaponCapabilities = weaponCapabilities;
         this.plugins = plugins;
+        this.movement = moveInstance;
         this.name = "Base";
     }
 
@@ -52,13 +54,13 @@ public class Strategy {
     @PluginTrait(type="movements", on="strategy")
     @PluginOverridable(name="movements", on="strategy")
     public void movements() throws InvocationTargetException, IllegalAccessException {
-        Method move = (Method) PluginUtil.getMethodUsingTrait(plugins.get("RandomMove"), "move");
-        Method moveY = (Method) PluginUtil.getMethodUsingTrait(plugins.get("RandomMove"), "moveY");
+        Method move = (Method) PluginUtil.getMethodUsingTrait(this.movement, "move");
+        Method moveY = (Method) PluginUtil.getMethodUsingTrait(this.movement, "moveY");
 
         assert move != null;
-        this.nextMoveX = (Integer) move.invoke(plugins.get("RandomMove"));
+        this.nextMoveX = (Integer) move.invoke(this.movement);
         assert moveY != null;
-        this.nextMoveY = (Integer) moveY.invoke(plugins.get("RandomMove"));
+        this.nextMoveY = (Integer) moveY.invoke(this.movement);
     }
 
     /**

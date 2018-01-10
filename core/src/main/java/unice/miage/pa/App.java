@@ -47,9 +47,12 @@ public class App
             Object graphismInstance = ReflectionUtil.__construct(plugins.get("Graphism"), mainPanel);
             Object moveInstance = ReflectionUtil.__construct(plugins.get("RandomMove"));
 
-            for(String customStrategy : plugins.keySet()){
-                if(customStrategy.startsWith("Custom")){
-                    boardMonitor.addPlugin(customStrategy, plugins.get(customStrategy));
+            for(String plugin : plugins.keySet()){
+                if(plugin.startsWith("Custom")){
+                    boardMonitor.addPlugin(plugin, plugins.get(plugin));
+                }
+                if(plugin.endsWith("Move")){
+                    boardMonitor.addPlugin(plugin, plugins.get(plugin));
                 }
             }
 
@@ -71,9 +74,6 @@ public class App
             // Workaround defaulting to pair value
             if(countBotAsParam % 2 != 0)
                 countBotAsParam = countBotAsParam - 1;
-
-
-            // TODO : Increment frame size as bot count
 
             boardMonitor.startGame(countBotAsParam, frame);
         } catch (Exception e) {

@@ -109,11 +109,18 @@ public class Monitor {
         ArrayList<Robot> bots = this.board.getRobots();
 
         for(Robot bot : bots){
-            Object strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, bots, weaponCapabilities, this.plugins);
+            Object moveInstance = null;
+            if(this.moves().size() != 0){
+                moveInstance = ReflectionUtil.__construct((Class) this.moves().values().toArray()[0]);
+            }
 
+            if(moveInstance == null)
+                moveInstance = plugins.get("RandomMove");
+
+            Object strategy = ReflectionUtil.__constructStrategy((Class)plugins.get("Strategy"), bot, bots, weaponCapabilities, this.plugins, moveInstance);
             if(this.customs().size() != 0){
                 System.out.println("Custom strategy loaded for " + bot.getName());
-                Object custom = ReflectionUtil.__constructStrategy((Class) this.customs().values().toArray()[0], bot, bots, weaponCapabilities, this.plugins);
+                Object custom = ReflectionUtil.__constructStrategy((Class) this.customs().values().toArray()[0], bot, bots, weaponCapabilities, this.plugins, moveInstance);
                 bot.setCustom(custom);
             }
 
@@ -125,11 +132,21 @@ public class Monitor {
     private HashMap<String, Class> customs(){
         HashMap<String, Class> customs = new HashMap<>();
         for(String customName : this.plugins.keySet()){
-            if(customName.startsWith("Custom")){
+            if(customName.startsWith("Custom") && !customName.endsWith("Move")){
                 customs.put(customName, (Class)plugins.get(customName));
             }
         }
         return customs;
+    }
+
+    private HashMap<String, Object> moves(){
+        HashMap<String, Object> moves = new HashMap<>();
+        for(String customName : this.plugins.keySet()){
+            if(customName.startsWith("Custom") && customName.endsWith("Move")){
+                moves.put(customName, plugins.get(customName));
+            }
+        }
+        return moves;
     }
 
     /**

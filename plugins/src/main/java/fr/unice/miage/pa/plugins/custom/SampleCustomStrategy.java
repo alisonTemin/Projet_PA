@@ -9,21 +9,23 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-@Plugin(name="SampleCustomStrategy", type="core", required=1)
+@Plugin(name="SampleCustomStrategy", type="strategy")
 public class SampleCustomStrategy {
     private final String name;
     private final Object monitored;
     private final ArrayList opponents;
     private final HashMap weaponCapabilities;
     private final HashMap<String, Class<?>> plugins;
+    private final Object movement;
     private Integer nextMoveY;
     private Integer nextMoveX;
 
-    public SampleCustomStrategy(Object monitored, ArrayList opponents, HashMap weaponCapabilities, HashMap<String, Class<?>> plugins){
+    public SampleCustomStrategy(Object monitored, ArrayList opponents, HashMap weaponCapabilities, HashMap<String, Class<?>> plugins, Object moveInstance){
         this.opponents = opponents;
         this.monitored = monitored;
         this.weaponCapabilities = weaponCapabilities;
         this.plugins = plugins;
+        this.movement = moveInstance;
         this.name = "SampleCustomStrategy";
     }
     @PluginTrait(type="movements", on="strategy")

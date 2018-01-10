@@ -98,7 +98,7 @@ public class ReflectionUtil {
      */
     public static Object __constructStrategy(Class pluginClass, Object... arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         @SuppressWarnings("unchecked")
-        Constructor constructor = pluginClass.getDeclaredConstructor(Object.class, ArrayList.class, HashMap.class, HashMap.class);
+        Constructor constructor = pluginClass.getDeclaredConstructor(Object.class, ArrayList.class, HashMap.class, HashMap.class, Object.class);
         //noinspection JavaReflectionInvocation IJ static analysis cry
         return constructor.newInstance(arg);
     }
