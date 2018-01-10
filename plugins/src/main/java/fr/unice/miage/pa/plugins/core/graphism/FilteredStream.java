@@ -25,8 +25,14 @@ public class FilteredStream extends FilterOutputStream{
         String debugText = new String(b, off, len);
         this.aTextArea.append(debugText);
 
-        FileWriter aWriter = new FileWriter(this.logFile, true);
-        aWriter.write(debugText);
-        aWriter.close();
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(this.logFile, true);
+            writer.write(debugText);
+        } finally {
+            if(writer != null){
+                writer.close();
+            }
+        }
     }
 }

@@ -156,6 +156,12 @@ public class ClassLoader extends SecureClassLoader {
                     baos.write(i);
             } catch (IOException e) {
                 return null;
+            } finally {
+                try {
+                    baos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return baos.toByteArray();
