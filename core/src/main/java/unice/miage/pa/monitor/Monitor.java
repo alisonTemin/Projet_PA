@@ -83,7 +83,7 @@ public class Monitor {
             else
                 result += lastname;
 
-            result += Integer.toString(rnd.nextInt(900));
+            result += Integer.toString(rnd.nextInt(900)) + i;
 
             // First is at left
             Robot fakePlayer = null;
