@@ -21,7 +21,6 @@ public class Robot {
     private JLabel label;
     private Object weapon;
     private Object strategy;
-    private Robot opponent;
     // 0 : left, 1 : right
     private int direction;
     private Object custom;
@@ -104,20 +103,13 @@ public class Robot {
     public void setY(int y) {
         this.y = y;
     }
+    
     public void setStrategy(Object strategy) {
         this.strategy = strategy;
     }
 
     public Object getStrategy() {
         return strategy;
-    }
-
-    public void setOpponent(Robot opponent) {
-        this.opponent = opponent;
-    }
-
-    public Robot getOpponent() {
-        return opponent;
     }
 
     public Object getCustom() {

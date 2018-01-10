@@ -28,6 +28,7 @@ public class SampleCustomStrategy {
         this.movement = moveInstance;
         this.name = "SampleCustomStrategy";
     }
+
     @PluginTrait(type="movements", on="strategy")
     public void movements() throws InvocationTargetException, IllegalAccessException {
         // Implement random strategy by setting this.nextMove values
