@@ -3,7 +3,6 @@ package fr.unice.miage.pa.plugins.core.graphism;
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.FilterOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 
 public class FilteredStream extends FilterOutputStream{
@@ -16,23 +15,21 @@ public class FilteredStream extends FilterOutputStream{
         this.logFile = logFile;
     }
 
+    @Override
     public void write(byte b[]) {
         String aString = new String(b);
         this.aTextArea.append(aString);
     }
 
-    public void write(byte b[], int off, int len) throws IOException {
+    @Override
+    public void write(byte b[], int off, int len) {
         String debugText = new String(b, off, len);
         this.aTextArea.append(debugText);
 
-        FileWriter writer = null;
-        try {
-            writer = new FileWriter(this.logFile, true);
+        try(FileWriter writer = new FileWriter(this.logFile, true)) {
             writer.write(debugText);
-        } finally {
-            if(writer != null){
-                writer.close();
-            }
+        } catch (Exception e) {
+            System.out.println("Write error");
         }
     }
 }

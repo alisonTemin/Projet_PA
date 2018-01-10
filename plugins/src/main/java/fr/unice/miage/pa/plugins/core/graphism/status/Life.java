@@ -7,7 +7,6 @@ import fr.unice.miage.pa.plugins.core.utils.PluginUtil;
 import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 
 @Plugin(name = "Life", type="core", required = 1)
@@ -42,7 +41,7 @@ public class Life {
         String name = (String) this.callGetOnRobot("getName", robot);
 
         this.bar.setForeground(Color.black);
-        this.bar.setText(name + " : " + String.valueOf(health));
+        this.bar.setText(name + " : " + health);
 
         if(health == 0) {
             this.bar.setForeground(Color.white);

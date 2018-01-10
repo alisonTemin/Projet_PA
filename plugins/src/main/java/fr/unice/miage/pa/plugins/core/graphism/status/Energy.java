@@ -7,7 +7,6 @@ import fr.unice.miage.pa.plugins.core.utils.PluginUtil;
 import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 @Plugin(name = "Energy", type="core", required = 1)
 public class Energy {
