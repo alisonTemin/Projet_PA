@@ -144,26 +144,30 @@ public class ClassLoader extends SecureClassLoader {
 
         assert(stream != null);
 
-        BufferedInputStream bis = new BufferedInputStream(stream);
-
-        boolean eof = false;
-        while (!eof) {
-            try {
-                int i = bis.read();
-                if (i == -1)
-                    eof = true;
-                else
-                    baos.write(i);
-            } catch (IOException e) {
-                return null;
-            } finally {
+        try (BufferedInputStream bis = new BufferedInputStream(stream)) {
+            boolean eof = false;
+            while (!eof) {
                 try {
-                    baos.close();
+                    int i = bis.read();
+                    if (i == -1)
+                        eof = true;
+                    else
+                        baos.write(i);
+
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    return null;
+                } finally {
+                    try {
+                        baos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
         }
+
         return baos.toByteArray();
     }
 
