@@ -98,7 +98,6 @@ public class Strategy {
     /**
      * Get strategy name
      *
-     * Todo : refactor : avoid code repeat in sample strategy ?
      * @return Base
      */
     @PluginTrait(type="strategyName", on="strategy")

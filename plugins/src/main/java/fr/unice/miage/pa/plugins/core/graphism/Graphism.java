@@ -8,7 +8,6 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Random;
 
 @Plugin(name="Graphism", type="core", required=1)
@@ -26,8 +25,6 @@ public class Graphism {
      */
     @PluginTrait(type="drawRobot", on="robot")
     public JLabel drawRobot(Object robot) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        String botName = (String) this.callGetOnRobot("getName", robot);
-
         int x = (Integer) this.callGetOnRobot("getX", robot);
         int y = (Integer) this.callGetOnRobot("getY", robot);
 
