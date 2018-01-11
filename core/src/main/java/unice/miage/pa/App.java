@@ -70,10 +70,6 @@ public class App
 
             if(args.length > 0) countBotAsParam = Integer.valueOf(args[0]);
 
-            // Workaround defaulting to pair value
-            if(countBotAsParam % 2 != 0)
-                countBotAsParam = countBotAsParam - 1;
-
             boardMonitor.startGame(countBotAsParam, frame);
         } catch (Exception e) {
             e.printStackTrace();
